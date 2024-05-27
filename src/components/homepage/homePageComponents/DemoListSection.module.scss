@@ -1,0 +1,23 @@
+/*Need to make all of this collapse on mobile, or make it mobile first and turn into row on big screen.*/
+.demo-list-body-container{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top:60px;
+    color:white;
+}
+
+.introduction-body-title{
+    margin: 0;
+    font-size:29px;
+}
+
+.introduction-cta{
+    text-decoration: none;
+    color:inherit;
+    padding: 8px 10px;
+    border-radius:4px;
+    background-color: rgb(35, 148, 54);
+    align-self: center;
+    margin-top:20px;
+}

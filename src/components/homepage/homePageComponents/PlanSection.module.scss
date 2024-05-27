@@ -1,0 +1,65 @@
+/*Need to make all of this collapse on mobile, or make it mobile first and turn into row on big screen.*/
+.plan-section-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  color: white;
+  width:100%
+}
+
+.plan-title{
+  font-size:29px;
+  text-align:center;
+}
+
+.plans-row {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 650px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.plan-container {
+  background-color: rgb(75 75 75);
+  width: 300px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  align-items: center;
+}
+
+.header {
+  margin: 0;
+  align-self: center;
+  font-size: 24px;
+}
+
+.price {
+  align-self: center;
+}
+
+.plan-cta {
+  align-self: center;
+  margin-top:20px;
+}
+
+.website-icon{
+  height:100%;
+  margin:10px;
+}
+
+@media only screen and (max-width: 728px) {
+  .plans-row{
+    justify-content:center;
+  }
+
+  .plan-container:last-child{
+    margin-top:30px;
+  }
+  
+}
+

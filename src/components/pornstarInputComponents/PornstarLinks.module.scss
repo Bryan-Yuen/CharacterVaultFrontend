@@ -1,0 +1,84 @@
+.links-container {
+  margin-top: 20px;
+}
+
+.add-links-button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add-links-button {
+  background-color: rgb(70, 70, 70);
+  font-size: 16px;
+  border: 1px solid gray;
+  color: white;
+  width: 150px;
+  height: 40px;
+  border-radius:4px;
+}
+
+.links-list-container {
+  padding: 0;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid rgb(139, 139, 139);
+    position: relative;
+
+    input {
+      display: block;
+      width: 100%;
+      background-color: rgb(83, 83, 83);
+      color: white;
+      font-size: 16px;
+      border: 1px solid gray;
+      border-radius: 4px;
+      padding: 10px;
+      margin-top: 3px;
+    }
+
+    /* Adjust the color and strength of the default placeholder css*/
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.521);
+      opacity: 1; /* Firefox */
+    }
+
+    .x-button{
+      cursor: pointer;
+    }
+  }
+
+  .title-label {
+    margin-top: 5px;
+  }
+
+  .url-label {
+    margin-top: 10px;
+  }
+
+  .x-button {
+    position: absolute;
+    right: 10px;
+    top: 2px;
+    font-size: 30px;
+  }
+
+  .delete-link-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+    display: none;
+  }
+
+  .delete-link-button {
+    background-color: rgb(70, 70, 70);
+    font-size: 16px;
+    border: 1px solid gray;
+    color: white;
+    width: 150px;
+    height: 40px;
+  }
+}

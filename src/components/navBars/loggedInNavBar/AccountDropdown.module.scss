@@ -1,0 +1,76 @@
+.backdrop {
+  position: fixed; /* Stay in place */
+  z-index: 10; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow-y: auto; /* Enable scroll if needed */
+}
+
+.modal {
+  position: absolute; /* Stay in place */
+  top: 0;
+  right: 0;
+  z-index: 100; /* Sit on top */
+
+  /*responsive*/
+  width: 100%;
+  max-width: 200px;
+  color: white;
+  background-color: rgb(63, 63, 63);
+  animation: fadeInAnimation 0.15s linear; /*Modal fade*/
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  //animation-direction: alternate-reverse;
+}
+
+.close {
+  background-color: inherit;
+  color: white;
+  border: none;
+  font-size: 25px;
+}
+
+.close:hover {
+  cursor: pointer;
+}
+
+@keyframes fadeInAnimation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.setting-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.username{
+  padding: 8px 8px;
+  font-size: 16px;
+  border-bottom: 1px solid #cfcfcf;
+}
+
+.setting-list-item {
+  padding: 8px 8px;
+  font-size: 16px;
+  color:white;
+  text-decoration: none;
+}
+
+.log-out-button {
+  background-color: inherit;
+  border:none;
+  text-align: left;
+}
+
+.setting-list-item:hover{
+  background-color: rgb(100, 100, 100);
+}

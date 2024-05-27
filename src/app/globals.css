@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /*font-family: Arial, Helvetica, sans-serif;*/
+  font-family: '__Inter_aaf875', '__Inter_Fallback_aaf875';
+  color:white;
+  /*backup color and color user sees when they scroll the page too far up and down
+  on iphone/mobile*/
+  background-color: rgb(46, 46, 46);
+}
+
+button, input{
+  font-family: '__Inter_aaf875', '__Inter_Fallback_aaf875';
+}
+
+button:hover{
+  cursor: pointer;
+}
+
+/* this is where we put colors, font-sizes, and spacing*/
+:root {
+  --primary-color: #ffffff;
+  --secondary-color: #ff5733;
+  --background-color: #f0f0f0;
+  --text-color: #333;
+  --accent-color: #ffcc00;
+  /* Add more colors as needed */
+}

@@ -1,0 +1,62 @@
+.drop-zone{
+  width:300px;
+  height:450px;
+  /*Consider maybe a different or lighter color*/
+  background-color: rgb(165 165 165);
+  background-color: rgb(83, 83, 83);
+  border: 2px dashed rgb(255, 255, 255);
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.onDragOver{
+  background-color: rgb(122, 122, 122);
+}
+
+.upload-image-container{
+  margin-top:10px;
+}
+
+.file-upload-input{
+  display: none;
+}
+
+.file-upload-button{
+  background-color: rgb(70, 70, 70);
+    border: none;
+    border-radius: 4px;
+    font-size: 20px;
+    color: white;
+    width: 200px;
+    height: 40px;
+    padding: 8px 10px;
+}
+
+.image{
+  margin-top:5px;
+  height:450px;
+  object-fit: cover;
+}
+
+.remove-button{
+  background-color: rgb(70, 70, 70);
+    font-size: 16px;
+    border: 1px solid gray;
+    border-radius: 4px;
+    color: white;
+    height: 40px;
+    margin-top: 8px;
+}
+
+@media only screen and (max-width: 500px) {
+  .image{
+    /*width:100%;*/
+    /*biggest width for iphone SE or 375px and above*/
+    width:400px;
+    max-width: 100%;
+    height:auto;
+  }
+}

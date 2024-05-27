@@ -1,0 +1,128 @@
+.container {
+  display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* remember for smaller computers will need scroll */
+.content-container {
+  color: white;
+  width:500px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  max-width: 100%;
+}
+
+.header {
+  font-size:36px;
+  margin:0;
+  padding-bottom:10px;
+}
+
+.sub-headers {
+  margin: 0;
+  font-size:24px;
+}
+
+.setting-fields {
+  font-size: 18px;
+  margin: 0;
+  padding:5px 0;
+  display:flex;
+  justify-content: space-between;
+}
+
+.confirmation-email-message {
+  margin-top: 10px;
+}
+
+.call-to-action-message {
+  margin-top: 10px;
+  font-size: 24px;
+}
+
+.upgrade-link {
+  margin-top: 10px;
+  color: white;
+  background-color: rgb(22, 122, 207);
+  background-color: rgb(35, 148, 54);
+  padding: 8px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  width: 100px;
+  text-align: center;
+}
+
+.keep-button {
+  margin-top: 10px;
+  color: white;
+  background-color: rgb(22, 122, 207);
+  padding: 8px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  text-align: center;
+}
+
+.cancel-link{
+  color:white;
+  text-decoration: none;
+  margin-top:10px;
+}
+
+.plan-details-container {
+  display: flex;
+  flex-direction: column;
+  /*need this to make button take up width of*/
+  align-items: flex-start;
+}
+
+.profile-container, .payment-method-container, .plan-container {
+  display:flex;
+  flex-direction: column;
+  border-top: 1px solid rgb(175, 175, 175);
+  padding:10px 0;
+}
+
+.update-payment-button, .change-password-button, .change-email-button{
+  background:none;
+  border:none;
+  padding: 0;
+  color:white;
+  font-size:16px;
+}
+
+.change-password-button, .change-email-button{
+  height:34px;
+  /*width:131px;*/
+  width:137px;
+  text-align: right;
+  text-decoration: none;
+}
+
+.email-password-and-buttons-container{
+  display:flex;
+  justify-content: space-between;
+}
+
+.email-password-buttons-container{
+  display:flex;
+  flex-direction: column;
+  align-items: flex-end;
+  /*just in case the email overfills and there is a space between these 2*/
+  justify-content: space-between;
+}
+
+@media only screen and (max-width: 550px) {
+  .email-password-and-buttons-container{
+    flex-direction: column;
+  }
+
+  .email-password-buttons-container{
+    align-items: flex-start;
+  }
+
+  .change-password-button, .change-email-button{
+    text-align: left;
+  }
+}

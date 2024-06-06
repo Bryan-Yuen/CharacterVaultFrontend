@@ -417,7 +417,7 @@ export default function EditPornstarBody() {
 
     //maybe have are you sure for changes
     //redirect ot homepage
-    router.back();
+    router.push('/dashboard');
   };
 
   // next level idea for the tags, like in gmail show a preview for a tag as a user types and have them press tab to finish the word.

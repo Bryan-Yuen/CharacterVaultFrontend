@@ -150,7 +150,7 @@ export default function AddPornstarBody() {
               __typename: 'PornstarWithTags',
               pornstar_id: result.data.addPornstar.pornstar_id,
                 pornstar_name: pornstarName,
-                pornstar_picture_path: newImageUrl,
+                pornstar_picture_path: selectedImage ? newImageUrl : null,
                 pornstar_tags_text: pornstarTags.map((tagObj: any) => tagObj.tag_text)
             },
             fragment: gql`

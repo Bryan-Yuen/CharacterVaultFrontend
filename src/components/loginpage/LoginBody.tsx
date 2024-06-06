@@ -89,10 +89,10 @@ export default function LoginBody() {
         >
            <Image
               priority
-              src="/paper.svg"
+              src="/MyFapSheetSVG.svg"
               alt="Down Icon"
-              height={100}
-              width={100}
+              height={0}
+              width={75}
               className={styles["website-icon"]}
             />
         <h1 className={styles["header"]}>Welcome Back</h1>

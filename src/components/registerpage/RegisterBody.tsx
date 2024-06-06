@@ -111,10 +111,10 @@ export default function RegisterBody() {
       >
             <Image
               priority
-              src="/paper.svg"
+              src="/MyFapSheetSVG.svg"
               alt="Down Icon"
-              height={100}
-              width={100}
+              height={0}
+              width={75}
               className={styles["website-icon"]}
             />
         <h1 className={styles["header"]}>Create your account</h1>
@@ -193,7 +193,7 @@ export default function RegisterBody() {
         </div>
         <span className={styles["agreement-text"]}>
         By signing up, you agree to our{" "}
-        <Link href={"/terms-and-conditions"} className={styles["login-link"]}>
+        <Link href={"/terms-of-service"} className={styles["login-link"]}>
           Terms of use
         </Link>{" "}
         and{" "}

@@ -9,8 +9,8 @@ export default function NonDashboardNavbar() {
   const [accountDropdownIsOpen, setAccountDropdownIsOpen] = useState<boolean>(false);
 
   return (
+    <>
     <div className={styles['navbar']}>
-      <div className={styles["navbar-container"]}>
         <Link
           href={'/dashboard'}
           className={`${styles['header']} ${styles['website-name-and-icon-container']}`}
@@ -35,8 +35,8 @@ export default function NonDashboardNavbar() {
             width={32}
           />
         </button>
-      </div>
-      {accountDropdownIsOpen && <AccountDropdown setDropdownIsOpen={setAccountDropdownIsOpen} />}
     </div>
+    {accountDropdownIsOpen && <AccountDropdown setDropdownIsOpen={setAccountDropdownIsOpen} />}
+    </>
   );
 }

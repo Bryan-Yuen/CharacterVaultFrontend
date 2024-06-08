@@ -9,7 +9,7 @@ export default function IntroductionBody() {
     <div className={styles["introduction-body-container"]}>
       <Image
         priority
-        src="/dashboard-updated.png"
+        src="https://pub-2b5d30d2053a4e3a92288345756fc27a.r2.dev/dashboard-example.png"
         alt="dashboard"
         height={267}
         width={475}

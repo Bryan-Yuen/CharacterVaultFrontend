@@ -43,7 +43,7 @@ export default function PornstarLinks({ pornstarLinks, setPornstarLinks }: propD
     <div className={styles['links-container']}>
       <div className={styles['add-links-button-container']}>
       <button type="button" onClick={addInput} className={styles['add-links-button']}>
-        Add Video Links
+        Add Video Link
       </button>
       </div>
       <ul className={styles['links-list-container']}>

@@ -19,6 +19,7 @@ export default function DemoListBody() {
   return (
     <div className={styles["demo-list-body"]}>
     <h1 className={styles["header"]}>Demo List</h1>
+    <span>The images here are AI generated. Feel free to add your own pornstar images when you sign up.</span>
       <div className={styles["pornstar-tiles-container"]}>
         {DemoListPornstars.map((pornstar: any) => 
             <PornstarTile

@@ -1,11 +1,10 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
-
-
+import 'dotenv/config';
 
 const client = new ApolloClient({
     //uri: "http://localhost:4000",
     // this allows you to call service on other devices not on the same one
-    uri: "http://192.168.0.208:4000",
+    uri: process.env.PRODUCTION ? "https://myfapsheettestingwebsite.us/api" : "http://192.168.0.208:4000",
     cache: new InMemoryCache({
       typePolicies: {
         PornstarWithTags: {

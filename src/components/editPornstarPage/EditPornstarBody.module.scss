@@ -79,12 +79,12 @@
 
 .add-link-button{
   background-color: rgb(70, 70, 70);
-    font-size: 20px;
-    border: 1px solid gray;
-    color: white;
-    width:150px;
-    height: 40px;
-    border-radius: 4px;
+  font-size: 16px;
+  border: 1px solid gray;
+  color: white;
+  width: 150px;
+  height: 40px;
+  border-radius: 4px;
 }
 
 .delete-button{
@@ -102,35 +102,56 @@
 }
 
 .pornstar-links-list-item{
-  background-color: #676767;
-  border-radius: 4px;
-  margin-top:10px;
-  padding:10px;
-  display:flex;
-  justify-content: space-between;
+  display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid rgb(139, 139, 139);
+    position: relative;
+    border-radius: 4px;
+    background-color: #272727;
+
+    .title-label {
+      margin-top: 5px;
+    }
+  
+    .url-label {
+      margin-top: 10px;
+    }
+
+    input{
+      display: block;
+      width: 100%;
+      background-color: rgb(83, 83, 83);
+      color: white;
+      font-size: 16px;
+      border: 1px solid gray;
+      border-radius: 4px;
+      padding: 10px;
+      margin-top: 3px;
+    }
+  
+    input:focus {
+      outline-style: none;
+      border: 1px solid rgb(255, 255, 255)
+    }
+
+        /* Adjust the color and strength of the default placeholder css*/
+        input::placeholder {
+          color: rgba(255, 255, 255, 0.521);
+          opacity: 1; /* Firefox */
+        }
+    
+        .x-button{
+          cursor: pointer;
+        }
 }
 
-.input-container{
-  display:flex;
-  flex-direction: column;
-  width: 100%;
-
-  input{
-    display: block;
-    width: 100%;
-    background-color: rgb(83, 83, 83);
-    color: white;
-    font-size: 16px;
-    border: 1px solid gray;
-    border-radius: 4px;
-    padding: 10px;
-    margin-top: 5px;
-  }
-
-  input:focus {
-    outline-style: none;
-    border: 1px solid rgb(255, 255, 255)
-  }
+.x-button {
+  position: absolute;
+  right: 10px;
+  top: 2px;
+  font-size: 30px;
 }
 
 .buttons-container{

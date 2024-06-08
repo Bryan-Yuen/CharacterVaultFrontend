@@ -470,42 +470,31 @@ export default function EditPornstarBody() {
               onClick={addLinkHandler}
               className={styles["add-link-button"]}
             >
-              Add Link
+              Add Video Link
             </button>
           </div>
           <ul className={styles["pornstar-links-list"]}>
             {pornstarLinks.map((link: any) => (
               <li className={styles["pornstar-links-list-item"]}>
-                <div className={styles["input-container"]}>
-                  <input
-                    value={link.pornstar_link_title}
-                    placeholder="Title"
-                    onChange={(e) =>
-                      titleInputChangeHandler(e, link.pornstar_link_id)
-                    }
-                  />
-                  <input
-                    value={link.pornstar_link_url}
-                    placeholder="URL"
+                <div className={styles['x-button']} onClick={() => handleDeleteTagClick(link.pornstar_link_id)}>&times;</div>
+            <label className={styles['title-label']}>Title</label>
+            <input
+              type="text"
+              placeholder="Title/Studio/Notes"
+              value={link.pornstar_link_title}
+              onChange={(e) =>
+                titleInputChangeHandler(e, link.pornstar_link_id)
+              }
+            />
+            <label className={styles['url-label']}>URL</label>
+            <input
+              type="text"
+              value={link.pornstar_link_url}
+                    placeholder="Video Link"
                     onChange={(e) =>
                       urlInputChangeHandler(e, link.pornstar_link_id)
                     }
-                  />
-                </div>
-                <button
-                  type="button"
-                  onClick={() => handleDeleteTagClick(link.pornstar_link_id)}
-                  className={styles["delete-button"]}
-                >
-                  <Image
-                    priority
-                    src="/trash-can-icon.svg"
-                    alt="Down Icon"
-                    height={32}
-                    width={32}
-                    className={styles["website-icon"]}
-                  />
-                </button>
+            />
               </li>
             ))}
           </ul>

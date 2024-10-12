@@ -21,7 +21,11 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-loader-spinner": "^6.1.6",
+    "react-player": "^2.16.0",
     "sass": "^1.58.1",
     "typescript": "4.9.5"
+  },
+  "devDependencies": {
+    "video.js": "^8.18.1"
   }
 }

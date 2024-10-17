@@ -19,14 +19,11 @@ export default function HomePageVideoBody() {
           src="https://pub-250210f504394affbc2c93cf1b8da2f7.r2.dev/Timeline%201%20final.webm"
           type="video/webm"
         />
-        <Image
-          priority
-          src="/MyFapSheetSVG.svg"
-          alt="Down Icon"
-          height={0}
-          width={50}
-          className={styles["website-icon"]}
+        <source
+          src="https://pub-250210f504394affbc2c93cf1b8da2f7.r2.dev/Timeline-1-final.ogg"
+          type="video/ogg"
         />
+        Your browser does not support the video tag.
       </video>
     </div>
   );

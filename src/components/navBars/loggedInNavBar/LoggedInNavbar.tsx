@@ -9,12 +9,6 @@ import { CHECK_SUBSCRIPTION } from "@/queries/subscription";
 import SearchTagManagerAddPornstarContainer from "./SearchTagManagerAddPornstarContainer";
 import { ThreeDots } from 'react-loader-spinner'
 
-enum Subscription_Status {
-  ACTIVE_SUBSCRIPTION = "ACTIVE_SUBSCRIPTION",
-  NO_SUBSCRIPTION = "NO_SUBSCRIPTION",
-  CANCELLING_SUBSCRIPTION = "CANCELLING_SUBSCRIPTION",
-}
-
 export default function LoggedInNavbar() {
   const pathname = usePathname()
 
@@ -83,13 +77,6 @@ export default function LoggedInNavbar() {
       </Link>
       {isDesktop && <SearchTagManagerAddPornstarContainer/>}
       <div className={styles["upgrade-button-profile-icon-container"]}>
-        {data.checkSubscription.subscription_status ===
-      Subscription_Status.NO_SUBSCRIPTION && <Link
-      href={"/upgrade"}
-      className={`${styles["header"]} ${styles["upgrade-button"]}`}
-    >
-      Upgrade
-    </Link>}
         <button className={`${styles['account-button']} ${styles[accountDropdownIsOpen ? 'account-dropdown-active' : '']}`} onClick={() => setAccountDropdownIsOpen(true)}>
           <Image
             priority

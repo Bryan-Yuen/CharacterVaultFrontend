@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <div className={styles["footer-container"]}>
+    <footer className={styles["footer-container"]}>
       <div className={styles["links-container"]}>
         <Link href={"/privacy-policy"} className={styles["footer-item"]}>
           Privacy Policy
@@ -17,6 +17,6 @@ export default function Footer() {
         </Link>
       </div>
       <div className={styles["copyright"]}>&copy; 2024 MyFapSheet</div>
-    </div>
+    </footer>
   );
 }

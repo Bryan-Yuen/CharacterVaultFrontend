@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { REGISTER_USER } from "@/mutations/userMutations";
 import Link from "next/link";
 import Image from "next/image";
-import { RotatingLines } from 'react-loader-spinner'
+import { RotatingLines } from "react-loader-spinner";
 
 export default function RegisterBody() {
   const {
@@ -33,9 +33,7 @@ export default function RegisterBody() {
     inputBlurHandler: registerPasswordBlurHandler,
   } = useInput((input) => input.length >= 6);
 
-  const [loading, setLoading] = useState<boolean>(false)
-
-  const [registerUser] = useMutation(REGISTER_USER, {
+  const [registerUser, {loading}] = useMutation(REGISTER_USER, {
     variables: {
       user: {
         user_username: registerUsername,
@@ -48,45 +46,55 @@ export default function RegisterBody() {
 
   // clears the error message the user starts typing again
   useEffect(() => {
-    if(uniqueUsernameIsInvalid)
-    setUniqueUsernameIsInvalid(false)
-    if(uniqueEmailIsInvalid)
-    setUniqueEmailIsInvalid(false)
-  },[registerUsername, registerEmail])
+    if (uniqueUsernameIsInvalid) setUniqueUsernameIsInvalid(false);
+    if (uniqueEmailIsInvalid) setUniqueEmailIsInvalid(false);
+  }, [registerUsername, registerEmail]);
 
   const [uniqueUsernameIsInvalid, setUniqueUsernameIsInvalid] = useState(false);
   const [uniqueEmailIsInvalid, setUniqueEmailIsInvalid] = useState(false);
+
+  const [genericError, setGenericError] = useState(false);
 
   const router = useRouter();
   // consider try catch in future for network errors or some other mysterious error
   const registerSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    setLoading(true);
-    const result = await registerUser();
-    setLoading(false);
-    if (result.errors) {
-      console.log("there was errors");
-      console.log(result);
-      console.log(result.errors[0].extensions.code);
-      // obviously put these code in a constant maybe in a file somewhere
-      if (
-        result.errors[0].extensions.code === "EMAIL_EXISTS_AND_USERNAME_TAKEN"
-      ) {
-        setUniqueUsernameIsInvalid(true);
-        setUniqueEmailIsInvalid(true);
-      } else if (result.errors[0].extensions.code === "EMAIL_EXISTS") {
-        setUniqueEmailIsInvalid(true);
-        setUniqueUsernameIsInvalid(false);
-      } else if (result.errors[0].extensions.code === "USERNAME_TAKEN") {
-        setUniqueUsernameIsInvalid(true);
-        setUniqueEmailIsInvalid(false);
+  
+    try {
+      const result = await registerUser();
+      if (!result) {
+        setGenericError(true);
+        return;
       }
-    } else if (result.data) {
-      console.log("it worked");
-      router.push("/dashboard")
+      console.log(result)
+      // Check for errors
+      if (result.errors && result.errors.length > 0) {
+        const errorCode = result.errors[0].extensions?.code;
+  
+        switch (errorCode) {
+          case "EMAIL_EXISTS":
+            setUniqueEmailIsInvalid(true);
+            setUniqueUsernameIsInvalid(false);
+            break;
+          case "USERNAME_TAKEN":
+            setUniqueUsernameIsInvalid(true);
+            setUniqueEmailIsInvalid(false);
+            break;
+          default:
+            setGenericError(true);
+        }
+      } 
+      // Success case
+      else if (result.data) {
+        console.log("Registration successful");
+        router.push("/dashboard");
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      setGenericError(true);
     }
   };
+  
 
   // if any of the invalids are true then we allow the red color class to be active
   const usernameIsInvalidClass =
@@ -104,19 +112,19 @@ export default function RegisterBody() {
   );
 
   return (
-    <div className={styles["register-body"]}>
+    <main className={styles["register-body"]}>
       <form
         onSubmit={registerSubmitHandler}
         className={styles["form-container"]}
       >
-            <Image
-              priority
-              src="/MyFapSheetSVG.svg"
-              alt="Down Icon"
-              height={0}
-              width={75}
-              className={styles["website-icon"]}
-            />
+        <Image
+          priority
+          src="/MyFapSheetSVG.svg"
+          alt="paper with splash icon"
+          height={0}
+          width={75}
+          className={styles["website-icon"]}
+        />
         <h1 className={styles["header"]}>Create your account</h1>
         <div
           className={`${styles["input-container"]} ${styles[usernameIsInvalidClass]}`}
@@ -151,7 +159,7 @@ export default function RegisterBody() {
           />
           {registerEmailIsInvalid && (
             <span className={styles["invalid-message"]}>
-              Invalid Email format.
+              Blank or invalid email format.
             </span>
           )}
           {uniqueEmailIsInvalid && (
@@ -176,38 +184,47 @@ export default function RegisterBody() {
             </span>
           )}
         </div>
+        {genericError && (
+            <span className={styles["server-error-message"]}>
+              Server Error. Please Refresh Page or try again later.
+            </span>
+          )}
         <div className={styles["sign-up-button-container"]}>
           <button
             disabled={overallFormIsInvalid}
             className={styles["sign-up-button"]}
           >
-            {loading ? <RotatingLines
-  visible={true}
-  width="25"
-  strokeWidth="5"
-  strokeColor="white"
-  animationDuration="0.75"
-  ariaLabel="rotating-lines-loading"
-  /> : "Sign Up"}
+            {loading ? (
+              <RotatingLines
+                visible={true}
+                width="25"
+                strokeWidth="5"
+                strokeColor="white"
+                animationDuration="0.75"
+                ariaLabel="rotating-lines-loading"
+              />
+            ) : (
+              "Sign Up"
+            )}
           </button>
         </div>
         <span className={styles["agreement-text"]}>
-        By signing up, you agree to our{" "}
-        <Link href={"/terms-of-service"} className={styles["login-link"]}>
-          Terms of use
-        </Link>{" "}
-        and{" "}
-        <Link href={"/privacy-policy"} className={styles["login-link"]}>
-          Privacy Policy
-        </Link>
-      </span>
-      <span className={styles["login-text"]}>
-        Already have an account?{" "}
-        <Link href={"/login"} className={styles["login-link"]}>
-          Login
-        </Link>
-      </span>
+          By signing up, you agree to our{" "}
+          <Link href={"/terms-of-service"} className={styles["login-link"]}>
+            Terms of use
+          </Link>{" "}
+          and{" "}
+          <Link href={"/privacy-policy"} className={styles["login-link"]}>
+            Privacy Policy
+          </Link>
+        </span>
+        <span className={styles["login-text"]}>
+          Already have an account?{" "}
+          <Link href={"/login"} className={styles["login-link"]}>
+            Login
+          </Link>
+        </span>
       </form>
-    </div>
+    </main>
   );
 }

@@ -3,7 +3,7 @@ import styles from "./TermsBody.module.scss";
 
 export default function TermsBody() {
   return (
-    <div className={styles["terms-body-container"]}>
+    <main className={styles["terms-body-container"]}>
       <h2 className={styles["header"]}>
         <b>TERMS AND CONDITIONS</b>
       </h2>
@@ -615,6 +615,6 @@ export default function TermsBody() {
         were created for <b>myfapsheet.com</b> by{" "}
         <a href="https://policymaker.io">PolicyMaker.io</a> on 2024-02-10.
       </p>
-    </div>
+    </main>
   );
 }

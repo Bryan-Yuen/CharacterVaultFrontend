@@ -1,6 +1,6 @@
 .backdrop{
   position: fixed; /* Stay in place */
-  z-index: 10; /* Sit on top */
+  z-index: 51; /* we need this number to be higher than the search bar's z -index */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -62,7 +62,7 @@
 }
 
 .upgrade-link-button{
-  background-color: rgb(35, 148, 54);
+  background-color: rgb(88, 88, 88);
   padding: 8px 10px;
   border: none;
   font-size: 16px;

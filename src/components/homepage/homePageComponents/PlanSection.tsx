@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function PlanSection() {
   return (
     <div className={styles["plan-section-container"]}>
-      <h2 className={styles["plan-title"]}>Try for free, upgrade anytime</h2>
+      <h2 className={styles["plan-title"]}>Try for free</h2>
         <div className={styles["plans-row"]}>
           <div className={styles["plan-container"]}>
               <h3 className={styles["header"]}>Basic</h3>
@@ -15,7 +15,7 @@ export default function PlanSection() {
               <Image
               priority
               src="/MyFapSheetSVG.svg"
-              alt="Down Icon"
+              alt="paper with droplets"
               height={0}
               width={50}
               className={styles["website-icon"]}
@@ -34,7 +34,7 @@ export default function PlanSection() {
               <Image
               priority
               src="/MyFapSheetSVG.svg"
-              alt="Down Icon"
+              alt="paper with droplets"
               height={0}
               width={65}
               className={styles["website-icon"]}
@@ -44,7 +44,7 @@ export default function PlanSection() {
             href={"/register"}
             className={`${globalStyles["blue-link-button"]} ${styles["plan-cta"]}`}
           >
-            Create Your List
+            Coming Soon
           </Link>
           </div>
         </div>

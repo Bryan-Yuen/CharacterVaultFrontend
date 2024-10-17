@@ -3,7 +3,7 @@ import styles from "./privacyBody.module.scss";
 
 export default function PrivacyBody() {
   return (
-    <div className={styles["terms-body-container"]}>
+    <main className={styles["terms-body-container"]}>
       <h2 className={styles["header"]}>
         <b>PRIVACY POLICY</b>
       </h2>
@@ -643,6 +643,6 @@ export default function PrivacyBody() {
         was created for <b>myfapsheet.com</b> by{" "}
         <a href="https://policymaker.io">PolicyMaker.io</a> on 2024-02-10.
       </p>
-    </div>
+    </main>
   );
 }

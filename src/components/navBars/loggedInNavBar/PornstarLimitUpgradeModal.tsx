@@ -22,14 +22,14 @@ export default function PornstarLimitUpgradeModal(props: propDefs) {
           </button>
           <div className={styles['modal-title']}>Pornstar Limit Reached</div>
         <div className={styles['modal-content']}>
-          You have reached the maximum 25 pornstars for our free plan. Please consider upgrading to increase the limit to 1,000 or deleting pornstars to free up space.
+          Thank you for your interest in using MyFapSheet. Unfortunately 25 pornstars is the limit for now. The premium plan for up to 1000 pornstars for $3.99/month will be coming soon.
         </div>
-        <Link
-          href={"/upgrade"}
-          className={`${styles["upgrade-link-button"]}`}
-        >
-          Upgrade
-        </Link>
+        <button
+            onClick={() => props.setPornstarLimitUpgradeModalIsOpen(false)}
+            className={styles['upgrade-link-button']}
+          >
+            Close
+          </button>
       </div>
     </div>
   );

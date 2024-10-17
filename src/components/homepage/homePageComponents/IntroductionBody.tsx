@@ -20,7 +20,7 @@ export default function IntroductionBody() {
           <h2 className={styles["introduction-body-title"]}>
             Save your favorite pornstars here
           </h2>
-          <span className={styles["introduction-body-content"]}>Create your own list and add and manage your favorite pornstars with our interactive dashboard.</span>
+          <span className={styles["introduction-body-content"]}>Create your list and add and manage your favorite pornstars with our interactive dashboard.</span>
           <Link
             href={"/register"}
             //className={styles["introduction-cta"]}

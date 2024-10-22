@@ -12,7 +12,8 @@ import Tags from "../pornstarInputComponents/Tags";
 import PornstarName from "../pornstarInputComponents/PornstarName";
 import Image from "next/image";
 import Link from "next/link";
-import MobileUploadImage from '../pornstarInputComponents/MobileUploadImage';
+import MobileUploadImage from "../pornstarInputComponents/MobileUploadImage";
+import { RotatingLines } from "react-loader-spinner";
 
 export enum ImageUpdateStatus {
   AddOrEdit = "ADD_OR_EDIT",
@@ -106,25 +107,27 @@ export default function EditPornstarBody() {
   const [newPornstarLinksIdCounter, setNewPornstarLinksIdCounter] =
     useState<number>(-1);
 
-    const [isDesktop, setDesktop] = useState(false);
+  const [isDesktop, setDesktop] = useState(false);
 
-    useEffect(() => {
+  const [genericError, setGenericError] = useState(false);
+
+  useEffect(() => {
+    if (window.innerWidth > 800) {
+      setDesktop(true);
+    } else {
+      setDesktop(false);
+    }
+
+    const updateMedia = () => {
       if (window.innerWidth > 800) {
         setDesktop(true);
       } else {
         setDesktop(false);
       }
-  
-      const updateMedia = () => {
-        if (window.innerWidth > 800) {
-          setDesktop(true);
-        } else {
-          setDesktop(false);
-        }
-      };
-      window.addEventListener('resize', updateMedia);
-      return () => window.removeEventListener('resize', updateMedia);
-    }, []);
+    };
+    window.addEventListener("resize", updateMedia);
+    return () => window.removeEventListener("resize", updateMedia);
+  }, []);
 
   const addLinkHandler = () => {
     // the id 0 is just placeholder and can be used to tell these are recently added links
@@ -239,9 +242,12 @@ export default function EditPornstarBody() {
     errorPolicy: 'all',
   });
   */
-  const [editPornstar, { data : data2, loading : loading2, error : error2 }] = useMutation(EDIT_PORNSTAR, {
-    errorPolicy: "all",
-  });
+  const [editPornstar, { loading: loadingEditPornstar }] = useMutation(
+    EDIT_PORNSTAR,
+    {
+      errorPolicy: "all",
+    }
+  );
 
   function stripTypenames(value: any): any {
     if (Array.isArray(value)) {
@@ -262,9 +268,8 @@ export default function EditPornstarBody() {
   const editPornstarHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if(!pornstarNameIsValid)
-    {
-      pornstarNameBlurHandler()
+    if (!pornstarNameIsValid) {
+      pornstarNameBlurHandler();
       return;
     }
 
@@ -279,145 +284,110 @@ export default function EditPornstarBody() {
     const newPornstarLinksFiltered = pornstarLinks.filter(
       (link) => link.pornstar_link_id < 0
     );
-    //let result;
-    console.log("beforee");
-    console.log({
-      pornstar_id: pornstarId,
-      pornstar_name: pornstarName,
-      pornstar_picture: selectedImage !== null,
-      pornstar_tags_obj: pornstarTags,
-      imageUpdate: imageUpdate,
-      pornstar_links_updates: {
-        edited_links: updatedEditedPornstarLinks,
-        deleted_links_ids: deletedPornstarLinksIds,
-        new_links: newPornstarLinksFiltered,
-      },
-    });
 
-    const result = await editPornstar({
-      variables: {
-        editPornstarInput: {
-          pornstar_id: pornstarId,
-          pornstar_name: pornstarName,
-          pornstar_picture: selectedImage !== null,
-          pornstar_tags_obj: pornstarTags,
-          imageUpdate: imageUpdate,
-          pornstar_links_updates: {
-            edited_links: updatedEditedPornstarLinks,
-            deleted_links_ids: deletedPornstarLinksIds,
-            new_links: newPornstarLinksFiltered,
+    try {
+      const result = await editPornstar({
+        variables: {
+          editPornstarInput: {
+            pornstar_id: pornstarId,
+            pornstar_name: pornstarName,
+            pornstar_picture: selectedImage !== null,
+            pornstar_tags_obj: pornstarTags,
+            imageUpdate: imageUpdate,
+            pornstar_links_updates: {
+              edited_links: updatedEditedPornstarLinks,
+              deleted_links_ids: deletedPornstarLinksIds,
+              new_links: newPornstarLinksFiltered,
+            },
           },
         },
-      },
-    });
+      });
 
-    console.log("afteeeeee");
-    if (result.errors) {
-      console.log("there was errors");
-      console.log(result);
-      console.log(result.errors[0].extensions.code);
-      // obviously put these code in a constant maybe in a file somewhere
-    } else if (result.data) {
-      console.log(result.data);
-      console.log("it worked");
-      //router.push("/dashboard")
+      if (!result) {
+        setGenericError(true);
+        return;
+      }
+
+      if (result.errors && result.errors.length > 0) {
+        console.log("there was errors");
+        console.log(result);
+        console.log(result.errors[0].extensions.code);
+        setGenericError(true);
+        return;
+        // obviously put these code in a constant maybe in a file somewhere
+      } else if (result.data) {
+        console.log(result.data);
+        console.log("it worked");
+        //router.push("/dashboard")
+
+        console.log(result.data);
+        const url = result.data.editPornstar.s3Url;
+
+        console.log(selectedImage);
+        console.log(pornstarTags);
+        console.log("data", url);
+        console.log(selectedImage?.type);
+
+        // If there is an error withh this we need to quickly call back to our graphql server
+        // maybe go in edit function and delete the url or something in our database entry
+
+        if (url)
+          {
+            try {
+              await fetch(url, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": selectedImage?.type || "",
+                },
+                body: selectedImage,
+              });
+            } catch (error) {
+              console.error(error)
+              setGenericError(true);
+            }
+          }
+
+        //const imageUrl = url.split("?")[0];
+
+        //unfortunately trying to get the links data back from mutation doesn't work when there
+        // is a link deleted, only add and edit links work for some reason
+        await client.refetchQueries({
+          include: ["GetPornstar"],
+        });
+
+        const newPornstarRef = client.cache.writeFragment({
+          id:
+            'PornstarWithTags:{"pornstar_id":' +
+            result.data.editPornstar.pornstar_id +
+            "}",
+          data: {
+            __typename: "PornstarWithTags",
+            pornstar_id: result.data.editPornstar.pornstar_id,
+            pornstar_name: pornstarName,
+            pornstar_picture_path:
+              result.data.editPornstar.pornstar_picture_path,
+            pornstar_tags_text: pornstarTags.map(
+              (tagObj: any) => tagObj.tag_text
+            ),
+          },
+          fragment: gql`
+            fragment NewPornstar on PornstarWithTags {
+              pornstar_id
+              pornstar_name
+              pornstar_picture_path
+              pornstar_tags_text
+            }
+          `,
+        });
+
+        console.log("alohaaaaa", newPornstarRef);
+
+        router.push("/dashboard");
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      setGenericError(true);
     }
-    console.log(result.data);
-    const url = result.data.editPornstar.s3Url;
-
-    console.log(selectedImage);
-    console.log(pornstarTags);
-    console.log("data", url);
-    console.log(selectedImage?.type);
-
-    // If there is an error withh this we need to quickly call back to our graphql server
-    // maybe go in edit function and delete the url or something in our database entry
-
-    await fetch(url, {
-      method: "PUT",
-      headers: {
-        "Content-Type": selectedImage?.type || "",
-      },
-      body: selectedImage,
-    });
-
-    const imageUrl = url.split("?")[0];
-    console.log("imageurl");
-    console.log(imageUrl);
-    console.log(result.data.editPornstar)
-
-    //unfortunately trying to get the links data back from mutation doesn't work when there
-    // is a link deleted, only add and edit links work for some reason
-    await client.refetchQueries({
-      include: ["GetPornstar"],
-    });
-
-    /*
-    const newPornstarRef1 = client.cache.writeFragment({
-      id:
-        'PornstarWithTagsAndLinks:{"pornstar_id":' +
-        result.data.editPornstar.pornstar_id +
-        "}",
-      data: {
-        __typename: "PornstarWithTagsAndLinks",
-        pornstar_id: result.data.editPornstar.pornstar_id,
-        pornstar_name: pornstarName,
-        pornstar_picture_path: result.data.editPornstar.pornstar_picture_path,
-        //pornstar_tags_text: pornstarTags.map((tagObj: any) => tagObj.tag_text)
-        pornstar_tags: result.data.editPornstar.pornstar.pornstar_tags,
-        pornstar_links: result.data.editPornstar.pornstar.pornstar_links,
-      },
-      fragment: gql`
-        fragment EditPornstar on PornstarWithTagsAndLinks {
-          pornstar_id
-          pornstar_name
-          pornstar_picture_path
-            pornstar_tags {
-              tag_text
-              tag_id
-              user_tag {
-                user_tag_id
-              }
-            }
-            pornstar_links {
-              pornstar_link_title
-              pornstar_link_url
-              pornstar_link_id
-            }
-        }
-      `,
-    });
-    console.log(newPornstarRef1);
-    */
-
-    const newPornstarRef = client.cache.writeFragment({
-      id:
-        'PornstarWithTags:{"pornstar_id":' +
-        result.data.editPornstar.pornstar_id +
-        "}",
-      data: {
-        __typename: "PornstarWithTags",
-        pornstar_id: result.data.editPornstar.pornstar_id,
-        pornstar_name: pornstarName,
-        pornstar_picture_path: result.data.editPornstar.pornstar_picture_path,
-        pornstar_tags_text: pornstarTags.map((tagObj: any) => tagObj.tag_text),
-      },
-      fragment: gql`
-        fragment NewPornstar on PornstarWithTags {
-          pornstar_id
-          pornstar_name
-          pornstar_picture_path
-          pornstar_tags_text
-        }
-      `,
-    });
-
-
-    console.log("alohaaaaa", newPornstarRef);
-
-    //maybe have are you sure for changes
-    //redirect ot homepage
-    router.push('/dashboard');
   };
 
   // next level idea for the tags, like in gmail show a preview for a tag as a user types and have them press tab to finish the word.
@@ -439,81 +409,110 @@ export default function EditPornstarBody() {
         className={styles["flex-form-container"]}
         onSubmit={editPornstarHandler}
       >
-        <h2 className={styles['header']}>Edit Pornstar</h2>
-        <div className={styles['second-row']}>
-          {isDesktop &&         <UploadImage
-          selectedImage={selectedImage}
-          setSelectedImage={setSelectedImage}
-          pornstar_picture_path={data.getPornstar.pornstar_picture_path}
-          setImageUpdate={setImageUpdate}
-          imageUpdate={imageUpdate}
-        />}
-        <div className={styles["flex-child-right-side"]}>
-          <PornstarName
-            pornstarName={pornstarName}
-            pornstarNameIsInvalid={pornstarNameIsInvalid}
-            pornstarNameChangeHandler={pornstarNameChangeHandler}
-            pornstarNameBlurHandler={pornstarNameBlurHandler}
-          />
-          {!isDesktop && <MobileUploadImage
-            selectedImage={selectedImage}
-            setSelectedImage={setSelectedImage}
-            pornstar_picture_path={data.getPornstar.pornstar_picture_path}
-            setImageUpdate={setImageUpdate}
-            imageUpdate={imageUpdate}
-          />}
-          <Tags pornstarTags={pornstarTags} setPornstarTags={setPornstarTags} />
-          <div className={styles["links-header-button-container"]}>
-            <div className={styles["links-header"]}>Links</div>
-            <button
-              type="button"
-              onClick={addLinkHandler}
-              className={styles["add-link-button"]}
-            >
-              Add Video Link
-            </button>
-          </div>
-          <ul className={styles["pornstar-links-list"]}>
-            {pornstarLinks.map((link: any) => (
-              <li className={styles["pornstar-links-list-item"]}>
-                <div className={styles['x-button']} onClick={() => handleDeleteTagClick(link.pornstar_link_id)}>&times;</div>
-            <label className={styles['title-label']}>Title</label>
-            <input
-              type="text"
-              placeholder="Title/Studio/Notes"
-              value={link.pornstar_link_title}
-              onChange={(e) =>
-                titleInputChangeHandler(e, link.pornstar_link_id)
-              }
+        <h2 className={styles["header"]}>Edit Pornstar</h2>
+        <div className={styles["second-row"]}>
+          {isDesktop && (
+            <UploadImage
+              selectedImage={selectedImage}
+              setSelectedImage={setSelectedImage}
+              pornstar_picture_path={data.getPornstar.pornstar_picture_path}
+              setImageUpdate={setImageUpdate}
+              imageUpdate={imageUpdate}
             />
-            <label className={styles['url-label']}>URL</label>
-            <input
-              type="text"
-              value={link.pornstar_link_url}
+          )}
+          <div className={styles["flex-child-right-side"]}>
+            <PornstarName
+              pornstarName={pornstarName}
+              pornstarNameIsInvalid={pornstarNameIsInvalid}
+              pornstarNameChangeHandler={pornstarNameChangeHandler}
+              pornstarNameBlurHandler={pornstarNameBlurHandler}
+            />
+            {!isDesktop && (
+              <MobileUploadImage
+                selectedImage={selectedImage}
+                setSelectedImage={setSelectedImage}
+                pornstar_picture_path={data.getPornstar.pornstar_picture_path}
+                setImageUpdate={setImageUpdate}
+                imageUpdate={imageUpdate}
+              />
+            )}
+            <Tags
+              pornstarTags={pornstarTags}
+              setPornstarTags={setPornstarTags}
+            />
+            <div className={styles["links-header-button-container"]}>
+              <div className={styles["links-header"]}>Links</div>
+              <button
+                type="button"
+                onClick={addLinkHandler}
+                className={styles["add-link-button"]}
+              >
+                Add Video Link
+              </button>
+            </div>
+            <ul className={styles["pornstar-links-list"]}>
+              {pornstarLinks.map((link: any) => (
+                <li className={styles["pornstar-links-list-item"]}>
+                  <div
+                    className={styles["x-button"]}
+                    onClick={() => handleDeleteTagClick(link.pornstar_link_id)}
+                  >
+                    &times;
+                  </div>
+                  <label className={styles["title-label"]}>Title</label>
+                  <input
+                    type="text"
+                    placeholder="Title/Studio/Notes"
+                    value={link.pornstar_link_title}
+                    onChange={(e) =>
+                      titleInputChangeHandler(e, link.pornstar_link_id)
+                    }
+                  />
+                  <label className={styles["url-label"]}>URL</label>
+                  <input
+                    type="text"
+                    value={link.pornstar_link_url}
                     placeholder="Video Link"
                     onChange={(e) =>
                       urlInputChangeHandler(e, link.pornstar_link_id)
                     }
-            />
-              </li>
-            ))}
-          </ul>
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-
-        </div>
-        <div className={styles['buttons-container']}>
+        <div className={styles["buttons-and-error-message-container"]}>
+          {genericError && (
+            <span className={styles["server-error-message"]}>
+              Server Error. Please Refresh Page or try again later.
+            </span>
+          )}
+          <div className={styles["buttons-container"]}>
             <Link
-          href={"/pornstar/" + pornstarId}
-          className={`${styles["cancel-button"]}`}
-        >
-          Cancel
-        </Link>
+              href={"/pornstar/" + pornstarId}
+              className={`${styles["cancel-button"]}`}
+            >
+              Cancel
+            </Link>
             <button
               type="submit"
               className={`${styles["add-pornstar-button"]}`}
             >
-              Save
+              {loadingEditPornstar ? (
+                <RotatingLines
+                  visible={true}
+                  width="25"
+                  strokeWidth="5"
+                  strokeColor="white"
+                  animationDuration="0.75"
+                  ariaLabel="rotating-lines-loading"
+                />
+              ) : (
+                "Save"
+              )}
             </button>
+          </div>
         </div>
       </form>
     </div>

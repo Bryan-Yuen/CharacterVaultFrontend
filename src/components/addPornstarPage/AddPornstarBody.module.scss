@@ -62,12 +62,23 @@
   border: 1px solid rgb(255, 255, 255)
 }
 
-.buttons-container{
+.buttons-and-error-message-container{
   display:flex;
+  flex-direction: column;
   align-self:flex-end;
   margin-top:30px;
   width: 400px;
   max-width: 100%;
+}
+
+.buttons-container{
+  display:flex;
+}
+
+.server-error-message{
+  color: #F0423C;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .add-pornstar-button-container{

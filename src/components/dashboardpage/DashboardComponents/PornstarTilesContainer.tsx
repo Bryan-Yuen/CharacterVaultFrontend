@@ -81,6 +81,8 @@ export default function PornstarTilesContainer() {
   );
 
   console.log("what is fullporn", fullPornstars);
+  console.log("filteredata", filteredData);
+  console.log("idk",pornstarsData.getAllPornstarsAndTags)
 
   //we could actually utilize the full pornstars state if we're keeping it instead of duplicating the logic for tags
   return (
@@ -90,7 +92,8 @@ export default function PornstarTilesContainer() {
           ? realFilterPornstarByTags
           : nameSearchTerm || pornstarTags.length !== 0
           ? filteredData
-          : pornstarsData.getAllPornstarsAndTags
+          // copy of the default pornstars if the user didn't type anything in search bar
+          : [...pornstarsData.getAllPornstarsAndTags]
         )
           .sort(function (a: any, b: any) {
             return a.pornstar_name

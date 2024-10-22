@@ -13,9 +13,13 @@ body {
   background-color: rgb(46, 46, 46);
 }
 
+
 button, input, textarea{
-  font-family: '__Inter_aaf875', '__Inter_Fallback_aaf875';
+  /*font-family: '__Inter_aaf875', '__Inter_Fallback_aaf875';*/
+  font-family: '__Inter_d65c78', '__Inter_Fallback_d65c78';
+  border-radius: 4px;
 }
+
 
 button:hover{
   cursor: pointer;

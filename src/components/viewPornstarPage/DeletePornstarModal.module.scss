@@ -26,29 +26,7 @@
     color: white;
     background-color: rgb(48, 48, 48);
     animation: fadeInAnimation .15s linear; /*Modal fade*/
-    padding:35px 35px;
-    border-radius: 4px;;
-    display:flex;
-    flex-direction: column;
-    //animation-direction: alternate-reverse;
-  }
-  
-  .delete-modal{
-    position: relative; /* Stay in place */
-    z-index: 100; /* Sit on top */
-  
-    /*gives a buffer room for the modal when the size gets small*/
-    margin: auto;
-    margin-top:5%;
-    margin-bottom: 5%;
-    /*responsive*/
-    width: 90%;
-    max-width: 370px;
-  
-    color: white;
-    background-color: rgb(48, 48, 48);
-    animation: fadeInAnimation .15s linear; /*Modal fade*/
-    padding:35px 35px;
+    padding:25px 35px;
     border-radius: 4px;;
     display:flex;
     flex-direction: column;
@@ -58,6 +36,7 @@
   .modal-header{
     display:flex;
     justify-content: space-between;
+    align-items: center;
     font-size: 20px;
   }
   

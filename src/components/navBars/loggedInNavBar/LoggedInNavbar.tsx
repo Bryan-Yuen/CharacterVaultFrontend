@@ -4,8 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter,usePathname } from "next/navigation";
 import AccountDropdown from "./AccountDropdown";
-import { useQuery, useMutation } from "@apollo/client";
-import { CHECK_SUBSCRIPTION } from "@/queries/subscription";
 import SearchTagManagerAddPornstarContainer from "./SearchTagManagerAddPornstarContainer";
 import { ThreeDots } from 'react-loader-spinner'
 
@@ -13,11 +11,6 @@ export default function LoggedInNavbar() {
   const pathname = usePathname()
 
   const [accountDropdownIsOpen, setAccountDropdownIsOpen] = useState<boolean>(false);
-
-    // need to refetch this query when the user upgrades
-    const { loading, error, data } = useQuery(
-      CHECK_SUBSCRIPTION
-    );
 
     const [isDesktop, setDesktop] = useState(false);
 
@@ -43,18 +36,6 @@ export default function LoggedInNavbar() {
       window.location.reload(); // Reload the page
     }
   };
-
-  if (loading) return <ThreeDots
-  visible={true}
-  height="80"
-  width="80"
-  color="rgb(22, 122, 207);"
-  radius="9"
-  ariaLabel="three-dots-loading"
-  wrapperStyle={{}}
-  wrapperClass=""
-  />;
-  if (error) return <div>Error! {error.message}</div>;
 
   return (
     <>

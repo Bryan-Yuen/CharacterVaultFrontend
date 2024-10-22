@@ -5,7 +5,8 @@ import { useApolloClient } from "@apollo/client";
 import { ThreeDots } from "react-loader-spinner";
 import { CHECK_USER_LOGGED_IN } from "@/queries/user";
 import { useRouter } from "next/navigation";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery} from "@apollo/client";
+import styles from './AuthenticationWrapper.module.scss';
 
 interface WrapperProps {
   children: ReactNode;
@@ -33,11 +34,11 @@ export default function AuthenticationWrapper({ children } : WrapperProps) {
     visible={true}
     height="80"
     width="80"
-    color="rgb(22, 122, 207);"
+    color="white"
     radius="9"
     ariaLabel="three-dots-loading"
     wrapperStyle={{}}
-    wrapperClass=""
+    wrapperClass={styles['authentication-wrapper-page-styles']}
   />
     if (error) return <div>Error! {error.message}</div>;
   return (

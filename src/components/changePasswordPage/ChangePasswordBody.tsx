@@ -4,7 +4,7 @@ import styles from "./ChangePasswordBody.module.scss";
 import { useMutation } from "@apollo/client";
 import { useSearchParams } from "next/navigation";
 import { CHANGE_PASSWORD } from "@/mutations/userMutations";
-import { Suspense } from 'react'
+import { RotatingLines } from "react-loader-spinner";
 
 export default function ChangePasswordBody() {
   const {
@@ -13,6 +13,7 @@ export default function ChangePasswordBody() {
     inputIsInvalid: newPasswordIsInvalid,
     inputChangeHandler: newPasswordChangeHandler,
     inputBlurHandler: newPasswordBlurHandler,
+    setInput: newPasswordSetInput
   } = useInput((input) => input.length >= 6);
 
   const {
@@ -21,63 +22,70 @@ export default function ChangePasswordBody() {
     inputIsInvalid: confirmPasswordIsInvalid,
     inputChangeHandler: confirmPasswordChangeHandler,
     inputBlurHandler: confirmPasswordBlurHandler,
+    setInput: confirmPasswordSetInput
   } = useInput((input) => input === newPassword);
 
   //need a check whether here on this component or the change password
   // component, if you don't have token, gtfo out of this page
 
   const params = useSearchParams();
-  const token = params.get("token")
-  console.log("token", params)
-  const [changePassword] = useMutation(CHANGE_PASSWORD, {
+  const token = params.get("token");
+  console.log("token", params);
+  const [changePassword, {loading}] = useMutation(CHANGE_PASSWORD, {
     variables: {
-      newPassword: newPassword,
+      newPassword: confirmPassword,
       token: token,
     },
     errorPolicy: "all",
   });
 
-  const [uniqueUsernameIsInvalid, setUniqueUsernameIsInvalid] = useState(false);
-  const [uniqueEmailIsInvalid, setUniqueEmailIsInvalid] = useState(false);
+  const [passwordChanged, setPasswordChanged] = useState(false);
+  const [genericError, setGenericError] = useState(false);
+  const [tokenExpired, setTokenExpired] = useState(false);
 
   // consider try catch in future for network errors or some other mysterious error
 
   const registerSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("gay");
-    const result = await changePassword();
-    if (result.errors) {
-      console.log("there was errors");
-      console.log(result);
-      console.log(result.errors[0].extensions.code);
-      // obviously put these code in a constant maybe in a file somewhere
-      if (
-        result.errors[0].extensions.code === "EMAIL_EXISTS_AND_USERNAME_TAKEN"
-      ) {
-        setUniqueUsernameIsInvalid(true);
-        setUniqueEmailIsInvalid(true);
+    try {
+      const result = await changePassword();
+      if (!result) {
+        setGenericError(true);
+        return;
       }
-    } else if (result.data) {
-      console.log("it worked");
-      //router.push("/dashboard")
+      if (result.errors && result.errors.length > 0) {
+        if (result.errors[0].extensions.code === "TOKEN_EXPIRED") {
+          setTokenExpired(true);
+        } else setGenericError(true);
+      } else if (result.data) {
+        console.log("it worked");
+        newPasswordSetInput("")
+        confirmPasswordSetInput("")
+        setPasswordChanged(true);
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      setGenericError(true);
     }
   };
 
-  const passwordIsInvalidClass = newPasswordIsInvalid ? 'invalid' : '';
+  const passwordIsInvalidClass = newPasswordIsInvalid ? "invalid" : "";
 
-  const confirmPasswordIsInvalidClass = confirmPasswordIsInvalid ? 'invalid' : '';
+  const confirmPasswordIsInvalidClass = confirmPasswordIsInvalid
+    ? "invalid"
+    : "";
 
   return (
-    <div className={styles["register-body"]}>
+    <main className={styles["register-body"]}>
       <form
         onSubmit={registerSubmitHandler}
         className={styles["form-container"]}
       >
         <span className={styles["header"]}>Change Password</span>
         <div
-          className={`${styles['input-container']} ${styles[passwordIsInvalidClass]}`}
+          className={`${styles["input-container"]} ${styles[passwordIsInvalidClass]}`}
         >
-          <label>Password</label>
+          <label>New Password</label>
           <input
             placeholder="At least 6 characters"
             onChange={newPasswordChangeHandler}
@@ -85,36 +93,62 @@ export default function ChangePasswordBody() {
             type="password"
           />
           {newPasswordIsInvalid && (
-            <span className={styles['invalid-message']}>
+            <span className={styles["invalid-message"]}>
               Minimum 6 characters.
             </span>
           )}
         </div>
         <div
-          className={`${styles['input-container']} ${styles[confirmPasswordIsInvalidClass]}`}
+          className={`${styles["input-container"]} ${styles[confirmPasswordIsInvalidClass]}`}
         >
-          <label>Re-Enter Password</label>
+          <label>Re-Enter New Password</label>
           <input
-            placeholder="At least 6 characters"
+            placeholder="Passwords must match"
             onChange={confirmPasswordChangeHandler}
             onBlur={confirmPasswordBlurHandler}
             type="password"
           />
           {confirmPasswordIsInvalid && (
-            <span className={styles['invalid-message']}>
+            <span className={styles["invalid-message"]}>
               Passwords must match.
             </span>
           )}
         </div>
         <div className={styles["sign-up-button-container"]}>
           <button
-            disabled={uniqueEmailIsInvalid}
+            disabled={!(newPasswordIsValid && confirmPasswordIsValid) || loading}
             className={styles["sign-up-button"]}
           >
-            Send Reset Link
+                        {loading ? (
+              <RotatingLines
+                visible={true}
+                width="25"
+                strokeWidth="5"
+                strokeColor="white"
+                animationDuration="0.75"
+                ariaLabel="rotating-lines-loading"
+              />
+            ) : (
+              "Update Password"
+            )}
           </button>
         </div>
+        {passwordChanged && (
+          <span className={styles["success-message"]}>
+            Password has been updated.
+          </span>
+        )}
+        {tokenExpired && (
+          <span className={styles["server-error-message"]}>
+            The link has expired. Please request a new link.
+          </span>
+        )}
+        {genericError && (
+          <span className={styles["server-error-message"]}>
+            Server Error. Please Refresh Page or try again later.
+          </span>
+        )}
       </form>
-    </div>
+    </main>
   );
 }

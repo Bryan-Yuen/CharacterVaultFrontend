@@ -32,10 +32,7 @@ mutation Mutation($email: String!) {
 
 const CHANGE_PASSWORD = gql`
 mutation Mutation($newPassword: String!, $token: String!) {
-  changePassword(newPassword: $newPassword, token: $token) {
-    user_email
-    user_id
-  }
+  changePassword(newPassword: $newPassword, token: $token)
 }
 `;
 

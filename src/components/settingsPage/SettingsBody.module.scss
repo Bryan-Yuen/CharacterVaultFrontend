@@ -98,6 +98,10 @@
   width:137px;
   text-align: right;
   text-decoration: none;
+  /* stop text from going to next line*/
+  white-space: nowrap;
+  overflow: hidden;
+  
 }
 
 .email-password-and-buttons-container{
@@ -120,6 +124,7 @@
 
   .email-password-buttons-container{
     align-items: flex-start;
+    margin-top:10px;
   }
 
   .change-password-button, .change-email-button{

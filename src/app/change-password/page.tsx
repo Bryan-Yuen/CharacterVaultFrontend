@@ -1,7 +1,7 @@
 'use client'
 
 import React from "react";
-import NonDashboardNavbar from '@/components/navBars/nonDashboardNavBar/NonDashboardNavbar';
+import HomePageNavBar from "@/components/navBars/homePageNavBar/HomePageNavBar";
 import ChangePasswordBody from "@/components/changePasswordPage/ChangePasswordBody";
 import { ApolloProvider } from "@apollo/client";
 import client from "../../apolloClient/apolloClient";
@@ -11,7 +11,7 @@ import { Suspense } from 'react'
 export default function changePassword() {
   return (
     <ApolloProvider client={client}>
-      <NonDashboardNavbar />
+      <HomePageNavBar />
       <Suspense>
       <ChangePasswordBody />
       </Suspense>

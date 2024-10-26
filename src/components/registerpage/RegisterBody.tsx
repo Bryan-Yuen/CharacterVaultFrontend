@@ -37,7 +37,7 @@ export default function RegisterBody() {
     variables: {
       user: {
         user_username: registerUsername,
-        user_email: registerEmail,
+        user_email: registerEmail.toLowerCase(),
         user_password: registerPassword,
       },
     },
@@ -191,7 +191,7 @@ export default function RegisterBody() {
           )}
         <div className={styles["sign-up-button-container"]}>
           <button
-            disabled={overallFormIsInvalid}
+            disabled={overallFormIsInvalid || loading}
             className={styles["sign-up-button"]}
           >
             {loading ? (

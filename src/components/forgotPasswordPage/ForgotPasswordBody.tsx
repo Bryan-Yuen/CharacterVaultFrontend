@@ -1,9 +1,9 @@
-import React, { useState,  FormEvent } from 'react';
-import useInput from '../hooks/useInput';
-import styles from './ForgotPasswordBody.module.scss';
-import { useMutation } from '@apollo/client';
-import { useRouter } from 'next/navigation'
-import { FORGOT_PASSWORD } from '@/mutations/userMutations';
+import React, { useState, FormEvent, useEffect } from "react";
+import useInput from "../hooks/useInput";
+import styles from "./ForgotPasswordBody.module.scss";
+import { useMutation } from "@apollo/client";
+import { FORGOT_PASSWORD } from "@/mutations/userMutations";
+import { RotatingLines } from "react-loader-spinner";
 
 export default function ForgotPasswordBody() {
   const {
@@ -12,55 +12,63 @@ export default function ForgotPasswordBody() {
     inputIsInvalid: registerEmailIsInvalid,
     inputChangeHandler: registerEmailChangeHandler,
     inputBlurHandler: registerEmailBlurHandler,
+    setInput: registerEmailSetInput,
+    setIsTouched: registerEmailSetIsTouched
   } = useInput((input) => /^\S+@\S+\.\S+$/.test(input));
 
-  
-  const [forgotPassword] = useMutation(FORGOT_PASSWORD, {
+  const [forgotPassword, {loading}] = useMutation(FORGOT_PASSWORD, {
     variables: {
-      email: registerEmail
+      email: registerEmail,
     },
-    errorPolicy: "all"
+    errorPolicy: "all",
   });
 
-  const [uniqueUsernameIsInvalid, setUniqueUsernameIsInvalid] = useState(false)
-  const [uniqueEmailIsInvalid, setUniqueEmailIsInvalid] = useState(false)
+    // clears the error message the user starts typing again
+    useEffect(() => {
+      if (uniqueEmailIsInvalid) setUniqueEmailIsInvalid(false);
+    }, [ registerEmail]);
 
-  const router = useRouter()
+  const [uniqueEmailIsInvalid, setUniqueEmailIsInvalid] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [genericError, setGenericError] = useState(false);
   // consider try catch in future for network errors or some other mysterious error
 
   const registerSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("gay")
-    const result = await forgotPassword()
-    if (result.errors)
-    {
-      console.log("there was errors")
-      console.log(result)
-      console.log(result.errors[0].extensions.code)
-      // obviously put these code in a constant maybe in a file somewhere
-      if (result.errors[0].extensions.code === "EMAIL_EXISTS_AND_USERNAME_TAKEN")
-      {
-        setUniqueUsernameIsInvalid(true)
-        setUniqueEmailIsInvalid(true)
+    try {
+      const result = await forgotPassword();
+      if (!result) {
+        setGenericError(true);
+        return;
       }
+      if (result.errors && result.errors.length > 0) {
+        if (result.errors[0].extensions.code === "EMAIL_NOT_REGISTERED") {
+          setUniqueEmailIsInvalid(true);
+        } else setGenericError(true);
+      } else if (result.data) {
+        console.log("it worked",result.data);
+        registerEmailSetInput("")
+        registerEmailSetIsTouched(false)
+        setEmailSent(true);
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      setGenericError(true);
     }
-    else if (result.data)
-    {
-      console.log("it worked")
-      //router.push("/dashboard")
-    }
-   
   };
 
-  const emailIsInvalidClass = registerEmailIsInvalid || uniqueEmailIsInvalid ? 'invalid' : '';
-
+  const emailIsInvalidClass =
+    registerEmailIsInvalid || uniqueEmailIsInvalid ? "invalid" : "";
 
   return (
-    <div className={styles['register-body']}>
-      <form onSubmit={registerSubmitHandler} className={styles["form-container"]}>
-        <span className={styles['header']}>Reset Password</span>
+    <main className={styles["register-body"]}>
+      <form
+        onSubmit={registerSubmitHandler}
+        className={styles["form-container"]}
+      >
+        <h2 className={styles["header"]}>Reset Password</h2>
         <div
-          className={`${styles['input-container']} ${styles[emailIsInvalidClass]}`}
+          className={`${styles["input-container"]} ${styles[emailIsInvalidClass]}`}
         >
           <label>Email</label>
           <input
@@ -68,22 +76,50 @@ export default function ForgotPasswordBody() {
             onChange={registerEmailChangeHandler}
             onBlur={registerEmailBlurHandler}
             type="text"
+            value={registerEmail}
           />
           {registerEmailIsInvalid && (
-            <span className={styles['invalid-message']}>
-              Invalid Email format.
+            <span className={styles["invalid-message"]}>
+              Blank or invalid Email format.
             </span>
           )}
           {uniqueEmailIsInvalid && (
-            <span className={styles['invalid-message']}>
-              Email is already registered.
+            <span className={styles["invalid-message"]}>
+              Email is not registered.
             </span>
           )}
         </div>
-        <div className={styles['sign-up-button-container']}>
-          <button disabled={uniqueEmailIsInvalid} className={styles['sign-up-button']}>Send Reset Link</button>
+        <div className={styles["sign-up-button-container"]}>
+          <button
+            disabled={!registerEmailIsValid || loading}
+            className={styles["sign-up-button"]}
+          >
+                        {loading ? (
+              <RotatingLines
+                visible={true}
+                width="25"
+                strokeWidth="5"
+                strokeColor="white"
+                animationDuration="0.75"
+                ariaLabel="rotating-lines-loading"
+              />
+            ) : (
+              "Send Reset Link"
+            )}
+          </button>
         </div>
+        {emailSent && (
+          <span className={styles["success-message"]}>
+            An email has been sent to the email address provided. Please click
+            on the link to reset your password.
+          </span>
+        )}
+        {genericError && (
+          <span className={styles["server-error-message"]}>
+            Server Error. Please Refresh Page or try again later.
+          </span>
+        )}
       </form>
-    </div>
+    </main>
   );
 }

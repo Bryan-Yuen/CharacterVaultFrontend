@@ -2,23 +2,13 @@ import styles from "./SettingsBody.module.scss";
 import Link from "next/link";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_USER_PROFILE } from "@/queries/user";
-//import { CHECK_USER_PREMIUM } from "@/queries/user";
-import { CHECK_SUBSCRIPTION } from "@/queries/subscription";
-import { KEEP_SUBSCRIPTION} from "@/mutations/paymentMutation";
 import React, {useState} from "react";
-
-enum Subscription_Status {
-  ACTIVE_SUBSCRIPTION = "ACTIVE_SUBSCRIPTION",
-  NO_SUBSCRIPTION = "NO_SUBSCRIPTION",
-  CANCELLING_SUBSCRIPTION = "CANCELLING_SUBSCRIPTION",
-}
 
 export default function SettingsBody() {
   //const client = useApolloClient();
   const { loading, error, data } = useQuery(
     GET_USER_PROFILE
   );
-
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error! {error.message}</div>;

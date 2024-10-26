@@ -28,7 +28,7 @@ export default function LoginBody() {
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     variables: {
       user: {
-        user_email: loginEmail,
+        user_email: loginEmail.toLowerCase(),
         user_password: loginPassword,
       },
     },

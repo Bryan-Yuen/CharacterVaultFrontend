@@ -1,11 +1,16 @@
-import React, { useState,  FormEvent } from 'react';
-import useInput from '../hooks/useInput';
-import useTextAreaInput from '../hooks/useTextAreaInput';
-import styles from './SupportBody.module.scss';
-import { useMutation } from '@apollo/client';
-import { useRouter } from 'next/navigation'
-import { CONTACT_FORM } from '@/mutations/userMutations';
-import { SUPPORT_FORM } from '@/mutations/userMutations';
+import React, { useState, FormEvent } from "react";
+import useInput from "../hooks/useInput";
+import useTextAreaInput from "../hooks/useTextAreaInput";
+import styles from "./SupportBody.module.scss";
+import { useMutation } from "@apollo/client";
+import { SUPPORT_FORM } from "@/mutations/contactMutations";
+import FormWrapper from "../utilities/FormWrapper";
+import FormInput from "../utilities/FormInput";
+import FormTextArea from "../utilities/FormTextArea";
+import FormInputInvalidMessage from "../utilities/FormInputInvalidMessage";
+import FormSubmitButton from "../utilities/FormSubmitButton";
+import FormHeader from "../utilities/FormHeader";
+import SuccessMessage from "../utilities/SuccessMessage";
 
 export default function SupportBody() {
   const {
@@ -24,81 +29,82 @@ export default function SupportBody() {
     inputBlurHandler: textAreaBlurHandler,
   } = useTextAreaInput((input) => input.length > 0);
 
-  
-  const [supportForm] = useMutation(SUPPORT_FORM, {
+  const [supportForm, { loading }] = useMutation(SUPPORT_FORM, {
     variables: {
-        message: textArea,
-        subject: subject,
+      supportFormInput: {
+        form_subject: subject,
+        form_message: textArea,
       },
-    errorPolicy: "all"
+    },
+    errorPolicy: "all",
   });
 
-  const router = useRouter()
-  // consider try catch in future for network errors or some other mysterious error
+  const [emailSent, setEmailSent] = useState(false);
+  const [genericError, setGenericError] = useState(false);
 
-  const registerSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
+  const supportSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("gay")
-    const result = await supportForm()
-    if (result.errors)
-    {
-      console.log("there was errors")
-      console.log(result)
-      console.log(result.errors[0].extensions.code)
-      // obviously put these code in a constant maybe in a file somewhere
+    try {
+      const result = await supportForm();
+      if (!result) {
+        setGenericError(true);
+        return;
+      }
+      if (result.errors && result.errors.length > 0) {
+        setGenericError(true);
+      } else if (result.data) {
+        console.log("it worked");
+        setEmailSent(true);
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      setGenericError(true);
     }
-    else if (result.data)
-    {
-      console.log("it worked")
-      //router.push("/dashboard")
-    }
-   
   };
 
-  const emailIsInvalidClass = subjectIsInvalid ? 'invalid' : '';
-
-
   return (
-    <div className={styles['register-body']}>
-      <form onSubmit={registerSubmitHandler} className={styles["form-container"]}>
-        <span className={styles['header']}>Support contact form</span>
-        <span className={styles['sub-copy']}>Use this form to contact us about any questions, issues, or feedback about your account</span>
-        <div
-          className={`${styles['input-container']} ${styles[emailIsInvalidClass]}`}
-        >
-          <label>Subject</label>
-          <input
-            placeholder="Subject"
-            type="text"
-            onChange={subjectChangeHandler}
-            onBlur={subjectBlurHandler}
-          />
-                    {subjectIsInvalid && (
-            <span className={styles['invalid-message']}>
-              Invalid Email format.
-            </span>
-          )}
-        </div>
-        <div
-          className={`${styles['input-container']} ${styles[emailIsInvalidClass]}`}
-        >
-          <label>Message</label>
-          <textarea
-            placeholder="Enter your message"
-            rows={3}
-            onChange={textAreaChangeHandler}
-            onBlur={textAreaBlurHandler}
-          />
-                    {textAreaIsInvalid && (
-            <span className={styles['invalid-message']}>
-              Can't be blank.
-            </span>
-          )}
-        </div>
-        <div className={styles['sign-up-button-container']}>
-          <button disabled={textAreaIsInvalid} className={styles['sign-up-button']}>Send</button>
-        </div>
-      </form>
-    </div>
+    <FormWrapper onSubmit={supportSubmitHandler} genericError={genericError}>
+      <FormHeader header="Contact Form" />
+      <span className={styles["sub-copy"]}>
+        Use this form to contact us about any questions, issues, or feedback
+        about your account
+      </span>
+      <FormInput
+        inputIsInvalid={subjectIsInvalid}
+        label="Subject"
+        placeholder="subject"
+        onChangeHandler={subjectChangeHandler}
+        onBlurHandler={subjectBlurHandler}
+        value={subject}
+      >
+        <FormInputInvalidMessage
+          inputIsInvalid={subjectIsInvalid}
+          message="Blank or invalid email format."
+        />
+      </FormInput>
+      <FormTextArea
+        inputIsInvalid={textAreaIsInvalid}
+        label="Message"
+        placeholder="Enter your message"
+        onChangeHandler={textAreaChangeHandler}
+        onBlurHandler={textAreaBlurHandler}
+        value={textArea}
+      >
+        <FormInputInvalidMessage
+          inputIsInvalid={textAreaIsInvalid}
+          message="Message cannot be blank."
+        />
+      </FormTextArea>
+      <FormSubmitButton
+        formIsInvalid={!(subjectIsValid && textAreaIsValid)}
+        loading={loading}
+        buttonText="Send"
+      />
+      <SuccessMessage
+        showSuccessMessage={emailSent}
+        message="Your message has been sent. You should receive an response from your
+          email shortly."
+      />
+    </FormWrapper>
   );
 }

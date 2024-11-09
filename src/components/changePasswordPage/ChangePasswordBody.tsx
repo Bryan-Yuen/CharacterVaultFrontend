@@ -4,7 +4,12 @@ import styles from "./ChangePasswordBody.module.scss";
 import { useMutation } from "@apollo/client";
 import { useSearchParams } from "next/navigation";
 import { CHANGE_PASSWORD } from "@/mutations/userMutations";
-import { RotatingLines } from "react-loader-spinner";
+import FormWrapper from "../utilities/FormWrapper";
+import FormInput from "../utilities/FormInput";
+import FormInputInvalidMessage from "../utilities/FormInputInvalidMessage";
+import FormSubmitButton from "../utilities/FormSubmitButton";
+import FormHeader from "../utilities/FormHeader";
+import SuccessMessage from "../utilities/SuccessMessage";
 
 export default function ChangePasswordBody() {
   const {
@@ -13,7 +18,7 @@ export default function ChangePasswordBody() {
     inputIsInvalid: newPasswordIsInvalid,
     inputChangeHandler: newPasswordChangeHandler,
     inputBlurHandler: newPasswordBlurHandler,
-    setInput: newPasswordSetInput
+    setInput: newPasswordSetInput,
   } = useInput((input) => input.length >= 6);
 
   const {
@@ -22,7 +27,7 @@ export default function ChangePasswordBody() {
     inputIsInvalid: confirmPasswordIsInvalid,
     inputChangeHandler: confirmPasswordChangeHandler,
     inputBlurHandler: confirmPasswordBlurHandler,
-    setInput: confirmPasswordSetInput
+    setInput: confirmPasswordSetInput,
   } = useInput((input) => input === newPassword);
 
   //need a check whether here on this component or the change password
@@ -31,7 +36,7 @@ export default function ChangePasswordBody() {
   const params = useSearchParams();
   const token = params.get("token");
   console.log("token", params);
-  const [changePassword, {loading}] = useMutation(CHANGE_PASSWORD, {
+  const [changePassword, { loading }] = useMutation(CHANGE_PASSWORD, {
     variables: {
       newPassword: confirmPassword,
       token: token,
@@ -45,7 +50,7 @@ export default function ChangePasswordBody() {
 
   // consider try catch in future for network errors or some other mysterious error
 
-  const registerSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
+  const changePasswordSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const result = await changePassword();
@@ -59,8 +64,8 @@ export default function ChangePasswordBody() {
         } else setGenericError(true);
       } else if (result.data) {
         console.log("it worked");
-        newPasswordSetInput("")
-        confirmPasswordSetInput("")
+        newPasswordSetInput("");
+        confirmPasswordSetInput("");
         setPasswordChanged(true);
       }
     } catch (error) {
@@ -69,86 +74,51 @@ export default function ChangePasswordBody() {
     }
   };
 
-  const passwordIsInvalidClass = newPasswordIsInvalid ? "invalid" : "";
-
-  const confirmPasswordIsInvalidClass = confirmPasswordIsInvalid
-    ? "invalid"
-    : "";
-
   return (
-    <main className={styles["register-body"]}>
-      <form
-        onSubmit={registerSubmitHandler}
-        className={styles["form-container"]}
+    <FormWrapper
+      onSubmit={changePasswordSubmitHandler}
+      genericError={genericError}
+    >
+      <FormHeader header="Change Password"></FormHeader>
+      <FormInput
+        inputIsInvalid={newPasswordIsInvalid}
+        label="New Password"
+        placeholder="At least 6 characters"
+        onChangeHandler={newPasswordChangeHandler}
+        onBlurHandler={newPasswordBlurHandler}
+        type="password"
+        value={newPassword}
       >
-        <span className={styles["header"]}>Change Password</span>
-        <div
-          className={`${styles["input-container"]} ${styles[passwordIsInvalidClass]}`}
-        >
-          <label>New Password</label>
-          <input
-            placeholder="At least 6 characters"
-            onChange={newPasswordChangeHandler}
-            onBlur={newPasswordBlurHandler}
-            type="password"
-          />
-          {newPasswordIsInvalid && (
-            <span className={styles["invalid-message"]}>
-              Minimum 6 characters.
-            </span>
-          )}
-        </div>
-        <div
-          className={`${styles["input-container"]} ${styles[confirmPasswordIsInvalidClass]}`}
-        >
-          <label>Re-Enter New Password</label>
-          <input
-            placeholder="Passwords must match"
-            onChange={confirmPasswordChangeHandler}
-            onBlur={confirmPasswordBlurHandler}
-            type="password"
-          />
-          {confirmPasswordIsInvalid && (
-            <span className={styles["invalid-message"]}>
-              Passwords must match.
-            </span>
-          )}
-        </div>
-        <div className={styles["sign-up-button-container"]}>
-          <button
-            disabled={!(newPasswordIsValid && confirmPasswordIsValid) || loading}
-            className={styles["sign-up-button"]}
-          >
-                        {loading ? (
-              <RotatingLines
-                visible={true}
-                width="25"
-                strokeWidth="5"
-                strokeColor="white"
-                animationDuration="0.75"
-                ariaLabel="rotating-lines-loading"
-              />
-            ) : (
-              "Update Password"
-            )}
-          </button>
-        </div>
-        {passwordChanged && (
-          <span className={styles["success-message"]}>
-            Password has been updated.
-          </span>
-        )}
-        {tokenExpired && (
-          <span className={styles["server-error-message"]}>
-            The link has expired. Please request a new link.
-          </span>
-        )}
-        {genericError && (
-          <span className={styles["server-error-message"]}>
-            Server Error. Please Refresh Page or try again later.
-          </span>
-        )}
-      </form>
-    </main>
+        <FormInputInvalidMessage
+          inputIsInvalid={newPasswordIsInvalid}
+          message="Minimum 6 characters."
+        />
+      </FormInput>
+      <FormInput
+        inputIsInvalid={confirmPasswordIsInvalid}
+        label="Re-Enter New Password"
+        placeholder="Passwords must match"
+        onChangeHandler={confirmPasswordChangeHandler}
+        onBlurHandler={confirmPasswordBlurHandler}
+        type="password"
+        value={confirmPassword}
+      >
+        <FormInputInvalidMessage
+          inputIsInvalid={confirmPasswordIsInvalid}
+          message="Passwords must match."
+        />
+      </FormInput>
+      <FormSubmitButton
+        formIsInvalid={!(newPasswordIsValid && confirmPasswordIsValid)}
+        loading={loading}
+        buttonText="Update Password"
+      />
+      <SuccessMessage showSuccessMessage={passwordChanged} message="Password has been updated."/>
+      {tokenExpired && (
+        <span className={styles["custom-error-message"]}>
+          The link has expired. Please request a new link.
+        </span>
+      )}
+    </FormWrapper>
   );
 }

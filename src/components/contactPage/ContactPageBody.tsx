@@ -3,8 +3,14 @@ import useInput from "../hooks/useInput";
 import useTextAreaInput from "../hooks/useTextAreaInput";
 import styles from "./ContactPageBody.module.scss";
 import { useMutation } from "@apollo/client";
-import { CONTACT_FORM } from "@/mutations/userMutations";
-import { RotatingLines } from "react-loader-spinner";
+import { CONTACT_FORM } from "@/mutations/contactMutations";
+import FormWrapper from "../utilities/FormWrapper";
+import FormInput from "../utilities/FormInput";
+import FormTextArea from "../utilities/FormTextArea";
+import FormInputInvalidMessage from "../utilities/FormInputInvalidMessage";
+import FormSubmitButton from "../utilities/FormSubmitButton";
+import FormHeader from "../utilities/FormHeader";
+import SuccessMessage from "../utilities/SuccessMessage";
 
 export default function ContactPageBody() {
   const {
@@ -13,7 +19,6 @@ export default function ContactPageBody() {
     inputIsInvalid: contactEmailIsInvalid,
     inputChangeHandler: contactEmailChangeHandler,
     inputBlurHandler: contactEmailBlurHandler,
-    setInput: contactEmailSetInput
   } = useInput((input) => /^\S+@\S+\.\S+$/.test(input));
 
   const {
@@ -22,14 +27,14 @@ export default function ContactPageBody() {
     inputIsInvalid: textAreaIsInvalid,
     inputChangeHandler: textAreaChangeHandler,
     inputBlurHandler: textAreaBlurHandler,
-    setInput: textAreaSetInput
-  //} = useTextAreaInput((input) => /^\S+@\S+\.\S+$/.test(input));
-} = useTextAreaInput((input) => input.length > 0);
+  } = useTextAreaInput((input) => input.length > 0);
 
   const [contactForm, { loading }] = useMutation(CONTACT_FORM, {
     variables: {
-      message: textArea,
-      email: contactEmail,
+      contactFormInput: {
+        form_email: contactEmail,
+        form_message: textArea,
+      },
     },
     errorPolicy: "all",
   });
@@ -39,7 +44,7 @@ export default function ContactPageBody() {
 
   // consider try catch in future for network errors or some other mysterious error
 
-  const registerSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
+  const contactSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -52,10 +57,7 @@ export default function ContactPageBody() {
         setGenericError(true);
       } else if (result.data) {
         console.log("it worked");
-        contactEmailSetInput("")
-        textAreaSetInput("")
-        setEmailSent(true)
-        //router.push("/dashboard")
+        setEmailSent(true);
       }
     } catch (error) {
       console.error("An unexpected error occurred:", error);
@@ -63,84 +65,49 @@ export default function ContactPageBody() {
     }
   };
 
-  const emailIsInvalidClass = contactEmailIsInvalid ? "invalid" : "";
-
-  const messageIsInvalidClass = textAreaIsInvalid ? "invalid" : "";
-  console.log("what is area",textAreaIsInvalid)
-
   return (
-    <main className={styles["register-body"]}>
-      <form
-        onSubmit={registerSubmitHandler}
-        className={styles["form-container"]}
+    <FormWrapper onSubmit={contactSubmitHandler} genericError={genericError}>
+      <FormHeader header="Contact Form"></FormHeader>
+      <span className={styles["sub-copy"]}>
+        Contact us for any questions related to your account or about our
+        website
+      </span>
+      <FormInput
+        inputIsInvalid={contactEmailIsInvalid}
+        label="Email"
+        placeholder="Enter your email"
+        onChangeHandler={contactEmailChangeHandler}
+        onBlurHandler={contactEmailBlurHandler}
+        value={contactEmail}
       >
-        <span className={styles["header"]}>Contact Form</span>
-        <span className={styles["sub-copy"]}>
-          Contact us for any questions related to your account or about the
-          website
-        </span>
-        <div
-          className={`${styles["input-container"]} ${styles[emailIsInvalidClass]}`}
-        >
-          <label>Email</label>
-          <input
-            placeholder="Enter your email"
-            onChange={contactEmailChangeHandler}
-            onBlur={contactEmailBlurHandler}
-            type="text"
-          />
-          {contactEmailIsInvalid && (
-            <span className={styles["invalid-message"]}>
-              Blank or invalid Email format.
-            </span>
-          )}
-        </div>
-        <div
-          className={`${styles["input-container"]} ${styles[messageIsInvalidClass]}`}
-        >
-          <label>Message</label>
-          <textarea
-            placeholder="Enter your message"
-            rows={4}
-            onChange={textAreaChangeHandler}
-            onBlur={textAreaBlurHandler}
-          />
-          {textAreaIsInvalid && (
-            <span className={styles["invalid-message"]}>
-              Message cannot be blank.
-            </span>
-          )}
-        </div>
-        <div className={styles["sign-up-button-container"]}>
-          <button
-            disabled={!(contactEmailIsValid && textAreaIsInvalid) || loading}
-            className={styles["sign-up-button"]}
-          >
-            {loading ? (
-              <RotatingLines
-                visible={true}
-                width="25"
-                strokeWidth="5"
-                strokeColor="white"
-                animationDuration="0.75"
-                ariaLabel="rotating-lines-loading"
-              />
-            ) : (
-              "Send"
-            )}
-          </button>
-        </div>
-        {emailSent && (
-          <span className={styles["success-message"]}>
-            Your message has been sent. You should receive an response from the email provided shortly.
-          </span>
-        )}
-        {genericError && (
-          <span className={styles["server-error-message"]}>
-            Server Error. Please Refresh Page or try again later.
-          </span>
-        )}
-      </form>
-    </main>
+        <FormInputInvalidMessage
+          inputIsInvalid={contactEmailIsInvalid}
+          message="Blank or invalid email format."
+        />
+      </FormInput>
+      <FormTextArea
+        inputIsInvalid={textAreaIsInvalid}
+        label="Message"
+        placeholder="Enter your message"
+        onChangeHandler={textAreaChangeHandler}
+        onBlurHandler={textAreaBlurHandler}
+        value={textArea}
+      >
+        <FormInputInvalidMessage
+          inputIsInvalid={textAreaIsInvalid}
+          message="Message cannot be blank."
+        />
+      </FormTextArea>
+      <FormSubmitButton
+        formIsInvalid={!(contactEmailIsValid && textAreaIsValid)}
+        loading={loading}
+        buttonText="Send"
+      />
+      <SuccessMessage
+        showSuccessMessage={emailSent}
+        message="Your message has been sent. You should receive an response from the
+          email provided shortly."
+      />
+    </FormWrapper>
   );
 }

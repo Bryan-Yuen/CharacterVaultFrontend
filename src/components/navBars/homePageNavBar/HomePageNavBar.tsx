@@ -22,7 +22,7 @@ export default function HomePageNavBar() {
               width={32}
               className={styles["website-icon"]}
             />
-            <h1 className={styles["website-name"]}>MyFapSheet</h1>
+            <div className={styles["website-name"]}>MyFapSheet</div>
           </Link>
           <div className={styles["login-sign-up-container"]}>
             <Link

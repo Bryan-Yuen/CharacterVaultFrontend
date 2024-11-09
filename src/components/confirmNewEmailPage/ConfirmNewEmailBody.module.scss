@@ -1,39 +1,45 @@
-.container{
-  height:100vh;
-  max-height:100vh;
-  display:flex;
-  justify-content: center;
+.confirm-new-email-body-container {
+  display: flex;
+  flex-direction: column;
+  /* height of screen minus nav bar to remove scroll bar*/
+  min-height: calc(100vh - 75px);
+  justify-content: flex-start;
+  align-items: center;
 }
 
 /* remember for smaller computers will need scroll */
-.content-container{
-  color:white;
-  max-width:1000px;
-  display:flex;
+.content-container {
+  color: white;
+  width: 1000px;
+  max-width: 100%;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  margin-top:50px;
+  padding: 0 20px;
+  margin-top: 5%;
 }
 
-.thank-you-message{
-  font-size:40px;
-  margin:0;
+.header {
+  font-size: 36px;
+  font-weight: 500;
+  margin: 0;
 }
 
-.confirmation-email-message{
-  margin-top:10px;
+.call-to-action-message {
+  margin-top: 10px;
+  font-size: 20px;
 }
 
-.call-to-action-message{
-  margin-top:10px;
-  font-size:24px;
+// loading spinner style
+.loading-spinner {
+  display: flex;
+  justify-content: center;
 }
 
-.dashboard-link{
-  color:white;
-  background-color: rgb(22, 122, 207);
-  padding: 8px 10px;
+// server error message
+.server-error-message {
+  padding: 10px 15px;
+  background-color: #c11010;
   border-radius: 4px;
-  text-decoration: none;
+  margin-top: 10px;
 }

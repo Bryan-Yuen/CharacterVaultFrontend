@@ -6,7 +6,10 @@ import { useRouter } from "next/navigation";
 import { LOGIN_USER } from "@/mutations/userMutations";
 import Link from "next/link";
 import Image from "next/image";
-import { RotatingLines } from "react-loader-spinner";
+import FormWrapper from "../utilities/FormWrapper";
+import FormSubmitButton from "../utilities/FormSubmitButton";
+import FormInput from "../utilities/FormInput";
+import FormInputInvalidMessage from "../utilities/FormInputInvalidMessage";
 
 export default function LoginBody() {
   const {
@@ -28,13 +31,14 @@ export default function LoginBody() {
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     variables: {
       user: {
-        user_email: loginEmail,
+        user_email: loginEmail.toLowerCase(),
         user_password: loginPassword,
       },
     },
     errorPolicy: "all",
   });
 
+  // gets rid of input errors when the user types again
   useEffect(() => {
     if (uniqueEmailIsInvalid) setUniqueEmailIsInvalid(false);
     if (passwordIsInvalid) setpasswordIsInvalid(false);
@@ -42,7 +46,6 @@ export default function LoginBody() {
 
   const [uniqueEmailIsInvalid, setUniqueEmailIsInvalid] = useState(false);
   const [passwordIsInvalid, setpasswordIsInvalid] = useState(false);
-
   const [genericError, setGenericError] = useState(false);
 
   const router = useRouter();
@@ -56,7 +59,7 @@ export default function LoginBody() {
         return;
       }
 
-      console.log(result)
+      console.log(result);
       if (result.errors && result.errors.length > 0) {
         const errorCode = result.errors[0].extensions?.code;
 
@@ -81,111 +84,73 @@ export default function LoginBody() {
     }
   };
 
-  // if any of the invalids are true then we allow the red color class to be active
-
-  const emailIsInvalidClass =
-    loginEmailIsInvalid || uniqueEmailIsInvalid ? "invalid" : "";
-
-  const passwordIsInvalidClass =
-    loginPasswordIsInvalid || passwordIsInvalid ? "invalid" : "";
-
-  const overallFormIsInvalid = !(loginEmailIsValid && loginPasswordIsValid);
-
   return (
-    <div className={styles["login-body"]}>
-      <form onSubmit={loginSubmitHandler} className={styles["form-container"]}>
-        <Image
-          priority
-          src="/MyFapSheetSVG.svg"
-          alt="Down Icon"
-          height={0}
-          width={75}
-          className={styles["website-icon"]}
+    <FormWrapper
+      onSubmit={loginSubmitHandler}
+      genericError={genericError}
+      marginTop="5%"
+    >
+      <Image
+        priority
+        src="/MyFapSheetSVG.svg"
+        alt="Down Icon"
+        height={0}
+        width={75}
+        className={styles["website-icon"]}
+      />
+      <h1 className={styles["header"]}>Welcome Back</h1>
+      <FormInput
+        inputIsInvalid={loginEmailIsInvalid || uniqueEmailIsInvalid}
+        label="Email"
+        placeholder="example@mail.com"
+        onChangeHandler={loginEmailChangeHandler}
+        onBlurHandler={loginEmailBlurHandler}
+      >
+        <FormInputInvalidMessage
+          inputIsInvalid={loginEmailIsInvalid}
+          message="Blank or invalid email format."
         />
-        <h1 className={styles["header"]}>Welcome Back</h1>
-        <div
-          className={`${styles["input-container"]} ${styles[emailIsInvalidClass]}`}
+        <FormInputInvalidMessage
+          inputIsInvalid={uniqueEmailIsInvalid}
+          message="Email is not registered."
+        />
+      </FormInput>
+      <FormInput
+        inputIsInvalid={loginPasswordIsInvalid || passwordIsInvalid}
+        label="Password"
+        placeholder="At least 6 characters"
+        onChangeHandler={loginPasswordChangeHandler}
+        onBlurHandler={loginPasswordBlurHandler}
+        type="password"
+      >
+        <FormInputInvalidMessage
+          inputIsInvalid={passwordIsInvalid}
+          message="Incorrect Password."
+        />
+        <FormInputInvalidMessage
+          inputIsInvalid={loginPasswordIsInvalid}
+          message="Password field empty."
+        />
+      </FormInput>
+      <span className={styles["forgot-password-link-container"]}>
+        <Link
+          href={"/forgot-password"}
+          className={styles["forgot-password-link"]}
         >
-          <label>Email</label>
-          <input
-            placeholder="Example@mail.com"
-            onChange={loginEmailChangeHandler}
-            onBlur={loginEmailBlurHandler}
-            type="text"
-          />
-          {loginEmailIsInvalid && (
-            <span className={styles["invalid-message"]}>
-              Blank or invalid email format.
-            </span>
-          )}
-          {uniqueEmailIsInvalid && (
-            <span className={styles["invalid-message"]}>
-              Email is not registered.
-            </span>
-          )}
-        </div>
-        <div
-          className={`${styles["input-container"]} ${styles[passwordIsInvalidClass]}`}
-        >
-          <label>Password</label>
-          <input
-            placeholder="At least 6 characters"
-            onChange={loginPasswordChangeHandler}
-            onBlur={loginPasswordBlurHandler}
-            type="password"
-          />
-          {passwordIsInvalid && (
-            <div className={`${styles["invalid"]}`}>
-              <span className={styles["invalid-message"]}>
-                Incorrect Password.
-              </span>
-            </div>
-          )}
-          {loginPasswordIsInvalid && (
-            <span className={styles["invalid-message"]}>
-              Password field empty.
-            </span>
-          )}
-        </div>
-        <span className={styles["forgot-password-link-container"]}>
-          <Link
-            href={"/forgot-password"}
-            className={styles["forgot-password-link"]}
-          >
-            Forgot Password?
-          </Link>
-        </span>
-        {genericError && (
-          <span className={styles["server-error-message"]}>
-            Server Error. Please Refresh Page or try again later.
-          </span>
-        )}
-        <div className={styles["sign-up-button-container"]}>
-          <button
-            disabled={overallFormIsInvalid || loading}
-            className={styles["sign-up-button"]}
-          >
-            {loading ? (
-              <RotatingLines
-                visible={true}
-                width="25"
-                strokeWidth="5"
-                strokeColor="white"
-                animationDuration="0.75"
-                ariaLabel="rotating-lines-loading"
-              />
-            ) : (
-              "Login"
-            )}
-          </button>
-        </div>
-        <span className={styles["new-account-link-container"]}>
-          Don't have an account?{" "}
-          <Link href={"/register"} className={styles["new-account-link"]}>
-            Sign Up
-          </Link>
-        </span>
-      </form>
-    </div>
+          Forgot Password?
+        </Link>
+      </span>
+      <FormSubmitButton
+        formIsInvalid={!(loginEmailIsValid && loginPasswordIsValid)}
+        loading={loading}
+        buttonText="Login"
+      />
+      <span className={styles["new-account-link-container"]}>
+        Don't have an account?{" "}
+        <Link href={"/register"} className={styles["new-account-link"]}>
+          Sign Up
+        </Link>
+      </span>
+    </FormWrapper>
   );
 }

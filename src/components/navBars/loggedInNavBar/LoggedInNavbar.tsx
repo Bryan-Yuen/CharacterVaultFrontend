@@ -54,7 +54,7 @@ export default function LoggedInNavbar() {
               width={32}
               className={styles["website-icon"]}
             />
-        <h1 className={styles["website-name"]}>MyFapSheet</h1>
+        <div className={styles["website-name"]}>MyFapSheet</div>
       </Link>
       {isDesktop && <SearchTagManagerAddPornstarContainer/>}
       <div className={styles["upgrade-button-profile-icon-container"]}>

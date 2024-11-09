@@ -1,116 +1,117 @@
-import React, {FormEvent, useState, useEffect} from 'react';
-import styles from './EditTagModal.module.scss';
-import { EDIT_USER_TAG } from '@/mutations/userTag';
-import { useMutation } from '@apollo/client';
-import useInput from '../hooks/useInput';
-import PornstarName from '../pornstarInputComponents/PornstarName';
-import { useApolloClient } from '@apollo/client';
+import React, { FormEvent, useEffect, useState } from "react";
+//import styles from "./EditTagModal.module.scss";
+import { EDIT_USER_TAG } from "@/mutations/userTagMutations";
+import { useMutation } from "@apollo/client";
+import useInput from "../hooks/useInput";
+import { useApolloClient } from "@apollo/client";
+import Modal from "../utilities/Modal";
+import FormInput from "../utilities/FormInput";
+import FormInputInvalidMessage from "../utilities/FormInputInvalidMessage";
+import FormSubmitButton from "../utilities/FormSubmitButton";
 
 interface propDefs {
-  user_tag_id : number;
-  user_tag_text : string;
+  user_tag_id: number;
+  user_tag_text: string;
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function EditTagModal(props: propDefs) {
+export default function EditTagModal({
+  user_tag_id,
+  user_tag_text,
+  setModalIsOpen,
+}: propDefs) {
   const {
     input: tag,
     inputIsValid: tagIsValid,
     inputIsInvalid: tagIsInvalid,
     inputChangeHandler: tagChangeHandler,
     inputBlurHandler: tagBlurHandler,
-    setInput: setTag
+    setInput: setTag,
   } = useInput((input) => input.length >= 1);
-
-  useEffect(() => {
-    setTag(props.user_tag_text)
-  },[])
 
   const client = useApolloClient();
 
-  const [editUserTag] = useMutation(EDIT_USER_TAG, {
+  const [editUserTag, { loading }] = useMutation(EDIT_USER_TAG, {
     variables: {
       editUserTagInput: {
-        user_tag_id: props.user_tag_id,
-        user_tag_text: tag
+        user_tag_id: user_tag_id,
+        user_tag_text: tag.toLowerCase(),
       },
     },
-    errorPolicy: 'all',
+    errorPolicy: "all",
   });
+
+  // initiliaze tag state with text
+  useEffect(() => {
+    setTag(user_tag_text);
+  }, []);
+
+  // clears the error message the user starts typing again
+  useEffect(() => {
+    if (uniqueTagIsInvalid) setUniqueTagIsInvalid(false);
+  }, [tag]);
+
+  const [uniqueTagIsInvalid, setUniqueTagIsInvalid] = useState(false);
+  const [genericError, setGenericError] = useState(false);
 
   const editPornstarHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const result = await editUserTag();
-    if (result.errors) {
-      console.log('there was errors');
-      console.log(result);
-      console.log(result.errors[0].extensions.code);
-      // obviously put these code in a constant maybe in a file somewhere
-    } else if (result.data) {
-      console.log(result.data);
-      console.log('it worked');
-      //router.push("/dashboard")
-    }
-    console.log(result.data);
+    try {
+      const result = await editUserTag();
+      if (!result) {
+        setGenericError(true);
+        return;
+      }
+      if (result.errors && result.errors.length > 0) {
+        if (result.errors[0].extensions.code === "TAG_ALREADY_EXISTS") {
+          setUniqueTagIsInvalid(true);
+        } else setGenericError(true);
+      } else if (result.data) {
+        console.log(result.data);
+        console.log("it worked");
 
-    await client.refetchQueries({
-      include: ["GetUserTags"],
-    });
-    
-    props.setModalIsOpen(false);
+        await client.refetchQueries({
+          include: ["GetUserTags"],
+        });
+
+        setModalIsOpen(false);
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      setGenericError(true);
+    }
   };
 
-  const tagIsInvalidClass =
-  tagIsInvalid  ? "invalid" : "";
-  
   return (
-    <div
-      className={styles['backdrop']}
-      onClick={() => props.setModalIsOpen(false)}
+    <Modal
+      setModal={setModalIsOpen}
+      header="Edit Tag"
+      genericError={genericError}
+      onSubmit={editPornstarHandler}
     >
-      <div className={styles['modal']} onClick={(e) => e.stopPropagation()}>
-        <div className={styles['modal-header']}>
-          <div className={styles['modal-title']}>Edit Tag</div>
-          <button
-            onClick={() => props.setModalIsOpen(false)}
-            className={styles['close']}
-          >
-            &#10006;
-          </button>
-        </div>
-        <form
-          onSubmit={editPornstarHandler}
-          className={styles['form-container']}
-        >
-                                            <div
-            className={`${styles["input-container"]} ${styles[tagIsInvalidClass]}`}
-          >
-            <label>Tag</label>
-            <input
-              placeholder="tag"
-              onChange={tagChangeHandler}
-              onBlur={tagBlurHandler}
-              value={tag}
-              type="text"
-            />
-            {tagIsInvalid && (
-              <span className={styles["invalid-message"]}>
-                Tag is blank.
-              </span>
-            )}
-          </div>
-          <div className={styles['sign-up-button-container']}>
-            <button
-              disabled={!tagIsValid}
-              className={styles['sign-up-button']}
-              type="submit"
-            >
-              Save Changes
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+      <FormInput
+        inputIsInvalid={tagIsInvalid || uniqueTagIsInvalid}
+        label="Tag"
+        placeholder="tag"
+        onChangeHandler={tagChangeHandler}
+        onBlurHandler={tagBlurHandler}
+        value={tag}
+      >
+        <FormInputInvalidMessage
+          inputIsInvalid={tagIsInvalid}
+          message="Tag cannot be blank."
+        />
+        <FormInputInvalidMessage
+          inputIsInvalid={uniqueTagIsInvalid}
+          message="Tag already exists."
+        />
+      </FormInput>
+      <FormSubmitButton
+        formIsInvalid={!tagIsValid}
+        loading={loading}
+        buttonText="Save"
+      />
+    </Modal>
   );
 }

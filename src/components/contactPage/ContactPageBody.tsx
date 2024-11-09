@@ -1,10 +1,16 @@
-import React, { useState,  FormEvent } from 'react';
-import useInput from '../hooks/useInput';
-import useTextAreaInput from '../hooks/useTextAreaInput';
-import styles from './ContactPageBody.module.scss';
-import { useMutation } from '@apollo/client';
-import { useRouter } from 'next/navigation'
-import { CONTACT_FORM } from '@/mutations/userMutations';
+import React, { useState, FormEvent } from "react";
+import useInput from "../hooks/useInput";
+import useTextAreaInput from "../hooks/useTextAreaInput";
+import styles from "./ContactPageBody.module.scss";
+import { useMutation } from "@apollo/client";
+import { CONTACT_FORM } from "@/mutations/contactMutations";
+import FormWrapper from "../utilities/FormWrapper";
+import FormInput from "../utilities/FormInput";
+import FormTextArea from "../utilities/FormTextArea";
+import FormInputInvalidMessage from "../utilities/FormInputInvalidMessage";
+import FormSubmitButton from "../utilities/FormSubmitButton";
+import FormHeader from "../utilities/FormHeader";
+import SuccessMessage from "../utilities/SuccessMessage";
 
 export default function ContactPageBody() {
   const {
@@ -21,91 +27,87 @@ export default function ContactPageBody() {
     inputIsInvalid: textAreaIsInvalid,
     inputChangeHandler: textAreaChangeHandler,
     inputBlurHandler: textAreaBlurHandler,
-  } = useTextAreaInput((input) => /^\S+@\S+\.\S+$/.test(input));
+  } = useTextAreaInput((input) => input.length > 0);
 
-  
-  const [contactForm] = useMutation(CONTACT_FORM, {
+  const [contactForm, { loading }] = useMutation(CONTACT_FORM, {
     variables: {
-        message: textArea,
-        email: contactEmail,
+      contactFormInput: {
+        form_email: contactEmail,
+        form_message: textArea,
       },
-    errorPolicy: "all"
+    },
+    errorPolicy: "all",
   });
 
-  const [uniqueUsernameIsInvalid, setUniqueUsernameIsInvalid] = useState(false)
-  const [uniqueEmailIsInvalid, setUniqueEmailIsInvalid] = useState(false)
+  const [emailSent, setEmailSent] = useState(false);
+  const [genericError, setGenericError] = useState(false);
 
-  const router = useRouter()
   // consider try catch in future for network errors or some other mysterious error
 
-  const registerSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
+  const contactSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("gay")
-    const result = await contactForm()
-    if (result.errors)
-    {
-      console.log("there was errors")
-      console.log(result)
-      console.log(result.errors[0].extensions.code)
-      // obviously put these code in a constant maybe in a file somewhere
-      if (result.errors[0].extensions.code === "EMAIL_EXISTS_AND_USERNAME_TAKEN")
-      {
-        setUniqueUsernameIsInvalid(true)
-        setUniqueEmailIsInvalid(true)
+
+    try {
+      const result = await contactForm();
+      if (!result) {
+        setGenericError(true);
+        return;
       }
+      if (result.errors && result.errors.length > 0) {
+        setGenericError(true);
+      } else if (result.data) {
+        console.log("it worked");
+        setEmailSent(true);
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      setGenericError(true);
     }
-    else if (result.data)
-    {
-      console.log("it worked")
-      //router.push("/dashboard")
-    }
-   
   };
 
-  const emailIsInvalidClass = contactEmailIsInvalid || uniqueEmailIsInvalid ? 'invalid' : '';
-
-
   return (
-    <div className={styles['register-body']}>
-      <form onSubmit={registerSubmitHandler} className={styles["form-container"]}>
-        <span className={styles['header']}>Contact Form</span>
-        <span className={styles['sub-copy']}>Contact us for any questions related to your account or about the website</span>
-        <div
-          className={`${styles['input-container']} ${styles[emailIsInvalidClass]}`}
-        >
-          <label>Email</label>
-          <input
-            placeholder="Enter your email"
-            onChange={contactEmailChangeHandler}
-            onBlur={contactEmailBlurHandler}
-            type="text"
-          />
-          {contactEmailIsInvalid && (
-            <span className={styles['invalid-message']}>
-              Invalid Email format.
-            </span>
-          )}
-          {uniqueEmailIsInvalid && (
-            <span className={styles['invalid-message']}>
-              Email is already registered.
-            </span>
-          )}
-        </div>
-        <div
-          className={`${styles['input-container']} ${styles[emailIsInvalidClass]}`}
-        >
-          <label>Message</label>
-          <textarea
-            placeholder="Enter your message"
-            rows={3}
-            onChange={textAreaChangeHandler}
-            onBlur={textAreaBlurHandler}
-          />
-        </div>
-        <div className={styles['sign-up-button-container']}>
-          <button disabled={uniqueEmailIsInvalid} className={styles['sign-up-button']}>Send</button>
-        </div>
-      </form>
-    </div>
+    <FormWrapper onSubmit={contactSubmitHandler} genericError={genericError}>
+      <FormHeader header="Contact Form"></FormHeader>
+      <span className={styles["sub-copy"]}>
+        Contact us for any questions related to your account or about our
+        website
+      </span>
+      <FormInput
+        inputIsInvalid={contactEmailIsInvalid}
+        label="Email"
+        placeholder="Enter your email"
+        onChangeHandler={contactEmailChangeHandler}
+        onBlurHandler={contactEmailBlurHandler}
+        value={contactEmail}
+      >
+        <FormInputInvalidMessage
+          inputIsInvalid={contactEmailIsInvalid}
+          message="Blank or invalid email format."
+        />
+      </FormInput>
+      <FormTextArea
+        inputIsInvalid={textAreaIsInvalid}
+        label="Message"
+        placeholder="Enter your message"
+        onChangeHandler={textAreaChangeHandler}
+        onBlurHandler={textAreaBlurHandler}
+        value={textArea}
+      >
+        <FormInputInvalidMessage
+          inputIsInvalid={textAreaIsInvalid}
+          message="Message cannot be blank."
+        />
+      </FormTextArea>
+      <FormSubmitButton
+        formIsInvalid={!(contactEmailIsValid && textAreaIsValid)}
+        loading={loading}
+        buttonText="Send"
+      />
+      <SuccessMessage
+        showSuccessMessage={emailSent}
+        message="Your message has been sent. You should receive an response from the
+          email provided shortly."
+      />
+    </FormWrapper>
   );
 }

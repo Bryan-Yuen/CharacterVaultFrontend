@@ -1,0 +1,43 @@
+.textarea-container {
+  /* border: 2px solid gray; */
+  padding: 10px 0;
+  width: 100%;
+  max-width: 100%;
+
+  label {
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  textArea {
+    display: block;
+    width: 100%;
+    background-color: rgb(83, 83, 83);
+    color: white;
+    font-size: 16px;
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 10px;
+  }
+
+  
+  textArea:focus {
+    outline-style: none;
+    border: 1px solid rgb(255, 255, 255);
+  }
+    
+}
+
+.invalid {
+  /*Keep the border red even as the user goes back to it*/
+  textarea,
+  textarea:focus {
+    border: 1px solid #f0423c;
+  }
+
+  .invalid-message {
+    display: block;
+    margin-top: 2px;
+    color: #f0423c;
+  }
+}

@@ -1,17 +1,23 @@
-import React, {FormEvent} from 'react';
-import styles from './AddTagModal.module.scss';
-import { ADD_USER_TAG } from '@/mutations/userTag';
-import { useMutation } from '@apollo/client';
-import useInput from '../hooks/useInput';
-import PornstarName from '../pornstarInputComponents/PornstarName';
-import { useApolloClient } from '@apollo/client';
+import React, { FormEvent, useState, useEffect } from "react";
+//import styles from './AddTagModal.module.scss';
+import { ADD_USER_TAG } from "@/mutations/userTagMutations";
+import { useMutation } from "@apollo/client";
+import useInput from "../hooks/useInput";
+import { useApolloClient } from "@apollo/client";
+import Modal from "../utilities/Modal";
+import FormInput from "../utilities/FormInput";
+import FormInputInvalidMessage from "../utilities/FormInputInvalidMessage";
+import FormSubmitButton from "../utilities/FormSubmitButton";
 
 interface propDefs {
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   showSuccessfulPopup: () => void;
 }
 
-export default function AddTagModal(props: propDefs) {
+export default function AddTagModal({
+  setModalIsOpen,
+  showSuccessfulPopup,
+}: propDefs) {
   const {
     input: tag,
     inputIsValid: tagIsValid,
@@ -20,93 +26,83 @@ export default function AddTagModal(props: propDefs) {
     inputBlurHandler: tagBlurHandler,
   } = useInput((input) => input.length >= 1);
 
-  const [addUserTag] = useMutation(ADD_USER_TAG, {
+  const [addUserTag, { loading }] = useMutation(ADD_USER_TAG, {
     variables: {
       newUserTag: {
-        user_tag_text: tag
+        user_tag_text: tag.toLowerCase(),
       },
     },
-    errorPolicy: 'all',
+    errorPolicy: "all",
   });
+
+  // clears the error message the user starts typing again
+  useEffect(() => {
+    if (uniqueTagIsInvalid) setUniqueTagIsInvalid(false);
+  }, [tag]);
+
+  const [uniqueTagIsInvalid, setUniqueTagIsInvalid] = useState(false);
+  const [genericError, setGenericError] = useState(false);
 
   const client = useApolloClient();
 
   const addPornstarHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(!tagIsValid)
-      {
-        tagBlurHandler()
+    try {
+      const result = await addUserTag();
+      if (!result) {
+        setGenericError(true);
         return;
       }
-    const result = await addUserTag();
-    if (result.errors) {
-      console.log('there was errors');
-      console.log(result);
-      console.log(result.errors[0].extensions.code);
-      // obviously put these code in a constant maybe in a file somewhere
-    } else if (result.data) {
-      console.log(result.data);
-      console.log('it worked');
-      //router.push("/dashboard")
-    }
-    console.log(result.data);
+      if (result.errors && result.errors.length > 0) {
+        if (result.errors[0].extensions.code === "TAG_ALREADY_EXISTS") {
+          setUniqueTagIsInvalid(true);
+        } else setGenericError(true);
+      } else if (result.data) {
+        console.log(result.data);
+        console.log("it worked");
 
-    await client.refetchQueries({
-      include: ["GetUserTags"],
-    });
-    
-    props.setModalIsOpen(false);
-    props.showSuccessfulPopup();
+        await client.refetchQueries({
+          include: ["GetUserTags"],
+        });
+
+        setModalIsOpen(false);
+        showSuccessfulPopup();
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      setGenericError(true);
+    }
   };
 
-  const tagIsInvalidClass =
-  tagIsInvalid  ? "invalid" : "";
-  
   return (
-    <div
-      className={styles['backdrop']}
-      onClick={() => props.setModalIsOpen(false)}
+    <Modal
+      setModal={setModalIsOpen}
+      header="Add Tag"
+      genericError={genericError}
+      onSubmit={addPornstarHandler}
     >
-      <div className={styles['modal']} onClick={(e) => e.stopPropagation()}>
-        <div className={styles['modal-header']}>
-          <div className={styles['modal-title']}>Add Tag</div>
-          <button
-            onClick={() => props.setModalIsOpen(false)}
-            className={styles['close']}
-          >
-            &#10006;
-          </button>
-        </div>
-        <form
-          onSubmit={addPornstarHandler}
-          className={styles['form-container']}
-        >
-                           <div
-            className={`${styles["input-container"]} ${styles[tagIsInvalidClass]}`}
-          >
-            <label>Tag</label>
-            <input
-              placeholder="tag"
-              onChange={tagChangeHandler}
-              onBlur={tagBlurHandler}
-              type="text"
-            />
-            {tagIsInvalid && (
-              <span className={styles["invalid-message"]}>
-                Tag is blank.
-              </span>
-            )}
-          </div>
-          <div className={styles['sign-up-button-container']}>
-            <button
-              className={styles['sign-up-button']}
-              type="submit"
-            >
-              Add
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+      <FormInput
+        inputIsInvalid={tagIsInvalid || uniqueTagIsInvalid}
+        label="Tag"
+        placeholder="tag"
+        onChangeHandler={tagChangeHandler}
+        onBlurHandler={tagBlurHandler}
+        value={tag}
+      >
+        <FormInputInvalidMessage
+          inputIsInvalid={tagIsInvalid}
+          message="Tag cannot be blank."
+        />
+        <FormInputInvalidMessage
+          inputIsInvalid={uniqueTagIsInvalid}
+          message="Tag already exists."
+        />
+      </FormInput>
+      <FormSubmitButton
+        formIsInvalid={!tagIsValid}
+        loading={loading}
+        buttonText="Add"
+      />
+    </Modal>
   );
 }

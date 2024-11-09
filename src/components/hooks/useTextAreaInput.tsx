@@ -21,6 +21,7 @@ export default function useTextAreaInput(validateInput : (e : string) => boolean
     inputIsInvalid,
     inputChangeHandler,
     inputBlurHandler,
-    setInput
+    setInput,
+    setIsTouched
   }
 }

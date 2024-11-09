@@ -1,6 +1,5 @@
 import React,{useState} from 'react';
 import styles from './NonDashboardNavbar.module.scss';
-import FakeSearchBar from './FakeSearchBar';
 import Link from 'next/link';
 import Image from 'next/image';
 import AccountDropdown from "../loggedInNavBar/AccountDropdown";
@@ -24,7 +23,7 @@ export default function NonDashboardNavbar() {
               width={32}
               className={styles["website-icon"]}
             />
-          <h1 className={styles['website-name']}>MyFapSheet</h1>
+          <div className={styles['website-name']}>MyFapSheet</div>
         </Link>
         <button className={`${styles['account-button']} ${styles[accountDropdownIsOpen ? 'account-dropdown-active' : '']}`} onClick={() => setAccountDropdownIsOpen(true)}>
           <Image

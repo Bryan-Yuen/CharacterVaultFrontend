@@ -4,7 +4,12 @@ import styles from "./ChangePasswordBody.module.scss";
 import { useMutation } from "@apollo/client";
 import { useSearchParams } from "next/navigation";
 import { CHANGE_PASSWORD } from "@/mutations/userMutations";
-import { Suspense } from 'react'
+import FormWrapper from "../utilities/FormWrapper";
+import FormInput from "../utilities/FormInput";
+import FormInputInvalidMessage from "../utilities/FormInputInvalidMessage";
+import FormSubmitButton from "../utilities/FormSubmitButton";
+import FormHeader from "../utilities/FormHeader";
+import SuccessMessage from "../utilities/SuccessMessage";
 
 export default function ChangePasswordBody() {
   const {
@@ -13,6 +18,7 @@ export default function ChangePasswordBody() {
     inputIsInvalid: newPasswordIsInvalid,
     inputChangeHandler: newPasswordChangeHandler,
     inputBlurHandler: newPasswordBlurHandler,
+    setInput: newPasswordSetInput,
   } = useInput((input) => input.length >= 6);
 
   const {
@@ -21,100 +27,98 @@ export default function ChangePasswordBody() {
     inputIsInvalid: confirmPasswordIsInvalid,
     inputChangeHandler: confirmPasswordChangeHandler,
     inputBlurHandler: confirmPasswordBlurHandler,
+    setInput: confirmPasswordSetInput,
   } = useInput((input) => input === newPassword);
 
   //need a check whether here on this component or the change password
   // component, if you don't have token, gtfo out of this page
 
   const params = useSearchParams();
-  const token = params.get("token")
-  console.log("token", params)
-  const [changePassword] = useMutation(CHANGE_PASSWORD, {
+  const token = params.get("token");
+  console.log("token", params);
+  const [changePassword, { loading }] = useMutation(CHANGE_PASSWORD, {
     variables: {
-      newPassword: newPassword,
+      newPassword: confirmPassword,
       token: token,
     },
     errorPolicy: "all",
   });
 
-  const [uniqueUsernameIsInvalid, setUniqueUsernameIsInvalid] = useState(false);
-  const [uniqueEmailIsInvalid, setUniqueEmailIsInvalid] = useState(false);
+  const [passwordChanged, setPasswordChanged] = useState(false);
+  const [genericError, setGenericError] = useState(false);
+  const [tokenExpired, setTokenExpired] = useState(false);
 
   // consider try catch in future for network errors or some other mysterious error
 
-  const registerSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
+  const changePasswordSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("gay");
-    const result = await changePassword();
-    if (result.errors) {
-      console.log("there was errors");
-      console.log(result);
-      console.log(result.errors[0].extensions.code);
-      // obviously put these code in a constant maybe in a file somewhere
-      if (
-        result.errors[0].extensions.code === "EMAIL_EXISTS_AND_USERNAME_TAKEN"
-      ) {
-        setUniqueUsernameIsInvalid(true);
-        setUniqueEmailIsInvalid(true);
+    try {
+      const result = await changePassword();
+      if (!result) {
+        setGenericError(true);
+        return;
       }
-    } else if (result.data) {
-      console.log("it worked");
-      //router.push("/dashboard")
+      if (result.errors && result.errors.length > 0) {
+        if (result.errors[0].extensions.code === "TOKEN_EXPIRED") {
+          setTokenExpired(true);
+        } else setGenericError(true);
+      } else if (result.data) {
+        console.log("it worked");
+        newPasswordSetInput("");
+        confirmPasswordSetInput("");
+        setPasswordChanged(true);
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      setGenericError(true);
     }
   };
 
-  const passwordIsInvalidClass = newPasswordIsInvalid ? 'invalid' : '';
-
-  const confirmPasswordIsInvalidClass = confirmPasswordIsInvalid ? 'invalid' : '';
-
   return (
-    <div className={styles["register-body"]}>
-      <form
-        onSubmit={registerSubmitHandler}
-        className={styles["form-container"]}
+    <FormWrapper
+      onSubmit={changePasswordSubmitHandler}
+      genericError={genericError}
+    >
+      <FormHeader header="Change Password"></FormHeader>
+      <FormInput
+        inputIsInvalid={newPasswordIsInvalid}
+        label="New Password"
+        placeholder="At least 6 characters"
+        onChangeHandler={newPasswordChangeHandler}
+        onBlurHandler={newPasswordBlurHandler}
+        type="password"
+        value={newPassword}
       >
-        <span className={styles["header"]}>Change Password</span>
-        <div
-          className={`${styles['input-container']} ${styles[passwordIsInvalidClass]}`}
-        >
-          <label>Password</label>
-          <input
-            placeholder="At least 6 characters"
-            onChange={newPasswordChangeHandler}
-            onBlur={newPasswordBlurHandler}
-            type="password"
-          />
-          {newPasswordIsInvalid && (
-            <span className={styles['invalid-message']}>
-              Minimum 6 characters.
-            </span>
-          )}
-        </div>
-        <div
-          className={`${styles['input-container']} ${styles[confirmPasswordIsInvalidClass]}`}
-        >
-          <label>Re-Enter Password</label>
-          <input
-            placeholder="At least 6 characters"
-            onChange={confirmPasswordChangeHandler}
-            onBlur={confirmPasswordBlurHandler}
-            type="password"
-          />
-          {confirmPasswordIsInvalid && (
-            <span className={styles['invalid-message']}>
-              Passwords must match.
-            </span>
-          )}
-        </div>
-        <div className={styles["sign-up-button-container"]}>
-          <button
-            disabled={uniqueEmailIsInvalid}
-            className={styles["sign-up-button"]}
-          >
-            Send Reset Link
-          </button>
-        </div>
-      </form>
-    </div>
+        <FormInputInvalidMessage
+          inputIsInvalid={newPasswordIsInvalid}
+          message="Minimum 6 characters."
+        />
+      </FormInput>
+      <FormInput
+        inputIsInvalid={confirmPasswordIsInvalid}
+        label="Re-Enter New Password"
+        placeholder="Passwords must match"
+        onChangeHandler={confirmPasswordChangeHandler}
+        onBlurHandler={confirmPasswordBlurHandler}
+        type="password"
+        value={confirmPassword}
+      >
+        <FormInputInvalidMessage
+          inputIsInvalid={confirmPasswordIsInvalid}
+          message="Passwords must match."
+        />
+      </FormInput>
+      <FormSubmitButton
+        formIsInvalid={!(newPasswordIsValid && confirmPasswordIsValid)}
+        loading={loading}
+        buttonText="Update Password"
+      />
+      <SuccessMessage showSuccessMessage={passwordChanged} message="Password has been updated."/>
+      {tokenExpired && (
+        <span className={styles["custom-error-message"]}>
+          The link has expired. Please request a new link.
+        </span>
+      )}
+    </FormWrapper>
   );
 }

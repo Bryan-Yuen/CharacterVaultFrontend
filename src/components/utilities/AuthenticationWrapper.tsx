@@ -40,6 +40,7 @@ export default function AuthenticationWrapper({ children } : WrapperProps) {
     wrapperStyle={{}}
     wrapperClass={styles['authentication-wrapper-page-styles']}
   />
+  // need to return an error page here or else it's just a line on the top left corner with error message
     if (error) return <div>Error! {error.message}</div>;
   return (
     <>{ success && children }</>

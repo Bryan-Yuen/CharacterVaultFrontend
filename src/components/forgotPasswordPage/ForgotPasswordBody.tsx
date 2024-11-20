@@ -23,7 +23,9 @@ export default function ForgotPasswordBody() {
 
   const [forgotPassword, { loading }] = useMutation(FORGOT_PASSWORD, {
     variables: {
-      email: forgotPasswordEmail,
+      forgotPasswordInput: {
+        user_email: forgotPasswordEmail,
+      }
     },
     errorPolicy: "all",
   });

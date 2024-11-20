@@ -3,7 +3,7 @@ import OutsideClickDetector from '../utilities/OutsideClickDetector';
 import styles from './Tags.module.scss';
 import Image from 'next/image';
 import { GET_USER_TAGS } from '@/queries/userTag';
-import { ADD_USER_TAG } from '@/mutations/userTag';
+import { ADD_USER_TAG } from '@/mutations/userTagMutations';
 import { useQuery, useMutation, useApolloClient } from '@apollo/client';
 
 interface propDefs {

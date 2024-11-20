@@ -38,8 +38,10 @@ export default function ChangePasswordBody() {
   console.log("token", params);
   const [changePassword, { loading }] = useMutation(CHANGE_PASSWORD, {
     variables: {
-      newPassword: confirmPassword,
-      token: token,
+      changePasswordInput : {
+        new_password: confirmPassword,
+        token: token,
+      }
     },
     errorPolicy: "all",
   });

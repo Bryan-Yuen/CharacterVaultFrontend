@@ -19,7 +19,9 @@ export default function ConfirmNewEmailBody() {
 
   const [confirmChangeEmail] = useMutation(CONFIRM_CHANGE_EMAIL, {
     variables: {
-      token: token,
+      confirmChangeEmailInput: {
+        token: token,
+      }
     },
     errorPolicy: "all",
   });

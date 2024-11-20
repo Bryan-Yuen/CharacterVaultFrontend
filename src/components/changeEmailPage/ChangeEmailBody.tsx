@@ -30,7 +30,9 @@ export default function ChangeEmailBody() {
 
   const [changeEmail, { loading }] = useMutation(CHANGE_EMAIL, {
     variables: {
-      newEmail: newEmail,
+      changeEmailInput : {
+        user_email: newEmail,
+      }
     },
     errorPolicy: "all",
   });

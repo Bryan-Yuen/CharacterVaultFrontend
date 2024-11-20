@@ -45,8 +45,10 @@ export default function UpdatePasswordBody() {
     CHANGE_PASSWORD_LOGGED_IN,
     {
       variables: {
-        currentPassword: currentPassword,
-        newPassword: confirmNewPassword,
+        changePasswordLoggedInInput : {
+          current_password: currentPassword,
+          new_password: confirmNewPassword,
+        }
       },
       errorPolicy: "all",
     }

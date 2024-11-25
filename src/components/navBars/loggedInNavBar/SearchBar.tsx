@@ -9,7 +9,7 @@ import React, {
 import OutsideClickDetector from '../../utilities/OutsideClickDetector';
 import styles from './SearchBar.module.scss';
 import Image from 'next/image';
-import { GET_USER_TAGS } from '@/queries/userTag';
+import { GET_USER_TAGS } from '@/queries/userTagQueries';
 import { ADD_USER_TAG } from '@/mutations/userTag';
 import { useQuery, useMutation } from '@apollo/client';
 import { usePornstarAndTagsContext } from '@/contexts/PornstarAndTagsContext';

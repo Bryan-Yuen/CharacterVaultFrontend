@@ -9,16 +9,10 @@ query Query {
   }
 `;
 
-const CHECK_USER_PREMIUM = gql`
-query Query {
-  checkUserPremium
-}
-`;
-
 const CHECK_USER_LOGGED_IN = gql`
 query Query {
   checkIfLoggedin
 }
 `;
 
-export {GET_USER_PROFILE, CHECK_USER_PREMIUM, CHECK_USER_LOGGED_IN};
+export {GET_USER_PROFILE, CHECK_USER_LOGGED_IN};

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_ALL_PORNSTARS } from '@/queries/pornstars';
+import { GET_ALL_PORNSTARS } from '@/queries/pornstarsQueries';
 import styles from './PornstarTile.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';

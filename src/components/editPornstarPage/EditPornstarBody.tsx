@@ -1,6 +1,6 @@
-import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
+ import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { GET_PORNSTAR } from "@/queries/pornstars";
+import { GET_PORNSTAR } from "@/queries/pornstarsQueries";
 import { useMutation, useQuery } from "@apollo/client";
 import styles from "./EditPornstarBody.module.scss";
 import useInput from "../hooks/useInput";
@@ -33,13 +33,6 @@ export interface PornstarAndTagsReturn {
   };
 }
 
-export interface PornstarTag {
-  tag_text: string;
-  user_tag: {
-    user_tag_id: number;
-  };
-}
-
 export interface EditPornstarLinkObj {
   pornstar_link_id: number;
   pornstar_link_title: string;
@@ -59,7 +52,8 @@ export default function EditPornstarBody() {
     },
     errorPolicy: "all",
     onCompleted: (data) => {
-      //setPornstarTags(data.getPornstar.pornstar_tags.map((tag: any) => tag.tag_text));
+      setPornstarTags(data.getPornstar.pornstar_tags.map((tag: any) => tag.tag_text));
+      /*
       setPornstarTags(
         data.getPornstar.pornstar_tags.map((tag: any) => ({
           tag_text: tag.tag_text,
@@ -68,6 +62,7 @@ export default function EditPornstarBody() {
           },
         }))
       );
+      */
       setPornstarName(data.getPornstar.pornstar_name);
       setPornstarLinks(data.getPornstar.pornstar_links);
     },
@@ -92,7 +87,7 @@ export default function EditPornstarBody() {
     didDelete: false,
   });
 
-  const [pornstarTags, setPornstarTags] = useState<PornstarTag[]>([]);
+  const [pornstarTags, setPornstarTags] = useState<string[]>([]);
 
   const [pornstarLinks, setPornstarLinks] = useState<EditPornstarLinkObj[]>([]);
 
@@ -292,7 +287,7 @@ export default function EditPornstarBody() {
             pornstar_id: pornstarId,
             pornstar_name: pornstarName,
             pornstar_picture: selectedImage !== null,
-            pornstar_tags_obj: pornstarTags,
+            pornstar_tags_text: pornstarTags,
             imageUpdate: imageUpdate,
             pornstar_links_updates: {
               edited_links: updatedEditedPornstarLinks,
@@ -358,17 +353,15 @@ export default function EditPornstarBody() {
         const newPornstarRef = client.cache.writeFragment({
           id:
             'PornstarWithTags:{"pornstar_id":' +
-            result.data.editPornstar.pornstar_id +
+            pornstarId +
             "}",
           data: {
             __typename: "PornstarWithTags",
-            pornstar_id: result.data.editPornstar.pornstar_id,
+            pornstar_id: pornstarId,
             pornstar_name: pornstarName,
             pornstar_picture_path:
               result.data.editPornstar.pornstar_picture_path,
-            pornstar_tags_text: pornstarTags.map(
-              (tagObj: any) => tagObj.tag_text
-            ),
+            pornstar_tags_text: pornstarTags,
           },
           fragment: gql`
             fragment NewPornstar on PornstarWithTags {

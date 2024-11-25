@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery} from "@apollo/client";
-import { GET_ALL_PORNSTARS_AND_TAGS } from "@/queries/pornstars";
+import { GET_ALL_PORNSTARS_AND_TAGS } from "@/queries/pornstarsQueries";
 import styles from "./PornstarTilesContainer.module.scss";
 import PornstarTile from "./PornstarTile";
 import { usePornstarAndTagsContext } from "@/contexts/PornstarAndTagsContext";

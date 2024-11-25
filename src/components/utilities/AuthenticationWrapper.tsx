@@ -3,7 +3,7 @@
 import React, { ReactNode ,useState} from 'react'
 import { useApolloClient } from "@apollo/client";
 import { ThreeDots } from "react-loader-spinner";
-import { CHECK_USER_LOGGED_IN } from "@/queries/user";
+import { CHECK_USER_LOGGED_IN } from "@/queries/userQueries";
 import { useRouter } from "next/navigation";
 import { useQuery} from "@apollo/client";
 import styles from './AuthenticationWrapper.module.scss';

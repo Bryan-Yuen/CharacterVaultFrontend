@@ -5,7 +5,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { useApolloClient } from "@apollo/client";
 import Link from "next/link";
-import { GET_USER_PROFILE } from "@/queries/user";
+import { GET_USER_PROFILE } from "@/queries/userQueries";
 import OutsideClickDetector from "@/components/utilities/OutsideClickDetector";
 import { ThreeDots } from "react-loader-spinner";
 import { RotatingLines } from "react-loader-spinner";

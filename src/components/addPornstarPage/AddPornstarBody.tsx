@@ -20,13 +20,6 @@ export interface PornstarLinkObj {
   pornstar_link_url: string;
 }
 
-export interface PornstarTag {
-  tag_text: string;
-  user_tag: {
-    user_tag_id: number;
-  };
-}
-
 export default function AddPornstarBody() {
   const {
     input: pornstarName,
@@ -41,7 +34,7 @@ export default function AddPornstarBody() {
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
-  const [pornstarTags, setPornstarTags] = useState<PornstarTag[]>([]);
+  const [pornstarTags, setPornstarTags] = useState<string[]>([]);
 
   const [pornstarLinks, setPornstarLinks] = useState<PornstarLinkObj[]>([]);
 
@@ -69,19 +62,16 @@ export default function AddPornstarBody() {
 
   const [addPornstar , {loading}] = useMutation(ADD_PORNSTAR, {
     variables: {
-      newPornstarInput: {
+      addPornstarInput: {
         pornstar_name: pornstarName,
         pornstar_picture: selectedImage !== null,
-        pornstar_tags_obj: pornstarTags,
+        pornstar_tags_text: pornstarTags,
         pornstar_links_title_url: pornstarLinks,
       },
     },
     errorPolicy: "all",
   });
 
-  // later on look up how we should handle errors on the client side
-  // because technically if our app is good we shouldn't have errors unless the client
-  // is changing code to break our stuff or maybe 1% chance the network or internet technical difficulties
   const addPornstarHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -98,11 +88,9 @@ export default function AddPornstarBody() {
       }
       if (result.errors && result.errors.length > 0) {
         console.log("there was errors");
-        console.log(result);
-        console.log(result.errors[0].extensions.code);
+        console.log(result.errors)
         setGenericError(true);
         return;
-        // obviously put these code in a constant maybe in a file somewhere
       } else if (result.data) {
         console.log(result.data);
 
@@ -139,9 +127,7 @@ export default function AddPornstarBody() {
                   pornstar_id: result.data.addPornstar.pornstar_id,
                   pornstar_name: pornstarName,
                   pornstar_picture_path: selectedImage ? newImageUrl : null,
-                  pornstar_tags_text: pornstarTags.map(
-                    (tagObj: any) => tagObj.tag_text
-                  ),
+                  pornstar_tags_text: pornstarTags
                 },
                 fragment: gql`
                   fragment NewPornstar on PornstarWithTags {

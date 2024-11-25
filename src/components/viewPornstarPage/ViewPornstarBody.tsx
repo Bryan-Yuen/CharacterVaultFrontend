@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { GET_PORNSTAR } from "@/queries/pornstars";
+import { GET_PORNSTAR } from "@/queries/pornstarsQueries";
 import { useMutation, useQuery } from "@apollo/client";
 import styles from "./ViewPornstarBody.module.scss";
 import Image from "next/image";

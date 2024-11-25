@@ -1,6 +1,6 @@
 import React, { useEffect, useState, ChangeEvent, useRef } from 'react';
 import styles from './TagManager.module.scss';
-import { GET_USER_TAGS } from '@/queries/userTag';
+import { GET_USER_TAGS } from '@/queries/userTagQueries';
 import { useQuery, useMutation } from '@apollo/client';
 import { useApolloClient } from '@apollo/client';
 import EditTagModal from './EditTagModal';

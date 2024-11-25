@@ -1,7 +1,7 @@
 import styles from "./SettingsBody.module.scss";
 import Link from "next/link";
 import { useQuery, useMutation } from "@apollo/client";
-import { GET_USER_PROFILE } from "@/queries/user";
+import { GET_USER_PROFILE } from "@/queries/userQueries";
 import React, {useState} from "react";
 
 export default function SettingsBody() {

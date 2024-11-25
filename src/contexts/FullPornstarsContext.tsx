@@ -1,5 +1,5 @@
 import React, {useContext, createContext, useState} from 'react'
-import { GET_ALL_PORNSTARS_AND_TAGS } from "@/queries/pornstars";
+import { GET_ALL_PORNSTARS_AND_TAGS } from "@/queries/pornstarsQueries";
 import { useQuery, ApolloError} from "@apollo/client";
 /*
 export interface PornstarTag {

@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useRef } from "react";
+import React, { useState, ChangeEvent, useRef, memo } from "react";
 import styles from "./MobileUploadImage.module.scss";
 import Image from "next/image";
 
@@ -21,7 +21,7 @@ interface propDefs {
   imageUpdate?: ImageUpdates;
 }
 
-export default function MobileUploadImage({
+export default memo(function MobileUploadImage({
   selectedImage,
   setSelectedImage,
   pornstar_picture_path,
@@ -107,4 +107,4 @@ export default function MobileUploadImage({
       )}
     </div>
   );
-}
+});

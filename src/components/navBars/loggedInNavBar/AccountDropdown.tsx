@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import React, { useState } from "react";
 import styles from "./AccountDropdown.module.scss";
 import { LOGOUT_USER } from "@/mutations/userMutations";
 import { useMutation, useQuery } from "@apollo/client";
@@ -7,19 +7,22 @@ import { useApolloClient } from "@apollo/client";
 import Link from "next/link";
 import { GET_USER_PROFILE } from "@/queries/userQueries";
 import OutsideClickDetector from "@/components/utilities/OutsideClickDetector";
-import { ThreeDots } from "react-loader-spinner";
 import { RotatingLines } from "react-loader-spinner";
+import GenericError from "../../utilities/GenericError";
+import MutationVersionError from "../../utilities/MutationVersionError";
+import RateLimitError from "../../utilities/RateLimitError";
 
 interface propDefs {
   setDropdownIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function AccountDropdown(props: propDefs) {
-  const [logoutUser, { loading: logoutLoading }] = useMutation(LOGOUT_USER, {
-    errorPolicy: "all",
-  });
+  const [logoutUser, { loading: logoutLoading }] = useMutation(LOGOUT_USER);
 
   const { loading, error, data } = useQuery(GET_USER_PROFILE);
+  const [genericError, setGenericError] = useState(false);
+  const [versionError, setVersionError] = useState(false);
+  const [rateLimitError, setRateLimitError] = useState(false);
 
   const router = useRouter();
   const client = useApolloClient();
@@ -30,24 +33,28 @@ export default function AccountDropdown(props: propDefs) {
     try {
       const result = await logoutUser();
       if (!result) {
+        setGenericError(true);
         return;
       }
 
       if (result.errors && result.errors.length > 0) {
-        console.log("there was errors");
-        console.log(result);
-        console.log(result.errors[0].extensions.code);
-        return;
-        // obviously put these code in a constant maybe in a file somewhere
+        const errorCode = result.errors[0].extensions?.code;
+
+        switch (errorCode) {
+          case "VERSION_ERROR":
+            setVersionError(true);
+            break;
+          case "RATE_LIMIT_ERROR":
+            setRateLimitError(true);
+            break;
+          default:
+            setGenericError(true);
+        }
       } else if (result.data) {
-        console.log(result.data);
-        console.log("it worked");
-        //router.push("/dashboard")
-        console.log(result.data);
         // clear cache after log out
         client.clearStore();
-        //redirect
-        router.push("/"); // Redirect to "/dashboard"
+        // redirect to homepage
+        router.push("/");
       }
     } catch (error) {
       console.error("An unexpected error occurred:", error);
@@ -73,13 +80,17 @@ export default function AccountDropdown(props: propDefs) {
         </div>
       </OutsideClickDetector>
     );
-  if (error) return <div>Error! {error.message}</div>;
+  // error handler is below
 
   return (
     <OutsideClickDetector onOutsideClick={() => props.setDropdownIsOpen(false)}>
       <div className={styles["modal"]} onClick={(e) => e.stopPropagation()}>
         <span className={styles["username"]}>
-          {data.getUserProfile.user_username}
+          {error ? (
+            <div>Error fetching profile.</div>
+          ) : (
+            data.getUserProfile.user_username
+          )}
         </span>
         <Link className={styles["setting-list-item"]} href={"/settings"}>
           Account
@@ -107,6 +118,9 @@ export default function AccountDropdown(props: propDefs) {
             "Log Out"
           )}
         </button>
+        <GenericError genericError={genericError} />
+        <MutationVersionError versionError={versionError} />
+        <RateLimitError rateLimitError={rateLimitError} />
       </div>
     </OutsideClickDetector>
   );

@@ -3,7 +3,7 @@ import { gql} from '@apollo/client';
 const GET_PORNSTAR = gql`
 query GetPornstar($getPornstarInput: GetPornstarInputType!) {
   getPornstar(getPornstarInput: $getPornstarInput) {
-    pornstar_id
+    pornstar_url_slug
     pornstar_name
     pornstar_picture_path
     pornstar_tags {
@@ -24,7 +24,7 @@ query GetPornstar($getPornstarInput: GetPornstarInputType!) {
 const GET_ALL_PORNSTARS_AND_TAGS = gql`
 query GetAllPornstarsAndTags {
   getAllPornstarsAndTags {
-    pornstar_id
+    pornstar_url_slug
     pornstar_name
     pornstar_picture_path
     pornstar_tags_text

@@ -7,13 +7,21 @@ import PornstarName from "../pornstarInputComponents/PornstarName";
 import Tags from "../pornstarInputComponents/Tags";
 import { gql } from "@apollo/client";
 import { useApolloClient } from "@apollo/client";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { ADD_PORNSTAR } from "@/mutations/pornstarMutations";
 import PornstarLinks from "../pornstarInputComponents/PornstarLinks";
 import MobileUploadImage from "../pornstarInputComponents/MobileUploadImage";
 import Link from "next/link";
 import { RotatingLines } from "react-loader-spinner";
+import GenericError from "../utilities/GenericError";
+import MutationVersionError from "../utilities/MutationVersionError";
+import RateLimitError from "../utilities/RateLimitError";
+import "dotenv/config";
 //import { useSuccessAlertContext } from '@/contexts/ShowSuccessAlertContext';
+
+if (!process.env.NEXT_PUBLIC_BUCKET_URL) {
+  throw new Error("no bucket url");
+}
 
 export interface PornstarLinkObj {
   pornstar_link_title: string;
@@ -42,8 +50,8 @@ export default function AddPornstarBody() {
 
   // lets maybe change this name to fail to add ponstar error instead of generic
   const [genericError, setGenericError] = useState(false);
-
-  //const { successAlertIsOpen, setSuccessAlertIsOpen } = useSuccessAlertContext();
+  const [versionError, setVersionError] = useState(false);
+  const [rateLimitError, setRateLimitError] = useState(false);
 
   useEffect(() => {
     const updateMedia = () => {
@@ -60,7 +68,7 @@ export default function AddPornstarBody() {
     return () => window.removeEventListener("resize", updateMedia);
   }, []);
 
-  const [addPornstar , {loading}] = useMutation(ADD_PORNSTAR, {
+  const [addPornstar, { loading }] = useMutation(ADD_PORNSTAR, {
     variables: {
       addPornstarInput: {
         pornstar_name: pornstarName,
@@ -69,7 +77,6 @@ export default function AddPornstarBody() {
         pornstar_links_title_url: pornstarLinks,
       },
     },
-    errorPolicy: "all",
   });
 
   const addPornstarHandler = async (e: FormEvent<HTMLFormElement>) => {
@@ -87,16 +94,21 @@ export default function AddPornstarBody() {
         return;
       }
       if (result.errors && result.errors.length > 0) {
-        console.log("there was errors");
-        console.log(result.errors)
-        setGenericError(true);
-        return;
-      } else if (result.data) {
-        console.log(result.data);
+        const errorCode = result.errors[0].extensions?.code;
 
+        switch (errorCode) {
+          case "VERSION_ERROR":
+            setVersionError(true);
+            break;
+          case "RATE_LIMIT_ERROR":
+            setRateLimitError(true)
+            break;
+          default:
+            setGenericError(true);
+        }
+      } else if (result.data) {
         const url = result.data.addPornstar.s3Url;
-        if (url)
-        {
+        if (url) {
           try {
             await fetch(url, {
               method: "PUT",
@@ -106,17 +118,13 @@ export default function AddPornstarBody() {
               body: selectedImage,
             });
           } catch (error) {
-            console.error(error)
+            console.error(error);
             setGenericError(true);
           }
         }
-          const imageUrl = url.split("?")[0];
-          const imageKey = imageUrl.split("/")[3];
-          const newImageUrl =
-            "https://pub-f8c29b76b6bc4836aac4b8dabb8b6b25.r2.dev/" + imageKey;
-          console.log("imageurl");
-          console.log(imageUrl);
-          console.log("url", url);
+        const imageUrl = url.split("?")[0];
+        const imageKey = imageUrl.split("/")[3];
+        const newImageUrl = process.env.NEXT_PUBLIC_BUCKET_URL + imageKey;
 
         client.cache.modify({
           fields: {
@@ -124,27 +132,25 @@ export default function AddPornstarBody() {
               const newPornstarRef = client.cache.writeFragment({
                 data: {
                   __typename: "PornstarWithTags",
-                  pornstar_id: result.data.addPornstar.pornstar_id,
+                  pornstar_url_slug: result.data.addPornstar.pornstar_url_slug,
                   pornstar_name: pornstarName,
                   pornstar_picture_path: selectedImage ? newImageUrl : null,
-                  pornstar_tags_text: pornstarTags
+                  pornstar_tags_text: pornstarTags,
                 },
                 fragment: gql`
                   fragment NewPornstar on PornstarWithTags {
-                    pornstar_id
+                    pornstar_url_slug
                     pornstar_name
                     pornstar_picture_path
                     pornstar_tags_text
                   }
                 `,
               });
-              console.log("aaaaaaaaaaaaaaaaaaaaa");
               return [...existingPornstars, newPornstarRef];
             },
           },
         });
 
-        //setSuccessAlertIsOpen(true);
         router.push("/dashboard");
       }
     } catch (error) {
@@ -191,30 +197,31 @@ export default function AddPornstarBody() {
           </div>
         </div>
         <div className={styles["buttons-and-error-message-container"]}>
-        {genericError && (
-            <span className={styles["server-error-message"]}>
-              Server Error. Please Refresh Page or try again later.
-            </span>
-          )}
           <div className={styles["buttons-container"]}>
             <Link href={"/dashboard"} className={`${styles["cancel-button"]}`}>
               Cancel
             </Link>
-            <button type="submit" className={`${styles["add-pornstar-button"]}`}>
-            {loading ? (
-              <RotatingLines
-                visible={true}
-                width="25"
-                strokeWidth="5"
-                strokeColor="white"
-                animationDuration="0.75"
-                ariaLabel="rotating-lines-loading"
-              />
-            ) : (
-              "Save"
-            )}
+            <button
+              type="submit"
+              className={`${styles["add-pornstar-button"]}`}
+            >
+              {loading ? (
+                <RotatingLines
+                  visible={true}
+                  width="25"
+                  strokeWidth="5"
+                  strokeColor="white"
+                  animationDuration="0.75"
+                  ariaLabel="rotating-lines-loading"
+                />
+              ) : (
+                "Save"
+              )}
             </button>
           </div>
+          <GenericError genericError={genericError} />
+          <MutationVersionError versionError={versionError} />
+          <RateLimitError rateLimitError={rateLimitError} />
         </div>
       </form>
     </div>

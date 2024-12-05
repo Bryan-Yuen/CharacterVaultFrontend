@@ -36,13 +36,13 @@ export default function ContactPageBody() {
         form_message: textArea,
       },
     },
-    errorPolicy: "all",
   });
 
   const [emailSent, setEmailSent] = useState(false);
-  const [genericError, setGenericError] = useState(false);
 
-  // consider try catch in future for network errors or some other mysterious error
+  const [genericError, setGenericError] = useState(false);
+  const [versionError, setVersionError] = useState(false);
+  const [rateLimitError, setRateLimitError] = useState(false);
 
   const contactSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,9 +54,19 @@ export default function ContactPageBody() {
         return;
       }
       if (result.errors && result.errors.length > 0) {
-        setGenericError(true);
+        const errorCode = result.errors[0].extensions?.code;
+
+        switch (errorCode) {
+          case "VERSION_ERROR":
+            setVersionError(true);
+            break;
+          case "RATE_LIMIT_ERROR":
+            setRateLimitError(true);
+            break;
+          default:
+            setGenericError(true);
+        }
       } else if (result.data) {
-        console.log("it worked");
         setEmailSent(true);
       }
     } catch (error) {
@@ -66,7 +76,12 @@ export default function ContactPageBody() {
   };
 
   return (
-    <FormWrapper onSubmit={contactSubmitHandler} genericError={genericError}>
+    <FormWrapper
+      onSubmit={contactSubmitHandler}
+      genericError={genericError}
+      versionError={versionError}
+      rateLimitError={rateLimitError}
+    >
       <FormHeader header="Contact Form"></FormHeader>
       <span className={styles["sub-copy"]}>
         Contact us for any questions related to your account or about our
@@ -103,11 +118,10 @@ export default function ContactPageBody() {
         loading={loading}
         buttonText="Send"
       />
-      <SuccessMessage
-        showSuccessMessage={emailSent}
-        message="Your message has been sent. You should receive an response from the
-          email provided shortly."
-      />
+      <SuccessMessage showSuccessMessage={emailSent}>
+        Your message has been sent. You should receive an response from the
+        email provided shortly.
+      </SuccessMessage>
     </FormWrapper>
   );
 }

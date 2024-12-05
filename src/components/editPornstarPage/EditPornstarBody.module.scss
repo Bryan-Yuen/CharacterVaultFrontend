@@ -204,6 +204,23 @@
   text-align: center;
 }
 
+.edit-pornstar-loading{
+  display:flex;
+  justify-content: center;
+}
+
+.edit-pornstar-error-container{
+display: flex;
+justify-content: center;
+}
+
+.edit-pornstar-error{
+  margin-top: 20px;
+  padding: 10px 15px;
+  background-color: #c11010;
+  border-radius: 4px;
+}
+
 @media only screen and (max-width: 800px) {
   .flex-child-right-side{
     margin-left:0;

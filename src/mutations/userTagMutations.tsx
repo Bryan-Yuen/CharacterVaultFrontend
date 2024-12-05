@@ -3,7 +3,9 @@ import { gql} from '@apollo/client';
 // get user tag id if you want to use cache or return usertag
 const ADD_USER_TAG = gql`
 mutation Mutation($newUserTag: AddUserTagInputType!) {
-  addUserTag(newUserTag: $newUserTag)
+  addUserTag(newUserTag: $newUserTag) {
+      user_tag_id
+    }
 }
 `;
 
@@ -15,7 +17,9 @@ mutation Mutation($userTagId: DeleteUserTagInputType!) {
 
 const EDIT_USER_TAG = gql`
 mutation Mutation($editUserTagInput: EditUserTagInputType!) {
-  editUserTag(editUserTagInput: $editUserTagInput)
+  editUserTag(editUserTagInput: $editUserTagInput) {
+      user_tag_id
+    }
 }
 `;
 

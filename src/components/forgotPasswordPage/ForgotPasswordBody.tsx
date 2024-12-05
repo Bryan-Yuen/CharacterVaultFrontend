@@ -17,8 +17,6 @@ export default function ForgotPasswordBody() {
     inputIsInvalid: forgotPasswordEmailIsInvalid,
     inputChangeHandler: forgotPasswordEmailChangeHandler,
     inputBlurHandler: forgotPasswordEmailBlurHandler,
-    setInput: forgotPasswordEmailSetInput,
-    setIsTouched: forgotPasswordEmailSetIsTouched,
   } = useInput((input) => /^\S+@\S+\.\S+$/.test(input));
 
   const [forgotPassword, { loading }] = useMutation(FORGOT_PASSWORD, {
@@ -27,7 +25,6 @@ export default function ForgotPasswordBody() {
         user_email: forgotPasswordEmail,
       }
     },
-    errorPolicy: "all",
   });
 
   // clears the error message the user starts typing again
@@ -37,8 +34,10 @@ export default function ForgotPasswordBody() {
 
   const [uniqueEmailIsInvalid, setUniqueEmailIsInvalid] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+
   const [genericError, setGenericError] = useState(false);
-  // consider try catch in future for network errors or some other mysterious error
+  const [versionError, setVersionError] = useState(false);
+  const [rateLimitError, setRateLimitError] = useState(false);
 
   const forgotPasswordSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -49,13 +48,22 @@ export default function ForgotPasswordBody() {
         return;
       }
       if (result.errors && result.errors.length > 0) {
-        if (result.errors[0].extensions.code === "EMAIL_NOT_REGISTERED") {
-          setUniqueEmailIsInvalid(true);
-        } else setGenericError(true);
+        const errorCode = result.errors[0].extensions?.code;
+
+        switch (errorCode) {
+          case "EMAIL_NOT_REGISTERED":
+            setUniqueEmailIsInvalid(true);
+            break;
+          case "VERSION_ERROR":
+            setVersionError(true);
+            break;
+          case "RATE_LIMIT_ERROR":
+            setRateLimitError(true)
+            break;
+          default:
+            setGenericError(true);
+        }
       } else if (result.data) {
-        console.log("it worked", result.data);
-        forgotPasswordEmailSetInput("");
-        forgotPasswordEmailSetIsTouched(false);
         setEmailSent(true);
       }
     } catch (error) {
@@ -68,6 +76,8 @@ export default function ForgotPasswordBody() {
     <FormWrapper
       onSubmit={forgotPasswordSubmitHandler}
       genericError={genericError}
+      versionError={versionError}
+      rateLimitError={rateLimitError}
     >
       <FormHeader header="Reset Password"></FormHeader>
       <FormInput
@@ -94,9 +104,9 @@ export default function ForgotPasswordBody() {
       />
       <SuccessMessage
         showSuccessMessage={emailSent}
-        message="An email has been sent to the email address provided. Please click on
-          the link to reset your password."
-      />
+        
+      >An email has been sent to the email address provided. Please click on
+          the link to reset your password.</SuccessMessage>
     </FormWrapper>
   );
 }

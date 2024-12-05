@@ -4,7 +4,7 @@ const ADD_PORNSTAR = gql`
   mutation Mutation($addPornstarInput: AddPornstarInputType!) {
     addPornstar(addPornstarInput: $addPornstarInput) {
       s3Url
-      pornstar_id
+      pornstar_url_slug
     }
   }
 `;

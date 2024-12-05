@@ -8,6 +8,7 @@ import Modal from "../utilities/Modal";
 import FormInput from "../utilities/FormInput";
 import FormInputInvalidMessage from "../utilities/FormInputInvalidMessage";
 import FormSubmitButton from "../utilities/FormSubmitButton";
+import { gql } from "@apollo/client";
 
 interface propDefs {
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,6 +19,7 @@ export default function AddTagModal({
   setModalIsOpen,
   showSuccessfulPopup,
 }: propDefs) {
+  console.log("addtag comp called");
   const {
     input: tag,
     inputIsValid: tagIsValid,
@@ -31,8 +33,7 @@ export default function AddTagModal({
       newUserTag: {
         user_tag_text: tag.toLowerCase(),
       },
-    },
-    errorPolicy: "all",
+    }
   });
 
   // clears the error message the user starts typing again
@@ -41,7 +42,10 @@ export default function AddTagModal({
   }, [tag]);
 
   const [uniqueTagIsInvalid, setUniqueTagIsInvalid] = useState(false);
+  
   const [genericError, setGenericError] = useState(false);
+  const [versionError, setVersionError] = useState(false);
+  const [rateLimitError, setRateLimitError] = useState(false);
 
   const client = useApolloClient();
 
@@ -54,15 +58,42 @@ export default function AddTagModal({
         return;
       }
       if (result.errors && result.errors.length > 0) {
-        if (result.errors[0].extensions.code === "TAG_ALREADY_EXISTS") {
-          setUniqueTagIsInvalid(true);
-        } else setGenericError(true);
-      } else if (result.data) {
-        console.log(result.data);
-        console.log("it worked");
+        const errorCode = result.errors[0].extensions?.code;
 
-        await client.refetchQueries({
-          include: ["GetUserTags"],
+        switch (errorCode) {
+          case "TAG_ALREADY_EXISTS":
+            setUniqueTagIsInvalid(true);
+            break;
+          case "VERSION_ERROR":
+            setVersionError(true);
+            break;
+          case "RATE_LIMIT_ERROR":
+            setRateLimitError(true)
+            break;
+          default:
+            setGenericError(true);
+        }
+      } else if (result.data) {
+        
+        client.cache.modify({
+          fields: {
+            getUserTags(existingUserTags = []) {
+              const newUserTagRef = client.cache.writeFragment({
+                data: {
+                  __typename: "UserTag",
+                  user_tag_id : result.data.addUserTag.user_tag_id,
+                  user_tag_text: tag.toLowerCase()
+                },
+                fragment: gql`
+                  fragment NewPornstar on UserTag {
+                    user_tag_id
+                  user_tag_text
+                  }
+                `,
+              });
+              return [...existingUserTags, newUserTagRef];
+            },
+          },
         });
 
         setModalIsOpen(false);
@@ -79,6 +110,8 @@ export default function AddTagModal({
       setModal={setModalIsOpen}
       header="Add Tag"
       genericError={genericError}
+      versionError={versionError}
+      rateLimitError={rateLimitError}
       onSubmit={addPornstarHandler}
     >
       <FormInput

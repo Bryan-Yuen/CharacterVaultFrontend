@@ -1,6 +1,5 @@
-import React from 'react';
+import React, {memo} from 'react';
 import styles from './PornstarName.module.scss';
-import useInput from '../hooks/useInput';
 import globalStyles from '@/sharedStyles/global-classes.module.scss'
 
 interface propDefs {
@@ -10,7 +9,7 @@ interface propDefs {
   pornstarNameBlurHandler: () => void;
 }
 
-export default function PornstarName(props: propDefs) {
+export default memo(function PornstarName(props: propDefs) {
 
   const pornstarNameIsInvalidClass = props.pornstarNameIsInvalid ? 'invalid-input-border' : '';
 
@@ -32,4 +31,4 @@ export default function PornstarName(props: propDefs) {
       )}
     </div>
   );
-}
+});

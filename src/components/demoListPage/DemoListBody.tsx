@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React from "react";
 import styles from "./DemoListBody.module.scss";
 import PornstarTile from "../dashboardpage/DashboardComponents/PornstarTile";
 import DemoListPornstars from "./DemoListPornstars";
@@ -26,7 +26,7 @@ export default function DemoListBody() {
       <div className={styles["pornstar-tiles-container"]}>
         {DemoListPornstars.map((pornstar: any) => (
           <PornstarTile
-            pornstar_id={pornstar.pornstar_id}
+          pornstar_url_slug=""
             pornstar_name={pornstar.pornstar_name}
             pornstar_picture_path={pornstar.pornstar_picture_path}
             tags={pornstar.pornstar_tags}

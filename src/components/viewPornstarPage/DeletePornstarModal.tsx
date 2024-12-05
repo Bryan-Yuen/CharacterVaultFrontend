@@ -6,7 +6,7 @@ import { useApolloClient } from "@apollo/client";
 import { useRouter } from "next/navigation";
 
 interface propDefs {
-  pornstar_id: number;
+  pornstar_url_slug: string;
   pornstar_name: string;
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -19,7 +19,7 @@ export default function DeletePornstarModal(props: propDefs) {
   const [deletePornstar] = useMutation(DELETE_PORNSTAR, {
     variables: {
       deletePornstarInput: {
-        pornstar_id: props.pornstar_id,
+        pornstar_url_slug: props.pornstar_url_slug,
       },
     },
     errorPolicy: "all",
@@ -40,7 +40,7 @@ export default function DeletePornstarModal(props: propDefs) {
         return;
       } else if (result.data) {
         const normalizedId = client.cache.identify({
-          pornstar_id: props.pornstar_id,
+          pornstar_url_slug: props.pornstar_url_slug,
           __typename: "PornstarWithTags",
         });
         client.cache.evict({ id: normalizedId });
@@ -81,6 +81,11 @@ export default function DeletePornstarModal(props: propDefs) {
             </button>
           </div>
         </form>
+        {genericError && (
+            <span className={styles["server-error-message"]}>
+              Server Error. Please Refresh Page or try again later.
+            </span>
+          )}
       </div>
     </div>
   );

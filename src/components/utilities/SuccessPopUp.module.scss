@@ -4,6 +4,21 @@
   width:400px;
   max-width:100%;
   background-color: green;
-  padding:5px;
+  padding: 5px 10px ;
   top:20px;
+  display:flex;
+  align-items: center;
+  height:40px;
+  border-radius: 4px;
+}
+
+.success-text {
+  margin-left:5px;
+}
+
+@media only screen and (max-width: 800px) {
+  .pop-up-container{
+    width:50vw;
+    justify-content: center;
+  }
 }

@@ -1,0 +1,56 @@
+.confirm-new-email-body-container {
+  display: flex;
+  flex-direction: column;
+  /* height of screen minus nav bar to remove scroll bar*/
+  min-height: calc(100vh - 75px);
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* remember for smaller computers will need scroll */
+.content-container {
+  color: white;
+  width: 1000px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+  margin-top: 5%;
+}
+
+.header {
+  font-size: 32px;
+  margin: 0;
+}
+
+.call-to-action-message {
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+// loading spinner style
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+}
+
+.login-button {
+  margin-left:10px;
+  background-color: rgb(24, 119, 201);
+  padding: 8px 10px;
+  border: none;
+  /* font-size: 16px; */
+  border-radius: 4px;
+  text-decoration: none;
+  color: white;
+  font-size:20px;
+}
+
+// server error message
+.server-error-message {
+  padding: 10px 15px;
+  background-color: #c11010;
+  border-radius: 4px;
+  margin-top: 10px;
+}

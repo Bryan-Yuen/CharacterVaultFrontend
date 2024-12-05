@@ -36,11 +36,13 @@ export default function SupportBody() {
         form_message: textArea,
       },
     },
-    errorPolicy: "all",
   });
 
   const [emailSent, setEmailSent] = useState(false);
+
   const [genericError, setGenericError] = useState(false);
+  const [versionError, setVersionError] = useState(false);
+  const [rateLimitError, setRateLimitError] = useState(false);
 
   const supportSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,9 +53,19 @@ export default function SupportBody() {
         return;
       }
       if (result.errors && result.errors.length > 0) {
-        setGenericError(true);
+        const errorCode = result.errors[0].extensions?.code;
+
+        switch (errorCode) {
+          case "VERSION_ERROR":
+            setVersionError(true);
+            break;
+          case "RATE_LIMIT_ERROR":
+            setRateLimitError(true);
+            break;
+          default:
+            setGenericError(true);
+        }
       } else if (result.data) {
-        console.log("it worked");
         setEmailSent(true);
       }
     } catch (error) {
@@ -63,7 +75,12 @@ export default function SupportBody() {
   };
 
   return (
-    <FormWrapper onSubmit={supportSubmitHandler} genericError={genericError}>
+    <FormWrapper
+      onSubmit={supportSubmitHandler}
+      genericError={genericError}
+      versionError={versionError}
+      rateLimitError={rateLimitError}
+    >
       <FormHeader header="Contact Form" />
       <span className={styles["sub-copy"]}>
         Use this form to contact us about any questions, issues, or feedback
@@ -100,11 +117,10 @@ export default function SupportBody() {
         loading={loading}
         buttonText="Send"
       />
-      <SuccessMessage
-        showSuccessMessage={emailSent}
-        message="Your message has been sent. You should receive an response from your
-          email shortly."
-      />
+      <SuccessMessage showSuccessMessage={emailSent}>
+        Your message has been sent. You should receive an response from your
+        email shortly.
+      </SuccessMessage>
     </FormWrapper>
   );
 }

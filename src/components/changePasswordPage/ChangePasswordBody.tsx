@@ -19,6 +19,7 @@ export default function ChangePasswordBody() {
     inputChangeHandler: newPasswordChangeHandler,
     inputBlurHandler: newPasswordBlurHandler,
     setInput: newPasswordSetInput,
+    setIsTouched: newPasswordSetIsTouched
   } = useInput((input) => input.length >= 6);
 
   const {
@@ -43,14 +44,14 @@ export default function ChangePasswordBody() {
         token: token,
       }
     },
-    errorPolicy: "all",
   });
 
   const [passwordChanged, setPasswordChanged] = useState(false);
-  const [genericError, setGenericError] = useState(false);
   const [tokenExpired, setTokenExpired] = useState(false);
 
-  // consider try catch in future for network errors or some other mysterious error
+  const [genericError, setGenericError] = useState(false);
+  const [versionError, setVersionError] = useState(false);
+  const [rateLimitError, setRateLimitError] = useState(false);
 
   const changePasswordSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,13 +62,25 @@ export default function ChangePasswordBody() {
         return;
       }
       if (result.errors && result.errors.length > 0) {
-        if (result.errors[0].extensions.code === "TOKEN_EXPIRED") {
-          setTokenExpired(true);
-        } else setGenericError(true);
+        const errorCode = result.errors[0].extensions?.code;
+
+        switch (errorCode) {
+          case "TOKEN_EXPIRED":
+            setTokenExpired(true);
+            break;
+          case "VERSION_ERROR":
+            setVersionError(true)
+            break;
+            case "RATE_LIMIT_ERROR":
+            setRateLimitError(true)
+            break;
+          default:
+            setGenericError(true);
+        }
       } else if (result.data) {
-        console.log("it worked");
         newPasswordSetInput("");
         confirmPasswordSetInput("");
+        newPasswordSetIsTouched(false);
         setPasswordChanged(true);
       }
     } catch (error) {
@@ -80,6 +93,8 @@ export default function ChangePasswordBody() {
     <FormWrapper
       onSubmit={changePasswordSubmitHandler}
       genericError={genericError}
+      versionError={versionError}
+      rateLimitError={rateLimitError}
     >
       <FormHeader header="Change Password"></FormHeader>
       <FormInput
@@ -115,7 +130,7 @@ export default function ChangePasswordBody() {
         loading={loading}
         buttonText="Update Password"
       />
-      <SuccessMessage showSuccessMessage={passwordChanged} message="Password has been updated."/>
+      <SuccessMessage showSuccessMessage={passwordChanged}>Password has been updated.</SuccessMessage>
       {tokenExpired && (
         <span className={styles["custom-error-message"]}>
           The link has expired. Please request a new link.

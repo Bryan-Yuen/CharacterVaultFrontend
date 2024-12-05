@@ -1,90 +1,80 @@
 import React from "react";
-import { useQuery} from "@apollo/client";
-import { GET_ALL_PORNSTARS_AND_TAGS } from "@/queries/pornstarsQueries";
 import styles from "./PornstarTilesContainer.module.scss";
 import PornstarTile from "./PornstarTile";
 import { usePornstarAndTagsContext } from "@/contexts/PornstarAndTagsContext";
 import { useFullPornstarsContext } from "@/contexts/FullPornstarsContext";
-import { ThreeDots } from "react-loader-spinner";
 import Link from "next/link";
-
-
-export interface Pornstar {
-  pornstar_id: number;
-  pornstar_name: string;
-  pornstar_picture_path: string;
-}
+import Loading from "@/components/utilities/Loading";
+import Error from "@/components/utilities/Error";
 
 export interface PornstarTag {
   tag_text: string;
 }
 
 export interface FullPornstar {
-  pornstar_id: number;
+  pornstar_url_slug: string;
   pornstar_name: string;
   pornstar_picture_path: string;
   pornstar_tags: PornstarTag[];
 }
 
 export default function PornstarTilesContainer() {
-  console.log("pornstartilecontainer has mounted")
-
-  /*
-  const {
-    loading: pornstarsLoading,
-    error: pornstarsError,
-    data: pornstarsData,
-  } = useQuery(GET_ALL_PORNSTARS_AND_TAGS, {
-    onCompleted: (data) => {
-      setFullPornstars(data.getAllPornstarsAndTags);
-    },
-  });
-  */
-
   const { pornstarTags, tagsToggle, nameSearchTerm } =
     usePornstarAndTagsContext();
-  const { fullPornstars, setFullPornstars, pornstarsData, pornstarsLoading, pornstarsError } = useFullPornstarsContext();
-  // will be filtered by name by the search bar
-  //const [fullPornstars, setFullPornstars] = useState<FullPornstar[]>([]);
+  const { fullPornstars, pornstarsData, pornstarsLoading, pornstarsError } =
+    useFullPornstarsContext();
 
-  if (pornstarsLoading)
+  if (pornstarsLoading) return <Loading />;
+  if (pornstarsError) {
+    if (
+      pornstarsError.graphQLErrors &&
+      pornstarsError.graphQLErrors.length > 0
+    ) {
+      const errorCode = pornstarsError.graphQLErrors[0].extensions.code;
+      switch (errorCode) {
+        case "VERSION_ERROR":
+          return (
+            <Error>
+              Version Error. A new web version is available. Please refresh your
+              page.
+            </Error>
+          );
+        case "RATE_LIMIT_ERROR":
+          return (
+            <Error>
+              Too many requests for this resource. Please wait and try again
+              again later. Contact support if you think this is was an error.
+            </Error>
+          );
+        default:
+          return (
+            <Error>
+              Error loading pornstars. Please refresh the page and try again.
+              <br></br>
+              If error persists please contact support@myfapsheet.com for help
+            </Error>
+          );
+      }
+    }
     return (
-      <ThreeDots
-        visible={true}
-        height="80"
-        width="80"
-        color="rgb(22, 122, 207);"
-        radius="9"
-        ariaLabel="three-dots-loading"
-        wrapperStyle={{}}
-        wrapperClass=""
-      />
+      <Error>
+        Error loading pornstars. Please refresh the page and try again.
+        <br></br>
+        If error persists please contact support@myfapsheet.com for help
+      </Error>
     );
-  if (pornstarsError) return <div>Error! {pornstarsError.message}</div>;
-
-  console.log(pornstarsData);
-  console.log("pornstardata and  container refresh");
-
-  //console.log('ptags', pornstarTags);
-  console.log("contextttttt", fullPornstars);
+  }
 
   const realFilterPornstarByTags = fullPornstars.filter((pornstar: any) =>
     pornstarTags.every((FilterTag: string) =>
       pornstar.pornstar_tags_text.some((tag: string) => tag === FilterTag)
     )
   );
-  console.log("real", realFilterPornstarByTags);
-  //console.log('see', fullPornstars);
 
   const filteredData = realFilterPornstarByTags.filter((item: any) =>
     item.pornstar_name.toLowerCase().includes(nameSearchTerm.toLowerCase())
   );
 
-  console.log("what is fullporn", fullPornstars);
-  console.log("filteredata", filteredData);
-  console.log("idk",pornstarsData.getAllPornstarsAndTags)
-
-  //we could actually utilize the full pornstars state if we're keeping it instead of duplicating the logic for tags
   return (
     <>
       <div className={styles["pornstar-tiles-container"]}>
@@ -92,8 +82,8 @@ export default function PornstarTilesContainer() {
           ? realFilterPornstarByTags
           : nameSearchTerm || pornstarTags.length !== 0
           ? filteredData
-          // copy of the default pornstars if the user didn't type anything in search bar
-          : [...pornstarsData.getAllPornstarsAndTags]
+          : // copy of the default pornstars if the user didn't type anything in search bar
+            [...pornstarsData.getAllPornstarsAndTags]
         )
           .sort(function (a: any, b: any) {
             return a.pornstar_name
@@ -103,17 +93,19 @@ export default function PornstarTilesContainer() {
           .map((pornstar: any) => {
             return (
               <PornstarTile
-                key={pornstar.pornstar_id}
-                pornstar_id={pornstar.pornstar_id}
+                key={pornstar.pornstar_url_slug}
+                pornstar_url_slug={pornstar.pornstar_url_slug}
                 pornstar_name={pornstar.pornstar_name}
                 pornstar_picture_path={pornstar.pornstar_picture_path}
                 tags={pornstar.pornstar_tags_text}
               />
             );
           })}
-        {pornstarsData.getAllPornstarsAndTags.length == 0 &&         <Link href={"/resources"} className={styles["resources-copy"]}>
-        Your list is empty. Add a pornstar or click here for resources.
-        </Link>}
+        {pornstarsData.getAllPornstarsAndTags.length == 0 && (
+          <Link href={"/resources"} className={styles["resources-copy"]}>
+            Your list is empty. Add a pornstar or click here for resources.
+          </Link>
+        )}
       </div>
     </>
   );

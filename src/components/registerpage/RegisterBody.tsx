@@ -10,6 +10,7 @@ import FormWrapper from "../utilities/FormWrapper";
 import FormInput from "../utilities/FormInput";
 import FormInputInvalidMessage from "../utilities/FormInputInvalidMessage";
 import FormSubmitButton from "../utilities/FormSubmitButton";
+import { useApolloClient } from "@apollo/client";
 
 export default function RegisterBody() {
   const {
@@ -44,9 +45,8 @@ export default function RegisterBody() {
         user_password: registerPassword,
       },
     },
-    errorPolicy: "all",
   });
-
+  const client = useApolloClient();
   // clears the error message the user starts typing again
   useEffect(() => {
     if (uniqueUsernameIsInvalid) setUniqueUsernameIsInvalid(false);
@@ -57,6 +57,8 @@ export default function RegisterBody() {
   const [uniqueEmailIsInvalid, setUniqueEmailIsInvalid] = useState(false);
 
   const [genericError, setGenericError] = useState(false);
+  const [versionError, setVersionError] = useState(false);
+  const [rateLimitError, setRateLimitError] = useState(false);
 
   const router = useRouter();
   // consider try catch in future for network errors or some other mysterious error
@@ -83,14 +85,23 @@ export default function RegisterBody() {
             setUniqueUsernameIsInvalid(true);
             setUniqueEmailIsInvalid(false);
             break;
+          case "VERSION_ERROR":
+            setVersionError(true);
+            break;
+          case "RATE_LIMIT_ERROR":
+            setRateLimitError(true);
+            break;
           default:
             setGenericError(true);
         }
       }
       // Success case
       else if (result.data) {
+        // remove old userprofile if for some reason the user decides to register for another account after making different account in registration
+        client.cache.evict({ id: "UserProfileReturn" });
+        client.cache.gc();
         console.log("Registration successful");
-        router.push("/dashboard");
+        router.push("/email-verification");
       }
     } catch (error) {
       console.error("An unexpected error occurred:", error);
@@ -102,6 +113,8 @@ export default function RegisterBody() {
     <FormWrapper
       onSubmit={registerSubmitHandler}
       genericError={genericError}
+      versionError={versionError}
+      rateLimitError={rateLimitError}
       marginTop="5%"
     >
       <Image

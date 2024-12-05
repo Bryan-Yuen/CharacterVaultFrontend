@@ -52,6 +52,18 @@ const CONFIRM_CHANGE_EMAIL = gql`
   }
 `;
 
+const CONFIRM_EMAIL_ADDRESS = gql`
+  mutation Mutation($confirmEmailAddressInput: ConfirmEmailAddressInputType!) {
+    confirmEmailAddress(confirmEmailAddressInput: $confirmEmailAddressInput) 
+  }
+`;
+
+const RESEND_VERIFICATION_EMAIL = gql`
+  mutation ResendVerificationEmail {
+    resendVerificationEmail
+  }
+`;
+
 export {
   REGISTER_USER,
   LOGIN_USER,
@@ -61,4 +73,6 @@ export {
   CHANGE_PASSWORD_LOGGED_IN,
   CHANGE_EMAIL,
   CONFIRM_CHANGE_EMAIL,
+  CONFIRM_EMAIL_ADDRESS,
+  RESEND_VERIFICATION_EMAIL
 };

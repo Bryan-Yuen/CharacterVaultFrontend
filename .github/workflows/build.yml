@@ -20,3 +20,5 @@ jobs:
 
       - name: Build Project
         run: npm run build
+        env:
+          MY_API_KEY: ${{ secrets.FRONTEND_ENV_VARIABLES }}

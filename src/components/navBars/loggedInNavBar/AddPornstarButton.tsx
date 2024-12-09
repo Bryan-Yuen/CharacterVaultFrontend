@@ -5,11 +5,11 @@ import { useFullPornstarsContext } from "@/contexts/FullPornstarsContext";
 import PornstarLimitUpgradeModal from "./PornstarLimitUpgradeModal";
 
 interface propDefs {
-  optionalProp?: string;
+  phone?: boolean;
 }
 
 // we could do optional prop or we could actually just coniditonally render the string to be diffrent based on screen size
-export default function AddPornstarButton() {
+export default function AddPornstarButton({phone} : propDefs) {
   const router = useRouter();
 
   const { fullPornstars } = useFullPornstarsContext();
@@ -28,7 +28,7 @@ export default function AddPornstarButton() {
         className={`${styles["header"]} ${styles["add-pornstar"]}`}
         onClick={addPornstarHandler}
       >
-        Add Pornstar
+        {phone ? "+" : "Add Pornstar"}
       </button>
       {pornstarLimitUpgradeModalIsOpen && (
         <PornstarLimitUpgradeModal

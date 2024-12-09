@@ -53,14 +53,14 @@ export default memo(function PornstarLinks({ pornstarLinks, setPornstarLinks }: 
             <label className={styles['title-label']}>Title</label>
             <input
               type="text"
-              placeholder="Title/Studio/Notes"
+              placeholder="Title/Studio/Notes (Optional)"
               value={input.pornstar_link_title}
               onChange={(event) => handleTitleInputChange(index, event)}
             />
             <label className={styles['url-label']}>URL</label>
             <input
               type="text"
-              placeholder="Video Link"
+              placeholder="Video Link (Optional)"
               value={input.pornstar_link_url}
               onChange={(event) => handleUrlInputChange(index, event)}
             />

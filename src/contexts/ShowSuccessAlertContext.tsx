@@ -6,8 +6,11 @@ type SuccessAlertIsOpenContextProviderProps = {
 
 // had any there we might change it back if we get errors
 type SuccessAlertIsOpenContext = {
+  successText : string;
+  setSuccessText: React.Dispatch<React.SetStateAction<string>>;
   successAlertIsOpen : boolean;
   setSuccessAlertIsOpen : React.Dispatch<React.SetStateAction<boolean>>;
+  showSuccessfulPopup: () => void;
 }
 
 export const SuccessAlertIsOpenContext = createContext<SuccessAlertIsOpenContext | null>(null)
@@ -15,12 +18,27 @@ export const SuccessAlertIsOpenContext = createContext<SuccessAlertIsOpenContext
 // will change tagtoggle later
 export default function SuccessAlertIsOpenContextProvider({children} : SuccessAlertIsOpenContextProviderProps) {
   const [successAlertIsOpen, setSuccessAlertIsOpen] = useState<boolean>(false);
+  const [successText, setSuccessText] = useState<string>('');
+
+  const showSuccessfulPopup = () => {
+    setSuccessAlertIsOpen(true);
+
+    setTimeout(() => {
+      console.log("settimeout called")
+      // reset
+      setSuccessAlertIsOpen(false);
+      setSuccessText('')
+    }, 3000);
+  };
 
   console.log("im in context", successAlertIsOpen)
   return (
     <SuccessAlertIsOpenContext.Provider value={{
       successAlertIsOpen,
-      setSuccessAlertIsOpen
+      setSuccessAlertIsOpen,
+      showSuccessfulPopup,
+      successText,
+      setSuccessText
     }}>
       {children}
     </SuccessAlertIsOpenContext.Provider>

@@ -64,6 +64,12 @@ const RESEND_VERIFICATION_EMAIL = gql`
   }
 `;
 
+const UPDATE_USER_IS_INTERESTED = gql`
+mutation Mutation($updateUserIsInterestedInput: UpdateUserIsInterestedInputType!) {
+  updateUserIsInterested(updateUserIsInterestedInput: $updateUserIsInterestedInput)
+}
+`;
+
 export {
   REGISTER_USER,
   LOGIN_USER,
@@ -74,5 +80,6 @@ export {
   CHANGE_EMAIL,
   CONFIRM_CHANGE_EMAIL,
   CONFIRM_EMAIL_ADDRESS,
-  RESEND_VERIFICATION_EMAIL
+  RESEND_VERIFICATION_EMAIL,
+  UPDATE_USER_IS_INTERESTED
 };

@@ -17,7 +17,7 @@ import GenericError from "../utilities/GenericError";
 import MutationVersionError from "../utilities/MutationVersionError";
 import RateLimitError from "../utilities/RateLimitError";
 import "dotenv/config";
-//import { useSuccessAlertContext } from '@/contexts/ShowSuccessAlertContext';
+import { useSuccessAlertContext } from '@/contexts/ShowSuccessAlertContext';
 
 if (!process.env.NEXT_PUBLIC_BUCKET_URL) {
   throw new Error("no bucket url");
@@ -40,6 +40,8 @@ export default function AddPornstarBody() {
   const router = useRouter();
   const client = useApolloClient();
 
+  const {showSuccessfulPopup , setSuccessText} = useSuccessAlertContext();
+
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
   const [pornstarTags, setPornstarTags] = useState<string[]>([]);
@@ -49,6 +51,7 @@ export default function AddPornstarBody() {
   const [isDesktop, setDesktop] = useState(false);
 
   // lets maybe change this name to fail to add ponstar error instead of generic
+  const [pornstarNameExists, setPornstarNameExists] = useState(false)
   const [genericError, setGenericError] = useState(false);
   const [versionError, setVersionError] = useState(false);
   const [rateLimitError, setRateLimitError] = useState(false);
@@ -77,6 +80,7 @@ export default function AddPornstarBody() {
         pornstar_links_title_url: pornstarLinks,
       },
     },
+    errorPolicy: "all"
   });
 
   const addPornstarHandler = async (e: FormEvent<HTMLFormElement>) => {
@@ -94,9 +98,12 @@ export default function AddPornstarBody() {
         return;
       }
       if (result.errors && result.errors.length > 0) {
-        const errorCode = result.errors[0].extensions?.code;
+        const errorCode = result.errors[0].extensions.code;
 
         switch (errorCode) {
+          case "PORNSTAR_NAME_ALREADY_EXISTS":
+            setPornstarNameExists(true);
+            break;
           case "VERSION_ERROR":
             setVersionError(true);
             break;
@@ -151,6 +158,8 @@ export default function AddPornstarBody() {
           },
         });
 
+        setSuccessText("Pornstar added")
+        showSuccessfulPopup();
         router.push("/dashboard");
       }
     } catch (error) {
@@ -179,6 +188,7 @@ export default function AddPornstarBody() {
               pornstarNameIsInvalid={pornstarNameIsInvalid}
               pornstarNameChangeHandler={pornstarNameChangeHandler}
               pornstarNameBlurHandler={pornstarNameBlurHandler}
+              pornstarNameExists={pornstarNameExists}
             />
             {!isDesktop && (
               <MobileUploadImage

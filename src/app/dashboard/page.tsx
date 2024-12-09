@@ -7,7 +7,6 @@ import { ApolloProvider, useQuery } from "@apollo/client";
 import client from "@/apolloClient/apolloClient";
 import PornstarAndTagsContextProvider from "@/contexts/PornstarAndTagsContext";
 import FilteredPornstarsContextProvider from "@/contexts/FullPornstarsContext";
-import SuccessAlertIsOpenContextProvider from "@/contexts/ShowSuccessAlertContext";
 import AuthenticationWrapper from "@/components/utilities/AuthenticationWrapper";
 
 export default function dashboard() {
@@ -15,12 +14,10 @@ export default function dashboard() {
     <ApolloProvider client={client}>
       <PornstarAndTagsContextProvider>
         <FilteredPornstarsContextProvider>
-          <SuccessAlertIsOpenContextProvider>
             <AuthenticationWrapper>
               <LoggedInNavbar />
               <DashboardBody />
             </AuthenticationWrapper>
-          </SuccessAlertIsOpenContextProvider>
         </FilteredPornstarsContextProvider>
       </PornstarAndTagsContextProvider>
     </ApolloProvider>

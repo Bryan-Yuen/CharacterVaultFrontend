@@ -35,6 +35,7 @@ export default function LoginBody() {
         user_password: loginPassword,
       },
     },
+    errorPolicy: "all"
   });
 
   // gets rid of input errors when the user types again

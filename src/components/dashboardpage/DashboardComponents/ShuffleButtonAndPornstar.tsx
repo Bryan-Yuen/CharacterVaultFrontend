@@ -24,11 +24,11 @@ export default function ShuffleButtonAndPornstar() {
   );
 
   function handleOnClickShuffle() {
-    console.log("whats in here", realFilterPornstarByTags);
     let newIndex;
+    // if pornstars length is 1, run only 1 time
     do {
       newIndex = Math.floor(Math.random() * realFilterPornstarByTags.length);
-    } while (newIndex === randomIndex);
+    } while (newIndex === randomIndex && realFilterPornstarByTags.length > 1);
 
     setRandomIndex(newIndex);
     if (!buttonClicked) {
@@ -40,8 +40,6 @@ export default function ShuffleButtonAndPornstar() {
     if (buttonClicked) setButtonClicked(false);
   }
 
-  console.log("lengthhh", realFilterPornstarByTags.length);
-  console.log(randomIndex);
   // PornstarTilesContainer has the same query and they both always run at the same time so that one will do show the loading and error
   if (pornstarsLoading) return <></>;
   if (pornstarsError) return <></>;

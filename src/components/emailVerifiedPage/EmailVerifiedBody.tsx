@@ -33,6 +33,7 @@ export default function EmailVerifiedBody() {
         token: token,
       },
     },
+    errorPolicy: "all"
   });
 
   const confirmEmailHandler = async () => {

@@ -36,6 +36,7 @@ export default function SupportBody() {
         form_message: textArea,
       },
     },
+    errorPolicy: "all"
   });
 
   const [emailSent, setEmailSent] = useState(false);

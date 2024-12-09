@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, useEffect } from "react";
+import React, { FormEvent, useState, useEffect,useRef } from "react";
 //import styles from './AddTagModal.module.scss';
 import { ADD_USER_TAG } from "@/mutations/userTagMutations";
 import { useMutation } from "@apollo/client";
@@ -9,15 +9,14 @@ import FormInput from "../utilities/FormInput";
 import FormInputInvalidMessage from "../utilities/FormInputInvalidMessage";
 import FormSubmitButton from "../utilities/FormSubmitButton";
 import { gql } from "@apollo/client";
+import { useSuccessAlertContext } from '@/contexts/ShowSuccessAlertContext';
 
 interface propDefs {
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  showSuccessfulPopup: () => void;
 }
 
 export default function AddTagModal({
   setModalIsOpen,
-  showSuccessfulPopup,
 }: propDefs) {
   console.log("addtag comp called");
   const {
@@ -33,13 +32,23 @@ export default function AddTagModal({
       newUserTag: {
         user_tag_text: tag.toLowerCase(),
       },
-    }
+    },
+    errorPolicy: "all"
   });
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    // Focus the input element when the component mounts
+    inputRef.current?.focus();
+  }, []); // Empty dependency array ensures this runs only once when the component mounts
 
   // clears the error message the user starts typing again
   useEffect(() => {
     if (uniqueTagIsInvalid) setUniqueTagIsInvalid(false);
   }, [tag]);
+
+  const {showSuccessfulPopup , setSuccessText} = useSuccessAlertContext();
 
   const [uniqueTagIsInvalid, setUniqueTagIsInvalid] = useState(false);
   
@@ -97,6 +106,7 @@ export default function AddTagModal({
         });
 
         setModalIsOpen(false);
+        setSuccessText("Tag added")
         showSuccessfulPopup();
       }
     } catch (error) {
@@ -121,6 +131,7 @@ export default function AddTagModal({
         onChangeHandler={tagChangeHandler}
         onBlurHandler={tagBlurHandler}
         value={tag}
+        inputRef={inputRef}
       >
         <FormInputInvalidMessage
           inputIsInvalid={tagIsInvalid}

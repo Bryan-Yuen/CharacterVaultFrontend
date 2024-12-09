@@ -1,24 +1,44 @@
-.pop-up-container{
-  position:absolute;
-  z-index: 2;
-  width:400px;
-  max-width:100%;
+.parent {
+  position: absolute;
+  height: calc(100% - 75px);
+}
+
+.pop-up-container {
+  position: sticky;
+  z-index: 200;
+  width: 350px;
+  max-width: 100%;
   background-color: green;
-  padding: 5px 10px ;
-  top:20px;
-  display:flex;
+  padding: 10px;
+  top: 20px;
+  display: flex;
   align-items: center;
-  height:40px;
+  height: 40px;
   border-radius: 4px;
+  font-size: 18px;
+  opacity: 0; /* Initially hidden */
+  transform: translateY(-20px); /* Start above the screen */
+  animation: dropdown 0.5s ease-out forwards; /* Apply the dropdown animation */
 }
 
 .success-text {
-  margin-left:5px;
+  margin-left: 5px;
+}
+
+@keyframes dropdown {
+  0% {
+    transform: translateY(-20px); /* Start above the screen */
+    opacity: 0; /* Fully transparent */
+  }
+  100% {
+    transform: translateY(0); /* End at its normal position */
+    opacity: 1; /* Fully visible */
+  }
 }
 
 @media only screen and (max-width: 800px) {
-  .pop-up-container{
-    width:50vw;
+  .pop-up-container {
+    width: 50vw;
     justify-content: center;
   }
 }

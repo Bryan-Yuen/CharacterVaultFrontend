@@ -8,6 +8,7 @@ interface propDefs {
 
 export default function SuccessPopUp({ successText }: propDefs) {
   return (
+    <div className={styles['parent']}>
     <div className={styles['pop-up-container']}>  <Image
     priority
     src="/check.png"
@@ -15,5 +16,6 @@ export default function SuccessPopUp({ successText }: propDefs) {
     height={20}
     width={20}
   /><span className={styles['success-text']}>{successText}</span></div>
+  </div>
   )
 }

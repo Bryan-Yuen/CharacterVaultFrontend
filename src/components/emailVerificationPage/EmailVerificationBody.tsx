@@ -11,7 +11,9 @@ import GenericError from "../utilities/GenericError";
 import MutationVersionError from "../utilities/MutationVersionError";
 
 export default function EmailVerificationBody() {
-  const [resendVerificationEmail, { loading : resendVerificationEmailLoading }] = useMutation(RESEND_VERIFICATION_EMAIL);
+  const [resendVerificationEmail, { loading : resendVerificationEmailLoading }] = useMutation(RESEND_VERIFICATION_EMAIL, {
+    errorPolicy: "all"
+  });
   const { loading, error, data } = useQuery(GET_USER_PROFILE);
   
   const [genericError, setGenericError] = useState(false);

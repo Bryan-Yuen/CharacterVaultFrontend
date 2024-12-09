@@ -101,7 +101,7 @@ export default memo(function MobileUploadImage({
             ref={fileInputRef}
             onChange={fileInputChangeHandler}
           />
-          <button  className={styles["file-upload-button"]}
+          <button type="button"  className={styles["file-upload-button"]}
             onClick={handleClick}>Upload Image</button>
         </>
       )}

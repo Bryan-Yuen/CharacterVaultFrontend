@@ -44,6 +44,7 @@ export default function ChangePasswordBody() {
         token: token,
       }
     },
+    errorPolicy: "all"
   });
 
   const [passwordChanged, setPasswordChanged] = useState(false);

@@ -112,6 +112,7 @@ export default function UpdatePasswordBody() {
         onChangeHandler={currentPasswordChangeHandler}
         onBlurHandler={currentPasswordBlurHandler}
         type="password"
+        value={currentPassword}
       >
         <FormInputInvalidMessage
           inputIsInvalid={currentPasswordIsInvalid}
@@ -125,6 +126,7 @@ export default function UpdatePasswordBody() {
         onChangeHandler={newPasswordChangeHandler}
         onBlurHandler={newPasswordBlurHandler}
         type="password"
+        value={newPassword}
       >
         <FormInputInvalidMessage
           inputIsInvalid={newPasswordIsInvalid}
@@ -138,6 +140,7 @@ export default function UpdatePasswordBody() {
         onChangeHandler={confirmNewPasswordChangeHandler}
         onBlurHandler={confirmNewPasswordBlurHandler}
         type="password"
+        value={confirmNewPassword}
       >
         <FormInputInvalidMessage
           inputIsInvalid={confirmNewPasswordIsInvalid}

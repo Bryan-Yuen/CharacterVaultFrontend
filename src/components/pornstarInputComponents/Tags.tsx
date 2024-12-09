@@ -90,6 +90,7 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
             user_tag_text: searchTerm.toLowerCase(),
           },
         },
+        errorPolicy: "all"
       });
       if (result.errors && result.errors.length > 0) {
         const errorCode = result.errors[0].extensions?.code;

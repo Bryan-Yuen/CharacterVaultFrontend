@@ -48,6 +48,7 @@ export default function ViewPornstarBody() {
   if (error) {
     if (error.graphQLErrors && error.graphQLErrors.length > 0) {
       const errorCode = error.graphQLErrors[0].extensions.code;
+      console.log(error.graphQLErrors)
       switch (errorCode) {
         // scenario if user deleted the pornstar and clicked on the old pornstar link in web browser
         // or if user refreshes the page after error from save button maybe because pornstar is deleted

@@ -36,6 +36,7 @@ export default function ContactPageBody() {
         form_message: textArea,
       },
     },
+    errorPolicy: "all"
   });
 
   const [emailSent, setEmailSent] = useState(false);

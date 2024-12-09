@@ -45,6 +45,7 @@ export default function RegisterBody() {
         user_password: registerPassword,
       },
     },
+    errorPolicy: "all"
   });
   const client = useApolloClient();
   // clears the error message the user starts typing again

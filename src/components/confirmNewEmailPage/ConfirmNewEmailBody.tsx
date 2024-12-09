@@ -27,7 +27,7 @@ export default function ConfirmNewEmailBody() {
     }
   }, [token]);
 
-  const [confirmChangeEmail, { data, loading}] = useMutation(
+  const [confirmChangeEmail, { data, loading }] = useMutation(
     CONFIRM_CHANGE_EMAIL,
     {
       variables: {
@@ -35,6 +35,7 @@ export default function ConfirmNewEmailBody() {
           token: token,
         },
       },
+      errorPolicy: "all"
     }
   );
 

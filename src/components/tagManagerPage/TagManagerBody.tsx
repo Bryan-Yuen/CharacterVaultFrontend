@@ -6,10 +6,11 @@ import EditTagModal from "./EditTagModal";
 import AddTagModal from "./AddTagModal";
 import DeleteTagModal from "./DeleteTagModal";
 import Image from "next/image";
-import SuccessPopUp from "../utilities/SuccessPopUp";
 import Loading from "../utilities/Loading";
 import Error from "../utilities/Error";
 import OutsideClickDetector from "../utilities/OutsideClickDetector";
+import { useSuccessAlertContext } from "@/contexts/ShowSuccessAlertContext";
+import SuccessPopUp from "../utilities/SuccessPopUp";
 
 // definitely need lazy loading here, maybe just show a few over the page
 // depending on screen size, and as user scrolls load more.
@@ -22,7 +23,7 @@ export default function TagManagerBody() {
 
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState<boolean>(false);
 
-  const [addTagSuccessPopUpIsOpen, setAddTagSuccessPopUpIsOpen] = useState<boolean>(false);
+  const { successAlertIsOpen, successText } = useSuccessAlertContext();
 
   const [selectedTagText, setSelectedTagText] = useState<string>("");
   const [selectedTagId, setSelectedTagId] = useState<number>(0);
@@ -40,15 +41,6 @@ export default function TagManagerBody() {
     setClicked(false);
   };
 
-  // in the future can change this to a reusable one so the edit function and use it.
-  const showSuccessfulPopup = () => {
-    setAddTagSuccessPopUpIsOpen(true);
-
-    setTimeout(() => {
-      setAddTagSuccessPopUpIsOpen(false);
-    }, 3000)
-  };
-  
   const handleEditTagClick = (tagId: number, tagText: string) => {
     setSelectedTagText(tagText);
     setSelectedTagId(tagId);
@@ -63,7 +55,7 @@ export default function TagManagerBody() {
 
   const clickedInsideClass = clicked ? "input-active" : "";
 
-  if (loading) return <Loading/>
+  if (loading) return <Loading />;
   if (error) {
     if (error.graphQLErrors && error.graphQLErrors.length > 0) {
       const errorCode = error.graphQLErrors[0].extensions.code;
@@ -112,6 +104,7 @@ export default function TagManagerBody() {
 
   return (
     <div className={styles["component-container"]}>
+      {successAlertIsOpen && <SuccessPopUp successText={successText} />}
       <div className={styles["modal-header"]}>
         <h2 className={styles["modal-title"]}>Tag Manager</h2>
         <button
@@ -122,29 +115,29 @@ export default function TagManagerBody() {
         </button>
       </div>
       <OutsideClickDetector onOutsideClick={handleOutsideClick}>
-      <div
-        className={`${styles["search-input-container"]} ${styles[clickedInsideClass]}`}
-      >
-        <input
-          type="text"
-          className={styles["search-input"]}
-          placeholder="Search"
-          onClick={handleClick}
-          value={searchTerm}
-          ref={inputRef}
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            setSearchTerm(event.target.value)
-          }
-        />
-      </div>
+        <div
+          className={`${styles["search-input-container"]} ${styles[clickedInsideClass]}`}
+        >
+          <input
+            type="text"
+            className={styles["search-input"]}
+            placeholder="Search"
+            onClick={handleClick}
+            value={searchTerm}
+            ref={inputRef}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              setSearchTerm(event.target.value)
+            }
+          />
+        </div>
       </OutsideClickDetector>
       <ul className={styles["search-results-container"]}>
-        {(filteredData.length === 0 && searchTerm.length === 0) && (
+        {filteredData.length === 0 && searchTerm.length === 0 && (
           <li key={"new"} className={styles["search-item-container"]}>
             Tags Empty
           </li>
         )}
-        {(filteredData.length === 0 && searchTerm.length > 0) && (
+        {filteredData.length === 0 && searchTerm.length > 0 && (
           <li key={"new"} className={styles["search-item-container"]}>
             No tag exist with that term. Add new tag.
           </li>
@@ -202,13 +195,7 @@ export default function TagManagerBody() {
           setModalIsOpen={setDeleteModalIsOpen}
         />
       )}
-      {addModalIsOpen && (
-        <AddTagModal
-          setModalIsOpen={setAddModalIsOpen}
-          showSuccessfulPopup={showSuccessfulPopup}
-        />
-      )}
-      {addTagSuccessPopUpIsOpen && <SuccessPopUp successText="Tag added" />}
+      {addModalIsOpen && <AddTagModal setModalIsOpen={setAddModalIsOpen} />}
     </div>
   );
 }

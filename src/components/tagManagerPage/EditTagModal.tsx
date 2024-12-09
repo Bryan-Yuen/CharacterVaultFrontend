@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState, useRef } from "react";
 //import styles from "./EditTagModal.module.scss";
 import { EDIT_USER_TAG } from "@/mutations/userTagMutations";
 import { useMutation } from "@apollo/client";
@@ -10,9 +10,7 @@ import FormInputInvalidMessage from "../utilities/FormInputInvalidMessage";
 import FormSubmitButton from "../utilities/FormSubmitButton";
 import { GET_ALL_PORNSTARS_AND_TAGS } from "@/queries/pornstarsQueries";
 import { gql } from "@apollo/client";
-import GenericError from "../utilities/GenericError";
-import MutationVersionError from "../utilities/MutationVersionError";
-import RateLimitError from "../utilities/RateLimitError";
+import { useSuccessAlertContext } from '@/contexts/ShowSuccessAlertContext';
 
 interface propDefs {
   user_tag_id: number;
@@ -43,7 +41,15 @@ export default function EditTagModal({
         user_tag_text: tag.toLowerCase(),
       },
     },
+    errorPolicy: "all"
   });
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    // Focus the input element when the component mounts
+    inputRef.current?.focus();
+  }, []); // Empty dependency array ensures this runs only once when the component mounts
 
   // initiliaze tag state with text
   useEffect(() => {
@@ -54,6 +60,8 @@ export default function EditTagModal({
   useEffect(() => {
     if (uniqueTagIsInvalid) setUniqueTagIsInvalid(false);
   }, [tag]);
+
+  const {showSuccessfulPopup , setSuccessText} = useSuccessAlertContext();
 
   const [uniqueTagIsInvalid, setUniqueTagIsInvalid] = useState(false);
 
@@ -126,6 +134,8 @@ export default function EditTagModal({
         client.cache.gc();
 
         setModalIsOpen(false);
+        setSuccessText("Tag added")
+        showSuccessfulPopup();
       }
     } catch (error) {
       console.error("An unexpected error occurred:", error);
@@ -149,6 +159,7 @@ export default function EditTagModal({
         onChangeHandler={tagChangeHandler}
         onBlurHandler={tagBlurHandler}
         value={tag}
+        inputRef={inputRef}
       >
         <FormInputInvalidMessage
           inputIsInvalid={tagIsInvalid}

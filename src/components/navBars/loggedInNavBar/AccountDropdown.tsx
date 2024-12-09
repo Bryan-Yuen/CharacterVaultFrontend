@@ -17,7 +17,9 @@ interface propDefs {
 }
 
 export default function AccountDropdown(props: propDefs) {
-  const [logoutUser, { loading: logoutLoading }] = useMutation(LOGOUT_USER);
+  const [logoutUser, { loading: logoutLoading }] = useMutation(LOGOUT_USER, {
+    errorPolicy: "all"
+  });
 
   const { loading, error, data } = useQuery(GET_USER_PROFILE);
   const [genericError, setGenericError] = useState(false);

@@ -25,6 +25,7 @@ export default function ForgotPasswordBody() {
         user_email: forgotPasswordEmail,
       }
     },
+    errorPolicy: "all"
   });
 
   // clears the error message the user starts typing again

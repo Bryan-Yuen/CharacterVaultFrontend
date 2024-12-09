@@ -12,7 +12,9 @@ import MutationVersionError from "../../utilities/MutationVersionError";
 import RateLimitError from "../../utilities/RateLimitError";
 
 export default function EmailVerificationNavBar() {
-  const [logoutUser, { loading: logoutLoading }] = useMutation(LOGOUT_USER);
+  const [logoutUser, { loading: logoutLoading }] = useMutation(LOGOUT_USER, {
+    errorPolicy: "all"
+  });
 
   const [genericError, setGenericError] = useState(false);
   const [versionError, setVersionError] = useState(false);

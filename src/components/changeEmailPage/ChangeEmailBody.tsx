@@ -37,6 +37,7 @@ export default function ChangeEmailBody() {
         user_email: newEmail,
       },
     },
+    errorPolicy: "all"
   });
 
   const changeEmailSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
@@ -49,6 +50,7 @@ export default function ChangeEmailBody() {
       }
       if (result.errors && result.errors.length > 0) {
         const errorCode = result.errors[0].extensions?.code;
+        console.log("errorCode",errorCode)
 
         switch (errorCode) {
           case "EMAIL_EXISTS":

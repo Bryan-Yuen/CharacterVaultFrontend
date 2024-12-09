@@ -18,6 +18,7 @@ import Error from "../utilities/Error";
 import GenericError from "../utilities/GenericError";
 import MutationVersionError from "../utilities/MutationVersionError";
 import RateLimitError from "../utilities/RateLimitError";
+import { useSuccessAlertContext } from '@/contexts/ShowSuccessAlertContext';
 
 export enum ImageUpdateStatus {
   AddOrEdit = "ADD_OR_EDIT",
@@ -53,6 +54,7 @@ export default function EditPornstarBody() {
         pornstar_url_slug: params.id,
       },
     },
+    errorPolicy: "all",
     onCompleted: (data) => {
       setPornstarTags(
         data.getPornstar.pornstar_tags.map((tag: any) => tag.tag_text)
@@ -72,6 +74,8 @@ export default function EditPornstarBody() {
     inputBlurHandler: pornstarNameBlurHandler,
     setInput: setPornstarName,
   } = useInput((input) => input.length >= 1);
+
+  const {showSuccessfulPopup, setSuccessText} = useSuccessAlertContext();
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
@@ -98,6 +102,7 @@ export default function EditPornstarBody() {
 
   const [isDesktop, setDesktop] = useState(false);
 
+  const [pornstarNameExists, setPornstarNameExists] = useState(false)
   const [genericError, setGenericError] = useState(false);
   const [versionError, setVersionError] = useState(false);
   const [rateLimitError, setRateLimitError] = useState(false);
@@ -282,6 +287,9 @@ export default function EditPornstarBody() {
         const errorCode = result.errors[0].extensions?.code;
 
         switch (errorCode) {
+          case "PORNSTAR_NAME_ALREADY_EXISTS":
+            setPornstarNameExists(true);
+            break;
           case "VERSION_ERROR":
             setVersionError(true);
             break;
@@ -338,7 +346,12 @@ export default function EditPornstarBody() {
           `,
         });
 
+        setSuccessText("Changes saved")
+        showSuccessfulPopup();
         router.push("/dashboard");
+        // we can checkout seeing if user was on dashboard 2 pages ago later
+        //router.back();
+        //router.back();
       }
     } catch (error) {
       console.error("An unexpected error occurred:", error);
@@ -413,6 +426,7 @@ export default function EditPornstarBody() {
               pornstarNameIsInvalid={pornstarNameIsInvalid}
               pornstarNameChangeHandler={pornstarNameChangeHandler}
               pornstarNameBlurHandler={pornstarNameBlurHandler}
+              pornstarNameExists={pornstarNameExists}
             />
             {!isDesktop && (
               <MobileUploadImage
@@ -449,7 +463,7 @@ export default function EditPornstarBody() {
                   <label className={styles["title-label"]}>Title</label>
                   <input
                     type="text"
-                    placeholder="Title/Studio/Notes"
+                    placeholder="Title/Studio/Notes (Optional)"
                     value={link.pornstar_link_title}
                     onChange={(e) =>
                       titleInputChangeHandler(e, link.pornstar_link_id)
@@ -459,7 +473,7 @@ export default function EditPornstarBody() {
                   <input
                     type="text"
                     value={link.pornstar_link_url}
-                    placeholder="Video Link"
+                    placeholder="Video Link (Optional)"
                     onChange={(e) =>
                       urlInputChangeHandler(e, link.pornstar_link_id)
                     }

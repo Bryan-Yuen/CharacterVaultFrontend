@@ -5,6 +5,7 @@ query Query {
     getUserProfile {
       user_email
       user_username
+      user_is_interested
     }
   }
 `;

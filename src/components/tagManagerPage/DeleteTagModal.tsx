@@ -6,6 +6,7 @@ import { useApolloClient } from "@apollo/client";
 import Modal from "../utilities/Modal";
 import FormSubmitButton from "../utilities/FormSubmitButton";
 import { GET_ALL_PORNSTARS_AND_TAGS } from "@/queries/pornstarsQueries";
+import { useSuccessAlertContext } from '@/contexts/ShowSuccessAlertContext';
 
 interface propDefs {
   user_tag_id: number;
@@ -20,6 +21,8 @@ export default function DeleteTagModal({
 }: propDefs) {
   const client = useApolloClient();
 
+  const {showSuccessfulPopup , setSuccessText} = useSuccessAlertContext();
+
   const [genericError, setGenericError] = useState(false);
   const [versionError, setVersionError] = useState(false);
   const [rateLimitError, setRateLimitError] = useState(false);
@@ -30,6 +33,7 @@ export default function DeleteTagModal({
         user_tag_id: user_tag_id,
       },
     },
+    errorPolicy: "all"
   });
 
   const deleteUserTagHandler = async (e: FormEvent<HTMLFormElement>) => {
@@ -80,6 +84,8 @@ export default function DeleteTagModal({
         client.cache.gc();
 
         setModalIsOpen(false);
+        setSuccessText("Tag deleted")
+        showSuccessfulPopup();
       }
     } catch (error) {
       console.error("An unexpected error occurred:", error);

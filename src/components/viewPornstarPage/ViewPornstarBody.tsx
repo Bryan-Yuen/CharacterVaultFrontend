@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { GET_PORNSTAR } from "@/queries/pornstars";
-import { useMutation, useQuery } from "@apollo/client";
+import { GET_PORNSTAR } from "@/queries/pornstarsQueries";
+import { useQuery } from "@apollo/client";
 import styles from "./ViewPornstarBody.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import DeletePornstarModal from "./DeletePornstarModal";
-import { ThreeDots } from "react-loader-spinner";
+import Loading from "../utilities/Loading";
+import Error from "../utilities/Error";
+import { useRouter } from "next/navigation";
 
 export default function ViewPornstarBody() {
   // read a route's dynamic params filled in by the current URL.
   const params = useParams<{ id: string }>();
+  const router = useRouter();
 
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState<boolean>(false);
 
@@ -33,34 +36,59 @@ export default function ViewPornstarBody() {
     return () => window.removeEventListener("resize", updateMedia);
   }, []);
 
-  //const pornstarIdValid = typeof searchParams.get('id') === 'string' ? parseInt(searchParams.get('id') ) : -1;
-  const pornstarId = typeof params.id === "string" ? parseInt(params.id) : "-1";
-
   const { loading, error, data } = useQuery(GET_PORNSTAR, {
     variables: {
       getPornstarInput: {
-        pornstar_id: pornstarId,
+        pornstar_url_slug: params.id,
       },
     },
-    errorPolicy: "all",
   });
 
-  if (loading)
+  if (loading) return <Loading />;
+  if (error) {
+    if (error.graphQLErrors && error.graphQLErrors.length > 0) {
+      const errorCode = error.graphQLErrors[0].extensions.code;
+      console.log(error.graphQLErrors)
+      switch (errorCode) {
+        // scenario if user deleted the pornstar and clicked on the old pornstar link in web browser
+        // or if user refreshes the page after error from save button maybe because pornstar is deleted
+        case "PORNSTAR_NOT_FOUND":
+          router.push("/dashboard");
+          return null;
+        case "VERSION_ERROR":
+          return (
+            <Error>
+              Version Error. A new web version is available. Please refresh your
+              page.
+            </Error>
+          );
+        case "RATE_LIMIT_ERROR":
+          return (
+            <Error>
+              Too many requests for this resource. Please wait and try again
+              again later. Contact support if you think this is was an error.
+            </Error>
+          );
+        default:
+          return (
+            <Error>
+              Error loading pornstar data. Please refresh the page and try
+              again.
+              <br></br>
+              If error persists please contact support@myfapsheet.com for help
+            </Error>
+          );
+      }
+    }
     return (
-      <ThreeDots
-        visible={true}
-        height="80"
-        width="80"
-        color="rgb(22, 122, 207);"
-        radius="9"
-        ariaLabel="three-dots-loading"
-        wrapperStyle={{}}
-        wrapperClass=""
-      />
+      <Error>
+        Error loading pornstar data. Please refresh the page and try again.
+        <br></br>
+        If error persists please contact support@myfapsheet.com for help
+      </Error>
     );
-  if (error) return <div>Error! {error.message}</div>;
-  console.log("getpornstar");
-  console.log(data.getPornstar);
+  }
+
   return (
     <div className={styles["component-container"]}>
       <div className={styles["flex-form-container"]}>
@@ -89,7 +117,7 @@ export default function ViewPornstarBody() {
             </h2>
             <div className={styles["buttons-container"]}>
               <Link
-                href={"edit/" + pornstarId}
+                href={"edit/" + params.id}
                 className={styles["edit-button"]}
               >
                 Edit
@@ -150,7 +178,7 @@ export default function ViewPornstarBody() {
       </div>
       {deleteModalIsOpen && (
         <DeletePornstarModal
-          pornstar_id={data.getPornstar.pornstar_id}
+          pornstar_url_slug={data.getPornstar.pornstar_url_slug}
           pornstar_name={data.getPornstar.pornstar_name}
           setModalIsOpen={setDeleteModalIsOpen}
         />

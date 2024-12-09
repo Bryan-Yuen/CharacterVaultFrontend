@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from "react";
 import useInput from "../hooks/useInput";
-import styles from "./UpdatePasswordBody.module.scss";
+//import styles from "./UpdatePasswordBody.module.scss";
 import { useMutation } from "@apollo/client";
 import { CHANGE_PASSWORD_LOGGED_IN } from "@/mutations/userMutations";
 import FormWrapper from "../utilities/FormWrapper";
@@ -45,17 +45,21 @@ export default function UpdatePasswordBody() {
     CHANGE_PASSWORD_LOGGED_IN,
     {
       variables: {
-        currentPassword: currentPassword,
-        newPassword: confirmNewPassword,
+        changePasswordLoggedInInput: {
+          current_password: currentPassword,
+          new_password: confirmNewPassword,
+        },
       },
       errorPolicy: "all",
     }
   );
 
   const [passwordChanged, setPasswordChanged] = useState(false);
-  const [genericError, setGenericError] = useState(false);
 
-  // consider try catch in future for network errors or some other mysterious error
+  const [genericError, setGenericError] = useState(false);
+  const [versionError, setVersionError] = useState(false);
+  const [rateLimitError, setRateLimitError] = useState(false);
+
   const updatePasswordSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -65,7 +69,18 @@ export default function UpdatePasswordBody() {
         return;
       }
       if (result.errors && result.errors.length > 0) {
-        setGenericError(true);
+        const errorCode = result.errors[0].extensions?.code;
+
+        switch (errorCode) {
+          case "VERSION_ERROR":
+            setVersionError(true);
+            break;
+          case "RATE_LIMIT_ERROR":
+            setRateLimitError(true);
+            break;
+          default:
+            setGenericError(true);
+        }
       } else if (result.data) {
         // resets input fields
         currentPasswordSetInput("");
@@ -86,6 +101,8 @@ export default function UpdatePasswordBody() {
     <FormWrapper
       onSubmit={updatePasswordSubmitHandler}
       genericError={genericError}
+      versionError={versionError}
+      rateLimitError={rateLimitError}
     >
       <FormHeader header="Update Password" />
       <FormInput
@@ -95,6 +112,7 @@ export default function UpdatePasswordBody() {
         onChangeHandler={currentPasswordChangeHandler}
         onBlurHandler={currentPasswordBlurHandler}
         type="password"
+        value={currentPassword}
       >
         <FormInputInvalidMessage
           inputIsInvalid={currentPasswordIsInvalid}
@@ -108,6 +126,7 @@ export default function UpdatePasswordBody() {
         onChangeHandler={newPasswordChangeHandler}
         onBlurHandler={newPasswordBlurHandler}
         type="password"
+        value={newPassword}
       >
         <FormInputInvalidMessage
           inputIsInvalid={newPasswordIsInvalid}
@@ -121,6 +140,7 @@ export default function UpdatePasswordBody() {
         onChangeHandler={confirmNewPasswordChangeHandler}
         onBlurHandler={confirmNewPasswordBlurHandler}
         type="password"
+        value={confirmNewPassword}
       >
         <FormInputInvalidMessage
           inputIsInvalid={confirmNewPasswordIsInvalid}
@@ -138,10 +158,9 @@ export default function UpdatePasswordBody() {
         loading={loading}
         buttonText="Save"
       />
-      <SuccessMessage
-        showSuccessMessage={passwordChanged}
-        message="Password has been updated."
-      />
+      <SuccessMessage showSuccessMessage={passwordChanged}>
+        Password has been updated.
+      </SuccessMessage>
     </FormWrapper>
   );
 }

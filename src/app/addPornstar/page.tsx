@@ -10,10 +10,10 @@ import AuthenticationWrapper from "@/components/utilities/AuthenticationWrapper"
 export default function addPornstar() {
   return (
     <ApolloProvider client={client}>
-      <AuthenticationWrapper>
-        <NonDashboardNavbar />
-        <AddPornstarBody />
-      </AuthenticationWrapper>
+        <AuthenticationWrapper>
+          <NonDashboardNavbar />
+          <AddPornstarBody />
+        </AuthenticationWrapper>
     </ApolloProvider>
   );
 }

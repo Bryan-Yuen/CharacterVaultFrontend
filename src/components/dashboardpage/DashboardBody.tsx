@@ -2,20 +2,17 @@ import { useState, useEffect } from "react";
 import styles from "./DashboardBody.module.scss";
 import PornstarTileContainer from "./DashboardComponents/PornstarTilesContainer";
 import SearchSelectedTags from "./DashboardComponents/SearchSelectedTags";
-import FilteredPornstarsContextProvider from "@/contexts/FullPornstarsContext";
 import ShuffleButtonAndPornstar from "./DashboardComponents/ShuffleButtonAndPornstar";
 import SearchTagManagerAddPornstarContainer from "../navBars/loggedInNavBar/SearchTagManagerAddPornstarContainer";
 import SearchBar from "../navBars/loggedInNavBar/SearchBar";
-import Link from "next/link";
 import AddPornstarButton from "../navBars/loggedInNavBar/AddPornstarButton";
-import SuccessAlertIsOpenContextProvider from "@/contexts/ShowSuccessAlertContext";
 import { useSuccessAlertContext } from "@/contexts/ShowSuccessAlertContext";
 import SuccessPopUp from "../utilities/SuccessPopUp";
 
 export default function DashboardBody() {
   const [isDesktop, setDesktop] = useState(false);
   const [isPhone, setPhone] = useState(false);
-  const { successAlertIsOpen, setSuccessAlertIsOpen } =useSuccessAlertContext();
+  const { successAlertIsOpen, successText } = useSuccessAlertContext();
 
   useEffect(() => {
     const updateMedia = () => {
@@ -27,7 +24,7 @@ export default function DashboardBody() {
         setDesktop(false);
       } else {
         setDesktop(false);
-        setPhone(false)
+        setPhone(false);
       }
     };
     updateMedia();
@@ -36,17 +33,15 @@ export default function DashboardBody() {
     return () => window.removeEventListener("resize", updateMedia);
   }, []);
 
-  console.log("successalret",successAlertIsOpen)
-
   return (
-      <div className={styles["dashboard-body"]}>
-        {isDesktop && <SearchTagManagerAddPornstarContainer />}
-        {isPhone && <SearchBar/>}
-        {isPhone && <AddPornstarButton optionalProp="+"/>}
-        <ShuffleButtonAndPornstar />
-        <SearchSelectedTags />
-        <PornstarTileContainer />
-        {successAlertIsOpen && < SuccessPopUp/>}
-      </div>
+    <div className={styles["dashboard-body"]}>
+      {successAlertIsOpen && <SuccessPopUp successText={successText} />}
+      {isDesktop && <SearchTagManagerAddPornstarContainer />}
+      {isPhone && <SearchBar />}
+      {isPhone && <AddPornstarButton phone={true}/>}
+      <ShuffleButtonAndPornstar />
+      <SearchSelectedTags />
+      <PornstarTileContainer />
+    </div>
   );
 }

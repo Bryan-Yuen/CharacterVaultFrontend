@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ReactNode } from 'react'
-import { ApolloProvider,useQuery } from "@apollo/client";
+import { ApolloProvider} from "@apollo/client";
 import client from "@/apolloClient/apolloClient";
 
 interface WrapperProps {

@@ -10,6 +10,7 @@ interface FormInputProps {
   onBlurHandler: (e: FocusEvent<HTMLInputElement>) => void;
   type?: string;
   value?: string;
+  inputRef?: React.RefObject<HTMLInputElement> | null;
 }
 
 export default function FormInput({
@@ -20,7 +21,8 @@ export default function FormInput({
   onChangeHandler,
   onBlurHandler,
   type = "text",
-  value
+  value,
+  inputRef
 }: FormInputProps) {
   return (
     <div
@@ -33,6 +35,7 @@ export default function FormInput({
       onBlur={onBlurHandler}
       type={type}
       {...(value !== undefined ? { value } : {})}
+      {...(inputRef ? { ref: inputRef } : {})}
     />
     {children}
   </div>

@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useRef } from "react";
+import React, { useState, ChangeEvent, useRef, memo } from "react";
 import styles from "./MobileUploadImage.module.scss";
 import Image from "next/image";
 
@@ -21,7 +21,7 @@ interface propDefs {
   imageUpdate?: ImageUpdates;
 }
 
-export default function MobileUploadImage({
+export default memo(function MobileUploadImage({
   selectedImage,
   setSelectedImage,
   pornstar_picture_path,
@@ -101,10 +101,10 @@ export default function MobileUploadImage({
             ref={fileInputRef}
             onChange={fileInputChangeHandler}
           />
-          <button  className={styles["file-upload-button"]}
+          <button type="button"  className={styles["file-upload-button"]}
             onClick={handleClick}>Upload Image</button>
         </>
       )}
     </div>
   );
-}
+});

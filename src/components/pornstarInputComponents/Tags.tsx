@@ -1,84 +1,72 @@
-import React, { useState, KeyboardEvent, ChangeEvent, useRef, useEffect } from 'react';
-import OutsideClickDetector from '../utilities/OutsideClickDetector';
-import styles from './Tags.module.scss';
-import Image from 'next/image';
-import { GET_USER_TAGS } from '@/queries/userTag';
-import { ADD_USER_TAG } from '@/mutations/userTag';
-import { useQuery, useMutation, useApolloClient } from '@apollo/client';
+import React, {
+  useState,
+  KeyboardEvent,
+  ChangeEvent,
+  useRef,
+  useEffect,
+  memo,
+} from "react";
+import OutsideClickDetector from "../utilities/OutsideClickDetector";
+import styles from "./Tags.module.scss";
+import Image from "next/image";
+import { GET_USER_TAGS } from "@/queries/userTagQueries";
+import { ADD_USER_TAG } from "@/mutations/userTagMutations";
+import { useQuery, useMutation, useApolloClient } from "@apollo/client";
+import Loading from "../utilities/Loading";
+import Error from "../utilities/Error";
+import GenericError from "../utilities/GenericError";
+import MutationVersionError from "../utilities/MutationVersionError";
+import RateLimitError from "../utilities/RateLimitError";
+import { gql } from "@apollo/client";
 
 interface propDefs {
-  pornstarTags: PornstarTag[];
-  setPornstarTags: React.Dispatch<React.SetStateAction<PornstarTag[]>>
+  pornstarTags: string[];
+  setPornstarTags: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-export interface PornstarTag {
-  tag_text: string
-  user_tag: {
-    user_tag_id: number;
-  }
-}
+export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
+  console.log("tags render");
+  const client = useApolloClient();
 
-interface UserTag{
-  user_tag_id: number,
-  user_tag_text: string
-}
+  const [accountTags, setAccountTags] = useState<string[]>([]);
 
-export default function Tags({ pornstarTags, setPornstarTags }: propDefs) {
+  const { loading, error, data } = useQuery(GET_USER_TAGS);
 
-  const client = useApolloClient()
-
-  const [accountTags, setAccountTags] = useState<UserTag[]>([])
-
-  const { loading, error, data } = useQuery(GET_USER_TAGS
-    // not necessary because we have useEffect
-    /*
-    , {
-    onCompleted: (data) => {
-      setAccountTags(data.getUserTags);
-    }
-  }
-  */
-  )
+  const [addUserTag] = useMutation(ADD_USER_TAG);
 
   useEffect(() => {
     // wait for both of these to finally be available
-    if(pornstarTags && data)
-    {
-      //setAccountTags(data.getUserTags.filter((item : any) => !pornstarTags.includes(item.user_tag_text)))
-      setAccountTags(data.getUserTags.filter((item : any) => !pornstarTags.map(obj => obj.tag_text).includes(item.user_tag_text)))
-      console.log("im hit")
-      console.log(pornstarTags)
-      console.log(accountTags)
+    if (pornstarTags && data) {
+      setAccountTags(
+        data.getUserTags
+          // first we filter to make sure each tag in account tags doesn't exist in pornstar tags
+          .filter((item: any) => !pornstarTags.includes(item.user_tag_text))
+          // then we convert the new filtered array of objects to only string array
+          .map((item: any) => item.user_tag_text)
+      );
+      console.log("im in useeffect tags");
     }
-  }, [pornstarTags,data]);
+  }, [pornstarTags, data]);
 
-  const [addUserTag] = useMutation(ADD_USER_TAG, {
-    errorPolicy: "all"
-  });
-
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>("");
   // handle when user clicks the input bar to make dropdown
   const [clicked, setClicked] = useState<boolean>(false);
 
-  // not sure what this is for i'll investigate and delete later
-  const parentRef = useRef<HTMLDivElement>(null);
+  const [genericError, setGenericError] = useState(false);
+  const [versionError, setVersionError] = useState(false);
+  const [rateLimitError, setRateLimitError] = useState(false);
+
+  // for focus when clicked
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const filteredData = accountTags.sort().filter((item) =>
-  item.user_tag_text.toLowerCase().includes(searchTerm.toLowerCase())
-);
-
-  /*
-  const filteredData = accountTags.filter((item) =>
-    item.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-  */
+  const filteredData = accountTags
+    .sort()
+    .filter((accountTag) =>
+      accountTag.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   const handleClick = () => {
-    //setClicked((oldClickStatus) => !oldClickStatus)
-    //setClickedInsideInput(true)
-    if(!clicked)
-      setClicked(true)
+    if (!clicked) setClicked(true);
   };
 
   const handleOutsideClick = () => {
@@ -87,115 +75,138 @@ export default function Tags({ pornstarTags, setPornstarTags }: propDefs) {
 
   // maybe focus the input when you drop down
   const toggleDownButton = () => {
-    if(!clicked)
-      if(inputRef.current)
-        inputRef.current.focus();
-    setClicked((prev) => !prev)
-    console.log("hi")
-    console.log(clicked)
-  }
+    if (!clicked) if (inputRef.current) inputRef.current.focus();
+    setClicked((prev) => !prev);
+    console.log("hi");
+    console.log(clicked);
+  };
 
-  const handleTagClickNew = async (tag: string) => {
-
-    const result = await addUserTag({variables: {
-      newUserTag: {
-        user_tag_text: tag
-      }
-    }})
-    if (result.errors)
-    {
-      console.log("there was errors")
-      console.log(result)
-      console.log(result.errors[0].extensions.code)
-      // obviously put these code in a constant maybe in a file somewhere
-    }
-    else if (result.data)
-    {
-      await client.refetchQueries({
-        include: ["GetUserTags"],
+  const handleTagClickNew = async () => {
+    if (!searchTerm) return;
+    try {
+      const result = await addUserTag({
+        variables: {
+          newUserTag: {
+            user_tag_text: searchTerm.toLowerCase(),
+          },
+        },
+        errorPolicy: "all"
       });
-      console.log("it worked")
-      //router.push("/dashboard")
-    }
+      if (result.errors && result.errors.length > 0) {
+        const errorCode = result.errors[0].extensions?.code;
 
-    if (!pornstarTags.some(pornstarTag => pornstarTag.tag_text.includes(tag))) {
-      setPornstarTags([...pornstarTags,
-        {
-          tag_text: tag,
-          user_tag: {
-            user_tag_id: result.data.addUserTag.user_tag_id
-          }
-        } 
-      ]);
-      // need to remove from the search bar now
-      setAccountTags((prevItems) => prevItems.filter((item) => item.user_tag_text !== tag));
-      // consider if this is appropriate for clicking an item or leaving the search term there.
-      //setSearchTerm('');
-      // on mobile we do not want focus because the keyboard will keep showing up. only desktop is good
-      if(inputRef.current)
-        inputRef.current.focus();
+        switch (errorCode) {
+          case "VERSION_ERROR":
+            setVersionError(true);
+            break;
+          case "RATE_LIMIT_ERROR":
+            setRateLimitError(true);
+            break;
+          default:
+            setGenericError(true);
+        }
+      } else if (result.data) {
+        // needed because of use effect is dependent on the updated database data
+        /*
+        await client.refetchQueries({
+          include: ["GetUserTags"],
+        });
+        */
+        // needed because of use effect is dependent on the updated database data
+        client.cache.modify({
+          fields: {
+            getUserTags(existingUserTags = []) {
+              const newUserTagRef = client.cache.writeFragment({
+                data: {
+                  __typename: "UserTag",
+                  user_tag_id: result.data.addUserTag.user_tag_id,
+                  user_tag_text: searchTerm.toLowerCase(),
+                },
+                fragment: gql`
+                  fragment NewPornstar on UserTag {
+                    user_tag_id
+                    user_tag_text
+                  }
+                `,
+              });
+              return [...existingUserTags, newUserTagRef];
+            },
+          },
+        });
 
-      setSearchTerm("")
-      console.log("imsinde if")
+        if (
+          !pornstarTags.some((pornstarTag) => pornstarTag.includes(searchTerm))
+        ) {
+          setPornstarTags([...pornstarTags, searchTerm]);
+          // need to remove from the search bar now
+          setAccountTags((prevItems) =>
+            prevItems.filter((item) => item !== searchTerm)
+          );
+          // consider if this is appropriate for clicking an item or leaving the search term there.
+          //setSearchTerm('');
+          // on mobile we do not want focus because the keyboard will keep showing up. only desktop is good
+          if (inputRef.current) inputRef.current.focus();
+
+          setSearchTerm("");
+        }
+        //setSearchTerm("")
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      setGenericError(true);
     }
-    //setSearchTerm("")
-    console.log("outside if")
-  }
+  };
 
   // need to make sure it doesn't already exist in pornstar tags array
-  const handleTagClick = (user_tag_text: string, user_tag_id: number) => {
+  const handleTagClick = (user_tag_text: string) => {
     // honestly this is here because our create new tag button calls this function too
     // but i guess this can also serve as a safeguard for the regular tag click even though that
     // does remove it from the search array
 
     //check if this works or if we need to compare the string inside to the string
-    if (!pornstarTags.some(pornstarTag => pornstarTag.tag_text.includes(user_tag_text))) {
-      setPornstarTags([...pornstarTags,
-        {
-          tag_text: user_tag_text,
-          user_tag: {
-            user_tag_id: user_tag_id
-          }
-        } 
-      ]);
-      console.log(user_tag_text)
-      console.log(accountTags)
+    if (
+      !pornstarTags.some((pornstarTag) => pornstarTag.includes(user_tag_text))
+    ) {
+      setPornstarTags([...pornstarTags, user_tag_text]);
+      console.log(user_tag_text);
+      console.log(accountTags);
       // need to remove from the search bar now
       //setAccountTags((prevItems) => prevItems.filter((item) => item.user_tag_text !== user_tag_text));
       // consider if this is appropriate for clicking an item or leaving the search term there.
       //setSearchTerm('');
       // on mobile we do not want focus because the keyboard will keep showing up. only desktop is good
-      if(inputRef.current)
-        inputRef.current.focus();
-      
-      setSearchTerm("")
+      if (inputRef.current) inputRef.current.focus();
+
+      setSearchTerm("");
     }
   };
 
-  const removeTag = (tag: string, user_tag_id: number) => {
+  const removeTag = (tag: string) => {
     //setClicked((oldClickStatus) => !oldClickStatus)
-    setPornstarTags((prevItems : PornstarTag[]) => prevItems.filter((item) => item.tag_text !== tag));
-    setAccountTags([...accountTags, 
-      {
-        user_tag_id: user_tag_id,
-        user_tag_text: tag
-      }
-    ]);
+    setPornstarTags((prevItems: string[]) =>
+      prevItems.filter((item) => item !== tag)
+    );
+    //setAccountTags([...accountTags, tag]);
+    setAccountTags((prevItems: string[]) => [...prevItems, tag]);
+    console.log(accountTags);
   };
 
   // need to make sure it doesn't already exist in pornstar tags array
-  /*
+
   const handleKeyPress = (
-    event: KeyboardEvent<HTMLInputElement>,
-    tag: string
+    event: KeyboardEvent<HTMLInputElement>
+    //tag: string
   ) => {
-    if (event.key === 'Enter') {
-      if (!pornstarTags.includes(tag)) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+
+      if (!pornstarTags.includes(searchTerm)) {
         // new tag
         if (filteredData.length <= 0)
           // send notification or alert user new tag created for the account in the background
           //setAccountTags([...accountTags, tag]);
-          setPornstarTags([...pornstarTags, tag]);
+          //setPornstarTags([...pornstarTags, searchTerm]);
+          handleTagClickNew();
         else {
           // gets first elem from filtered search bar results
           setPornstarTags([...pornstarTags, filteredData[0]]);
@@ -204,47 +215,85 @@ export default function Tags({ pornstarTags, setPornstarTags }: propDefs) {
             prevItems.filter((item) => item !== filteredData[0])
           );
         }
-        setSearchTerm('');
+        setSearchTerm("");
       }
     }
   };
-  */
-  const clickedInsideClass = clicked ? 'input-active' : ''
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error! {error.message}</div>;
+  const clickedInsideClass = clicked ? "input-active" : "";
 
-  console.log("refeesh?",pornstarTags)
+  if (loading) return <Loading />;
+  if (error) {
+    if (error.graphQLErrors && error.graphQLErrors.length > 0) {
+      const errorCode = error.graphQLErrors[0].extensions.code;
+
+      switch (errorCode) {
+        case "VERSION_ERROR":
+          return (
+            <Error>
+              Version Error. A new web version is available. Please refresh your
+              page.
+            </Error>
+          );
+        case "RATE_LIMIT_ERROR":
+          return (
+            <Error>
+              Too many requests for this resource. Please wait and try again
+              again later. Contact support if you think this is was an error.
+            </Error>
+          );
+        default:
+          return (
+            <Error>
+              Error loading tags. Please refresh the page and try again.
+              <br></br>
+              If error persists please contact support@myfapsheet.com for help
+            </Error>
+          );
+      }
+    }
+    return (
+      <Error>
+        Error loading tags. Please refresh the page and try again.
+        <br></br>
+        If error persists please contact support@myfapsheet.com for help
+      </Error>
+    );
+  }
+
   return (
     <>
-      <span className={styles['tags-label']}>Tags</span>
+      <span className={styles["tags-label"]}>Tags</span>
       <OutsideClickDetector onOutsideClick={handleOutsideClick}>
         {pornstarTags.length > 0 && (
-          <div className={styles['selected-tags-container']}>
+          <div className={styles["selected-tags-container"]}>
             <ul>
-              {pornstarTags.map((item, i) => (
-              <li key={i} onClick={() => removeTag(item.tag_text, item.user_tag.user_tag_id)}>
-                <span className={styles['selected-tag']}>{item.tag_text}</span>
-                <Image
-              priority
-              src="/x.svg"
-              alt="x"
-              height={11}
-              width={11}
-              className={styles['x-button']}
-            />
-              </li>
+              {pornstarTags.map((tag, i) => (
+                <li key={i} onClick={() => removeTag(tag)}>
+                  <span className={styles["selected-tag"]}>{tag}</span>
+                  <Image
+                    priority
+                    src="/x.svg"
+                    alt="x"
+                    height={11}
+                    width={11}
+                    className={styles["x-button"]}
+                  />
+                </li>
               ))}
             </ul>
           </div>
         )}
-        <div className={`${styles['search-input-container']} ${styles[clickedInsideClass]}`}>
+        <div
+          className={`${styles["search-input-container"]} ${styles[clickedInsideClass]}`}
+        >
           <input
             type="text"
-            className={styles['search-input']}
+            className={styles["search-input"]}
             placeholder="Select or Create Tag"
             value={searchTerm}
             onClick={handleClick}
+            onKeyDown={handleKeyPress}
             ref={inputRef}
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
               setSearchTerm(event.target.value)
@@ -255,7 +304,10 @@ export default function Tags({ pornstarTags, setPornstarTags }: propDefs) {
             }
             */
           />
-          <div className={styles['down-button-container']} onClick={toggleDownButton}>
+          <div
+            className={styles["down-button-container"]}
+            onClick={toggleDownButton}
+          >
             <Image
               priority
               src="/downIcon.svg"
@@ -266,24 +318,29 @@ export default function Tags({ pornstarTags, setPornstarTags }: propDefs) {
           </div>
         </div>
         {clicked && (
-            <ul className={styles['search-results-container']}>
-              {filteredData.length === 0 && (
-                <li key={'new'} onClick={() => handleTagClickNew(searchTerm)} className={styles['search-item-container']}>
-                  Create new tag "{searchTerm}"
-                </li>
-              )}
-              {filteredData.map((item) => (
-                <li
-                  key={item.user_tag_id}
-                  onClick={() => handleTagClick(item.user_tag_text, item.user_tag_id)}
-                  className={styles['search-item-container']}
-                >
-                  <span className={styles['search-item']}>{item.user_tag_text}</span>
-                </li>
-              ))}
-            </ul>
+          <ul className={styles["search-results-container"]}>
+            {filteredData.map((accountTagText) => (
+              <li
+                key={Math.random() * 100}
+                onClick={() => handleTagClick(accountTagText)}
+                className={styles["search-item-container"]}
+              >
+                <span className={styles["search-item"]}>{accountTagText}</span>
+              </li>
+            ))}
+            <li
+              key={"new"}
+              onClick={handleTagClickNew}
+              className={styles["search-item-container"]}
+            >
+              Create new tag "{searchTerm}"
+            </li>
+          </ul>
         )}
       </OutsideClickDetector>
+      <GenericError genericError={genericError} />
+      <MutationVersionError versionError={versionError} />
+      <RateLimitError rateLimitError={rateLimitError} />
     </>
   );
-}
+});

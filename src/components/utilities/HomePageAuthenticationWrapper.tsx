@@ -2,7 +2,7 @@
 
 import React, { ReactNode,useState } from 'react'
 import { useQuery, useMutation } from "@apollo/client";
-import { CHECK_USER_LOGGED_IN } from "@/queries/user";
+import { CHECK_USER_LOGGED_IN } from "@/queries/userQueries";
 import { useRouter } from "next/navigation";
 import { ThreeDots } from 'react-loader-spinner'
 

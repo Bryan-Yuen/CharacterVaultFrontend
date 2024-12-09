@@ -1,17 +1,9 @@
 import React, {useContext, createContext, useState} from 'react'
-import { GET_ALL_PORNSTARS_AND_TAGS } from "@/queries/pornstars";
+import { GET_ALL_PORNSTARS_AND_TAGS } from "@/queries/pornstarsQueries";
 import { useQuery, ApolloError} from "@apollo/client";
-/*
-export interface PornstarTag {
-  tag_text: string
-  user_tag: {
-    user_tag_id: number;
-  }
-}
-*/
 
 export interface FullPornstar {
-  pornstar_id: number;
+  pornstar_url_slug: string;
   pornstar_name: string;
   pornstar_picture_path: string;
   pornstar_tags_text: string[];
@@ -43,7 +35,7 @@ export default function FullPornstarsContextProvider({children} : FullPornstarsC
   } = useQuery(GET_ALL_PORNSTARS_AND_TAGS, {
     onCompleted: (data) => {
       setFullPornstars(data.getAllPornstarsAndTags);
-    },
+    }
   });
 
   return (

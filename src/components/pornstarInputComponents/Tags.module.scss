@@ -81,7 +81,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  max-height: 142px;
+  max-height: 120px;
   overflow-y: auto;
   background-color: rgb(83, 83, 83);
 
@@ -98,6 +98,7 @@
 
 .search-item-container {
   padding: 5px;
+  padding-left:10px;
 }
 
 .search-results-container::-webkit-scrollbar {

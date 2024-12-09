@@ -1,17 +1,17 @@
-import React from 'react'
+import React, {ReactNode} from 'react'
 import styles from "./SuccessMessage.module.scss";
 
 interface SuccessMessageProps {
   showSuccessMessage: boolean;
-  message: string;
+  children: ReactNode;
 }
 
-export default function SuccessMessage({ showSuccessMessage, message} : SuccessMessageProps) {
+export default function SuccessMessage({ showSuccessMessage, children} : SuccessMessageProps) {
   return (
     <>
     {showSuccessMessage && (
         <span className={styles["success-message"]}>
-          {message}
+          {children}
         </span>
       )}
     </>

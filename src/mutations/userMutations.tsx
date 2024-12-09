@@ -1,20 +1,14 @@
 import { gql } from "@apollo/client";
 
 const REGISTER_USER = gql`
-  mutation RegisterUser($user: RegisterUserInput!) {
-    registerUser(registerUserData: $user) {
-      message
-      success
-    }
+  mutation RegisterUser($user: RegisterUserInputType!) {
+    registerUser(registerUserData: $user)
   }
 `;
 
 const LOGIN_USER = gql`
-  mutation LoginUser($user: LoginUserInput!) {
-    loginUser(loginUserData: $user) {
-      message
-      success
-    }
+  mutation LoginUser($user: LoginUserInputType!) {
+    loginUser(loginUserData: $user)
   }
 `;
 
@@ -25,44 +19,55 @@ const LOGOUT_USER = gql`
 `;
 
 const FORGOT_PASSWORD = gql`
-  mutation Mutation($email: String!) {
-    forgotPassword(email: $email)
+  mutation Mutation($forgotPasswordInput: ForgotPasswordInputType!) {
+    forgotPassword(forgotPasswordInput: $forgotPasswordInput)
   }
 `;
 
 const CHANGE_PASSWORD = gql`
-  mutation Mutation($newPassword: String!, $token: String!) {
-    changePassword(newPassword: $newPassword, token: $token)
+  mutation Mutation($changePasswordInput: ChangePasswordInputType!) {
+    changePassword(changePasswordInput: $changePasswordInput)
   }
 `;
 
 const CHANGE_PASSWORD_LOGGED_IN = gql`
-  mutation Mutation($newPassword: String!, $currentPassword: String!) {
+  mutation Mutation(
+    $changePasswordLoggedInInput: ChangePasswordLoggedInInputType!
+  ) {
     changePasswordLoggedIn(
-      newPassword: $newPassword
-      currentPassword: $currentPassword
-    ) {
-      user_email
-      user_password
-      user_username
-    }
+      changePasswordLoggedInInput: $changePasswordLoggedInInput
+    )
   }
 `;
 
 const CHANGE_EMAIL = gql`
-  mutation Mutation($newEmail: String!) {
-    changeEmail(newEmail: $newEmail)
+  mutation Mutation($changeEmailInput: ChangeEmailInputType!) {
+    changeEmail(changeEmailInput: $changeEmailInput)
   }
 `;
 
 const CONFIRM_CHANGE_EMAIL = gql`
-  mutation Mutation($token: String!) {
-    confirmChangeEmail(token: $token) {
-      user_email
-      user_id
-      user_password
-    }
+  mutation Mutation($confirmChangeEmailInput: ConfirmChangeEmailInputType!) {
+    confirmChangeEmail(confirmChangeEmailInput: $confirmChangeEmailInput) 
   }
+`;
+
+const CONFIRM_EMAIL_ADDRESS = gql`
+  mutation Mutation($confirmEmailAddressInput: ConfirmEmailAddressInputType!) {
+    confirmEmailAddress(confirmEmailAddressInput: $confirmEmailAddressInput) 
+  }
+`;
+
+const RESEND_VERIFICATION_EMAIL = gql`
+  mutation ResendVerificationEmail {
+    resendVerificationEmail
+  }
+`;
+
+const UPDATE_USER_IS_INTERESTED = gql`
+mutation Mutation($updateUserIsInterestedInput: UpdateUserIsInterestedInputType!) {
+  updateUserIsInterested(updateUserIsInterestedInput: $updateUserIsInterestedInput)
+}
 `;
 
 export {
@@ -74,4 +79,7 @@ export {
   CHANGE_PASSWORD_LOGGED_IN,
   CHANGE_EMAIL,
   CONFIRM_CHANGE_EMAIL,
+  CONFIRM_EMAIL_ADDRESS,
+  RESEND_VERIFICATION_EMAIL,
+  UPDATE_USER_IS_INTERESTED
 };

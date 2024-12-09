@@ -5,7 +5,7 @@ import Image from "next/image";
 import globalStyles from "@/sharedStyles/global-classes.module.scss";
 
 export default function HomePageNavBar() {
-  // make the icon into a component, just looks confusing as fk.
+  // make the icon into a component, just looks confusing
   return (
     <nav className={styles["navbar"]}>
         <div className={styles["navbar-container"]}>

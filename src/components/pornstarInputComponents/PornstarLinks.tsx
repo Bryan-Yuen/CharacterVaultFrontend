@@ -1,4 +1,4 @@
-import React, { ChangeEvent  } from 'react';
+import React, { ChangeEvent,memo  } from 'react';
 import styles from './PornstarLinks.module.scss';
 
 export interface PornstarLinkObj {
@@ -12,7 +12,7 @@ interface propDefs {
 }
 
 
-export default function PornstarLinks({ pornstarLinks, setPornstarLinks }: propDefs) {
+export default memo(function PornstarLinks({ pornstarLinks, setPornstarLinks }: propDefs) {
   console.log("i am in link comp")
   const addInput = () => {
     const newInputList = [...pornstarLinks, { pornstar_link_title: '', pornstar_link_url: '' }]; // Add an empty input
@@ -53,14 +53,14 @@ export default function PornstarLinks({ pornstarLinks, setPornstarLinks }: propD
             <label className={styles['title-label']}>Title</label>
             <input
               type="text"
-              placeholder="Title/Studio/Notes"
+              placeholder="Title/Studio/Notes (Optional)"
               value={input.pornstar_link_title}
               onChange={(event) => handleTitleInputChange(index, event)}
             />
             <label className={styles['url-label']}>URL</label>
             <input
               type="text"
-              placeholder="Video Link"
+              placeholder="Video Link (Optional)"
               value={input.pornstar_link_url}
               onChange={(event) => handleUrlInputChange(index, event)}
             />
@@ -69,4 +69,4 @@ export default function PornstarLinks({ pornstarLinks, setPornstarLinks }: propD
       </ul>
     </div>
   );
-}
+});

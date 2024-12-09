@@ -35,7 +35,7 @@ export default function LoginBody() {
         user_password: loginPassword,
       },
     },
-    errorPolicy: "all",
+    errorPolicy: "all"
   });
 
   // gets rid of input errors when the user types again
@@ -46,10 +46,13 @@ export default function LoginBody() {
 
   const [uniqueEmailIsInvalid, setUniqueEmailIsInvalid] = useState(false);
   const [passwordIsInvalid, setpasswordIsInvalid] = useState(false);
+
   const [genericError, setGenericError] = useState(false);
+  const [versionError, setVersionError] = useState(false);
+  const [rateLimitError, setRateLimitError] = useState(false);
 
   const router = useRouter();
-  // consider try catch in future for network errors or some other mysterious error
+
   const loginSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -70,12 +73,19 @@ export default function LoginBody() {
           case "INCORRECT_PASSWORD":
             setpasswordIsInvalid(true);
             break;
+          case "VERSION_ERROR":
+            setVersionError(true);
+            break;
+          case "RATE_LIMIT_ERROR":
+            setRateLimitError(true);
+            break;
+          case "EMAIL_NOT_VERIFIED":
+            router.push("/email-verification");
+            break;
           default:
             setGenericError(true);
         }
       } else if (result.data) {
-        console.log("it worked");
-        console.log(result);
         router.push("/dashboard");
       }
     } catch (error) {
@@ -88,6 +98,8 @@ export default function LoginBody() {
     <FormWrapper
       onSubmit={loginSubmitHandler}
       genericError={genericError}
+      versionError={versionError}
+      rateLimitError={rateLimitError}
       marginTop="5%"
     >
       <Image

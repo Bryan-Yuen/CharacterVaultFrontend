@@ -5,14 +5,9 @@ query Query {
     getUserProfile {
       user_email
       user_username
+      user_is_interested
     }
   }
-`;
-
-const CHECK_USER_PREMIUM = gql`
-query Query {
-  checkUserPremium
-}
 `;
 
 const CHECK_USER_LOGGED_IN = gql`
@@ -21,4 +16,4 @@ query Query {
 }
 `;
 
-export {GET_USER_PROFILE, CHECK_USER_PREMIUM, CHECK_USER_LOGGED_IN};
+export {GET_USER_PROFILE, CHECK_USER_LOGGED_IN};

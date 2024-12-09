@@ -26,16 +26,20 @@ export default function ChangeEmailBody() {
 
   const [uniqueEmailIsInvalid, setUniqueEmailIsInvalid] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+
   const [genericError, setGenericError] = useState(false);
+  const [versionError, setVersionError] = useState(false);
+  const [rateLimitError, setRateLimitError] = useState(false);
 
   const [changeEmail, { loading }] = useMutation(CHANGE_EMAIL, {
     variables: {
-      newEmail: newEmail,
+      changeEmailInput: {
+        user_email: newEmail,
+      },
     },
-    errorPolicy: "all",
+    errorPolicy: "all"
   });
 
-  // consider try catch in future for network errors or some other mysterious error
   const changeEmailSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -45,11 +49,24 @@ export default function ChangeEmailBody() {
         return;
       }
       if (result.errors && result.errors.length > 0) {
-        // obviously put these code in a constant maybe in a file somewhere
-        if (result.errors[0].extensions.code === "EMAIL_EXISTS") {
-          setUniqueEmailIsInvalid(true);
-        } else setGenericError(true);
+        const errorCode = result.errors[0].extensions?.code;
+        console.log("errorCode",errorCode)
+
+        switch (errorCode) {
+          case "EMAIL_EXISTS":
+            setUniqueEmailIsInvalid(true);
+            break;
+          case "VERSION_ERROR":
+            setVersionError(true);
+            break;
+          case "RATE_LIMIT_ERROR":
+            setRateLimitError(true);
+            break;
+          default:
+            setGenericError(true);
+        }
       } else if (result.data) {
+        setUniqueEmailIsInvalid(false);
         setEmailSent(true);
       }
     } catch (error) {
@@ -62,6 +79,8 @@ export default function ChangeEmailBody() {
     <FormWrapper
       onSubmit={changeEmailSubmitHandler}
       genericError={genericError}
+      versionError={versionError}
+      rateLimitError={rateLimitError}
     >
       <FormHeader header="Update Email" />
       <FormInput
@@ -85,11 +104,10 @@ export default function ChangeEmailBody() {
         loading={loading}
         buttonText="Save"
       />
-      <SuccessMessage
-        showSuccessMessage={emailSent}
-        message="An email has been sent to the new email address provided. Please click on
-          the link to confirm the email address update."
-      />
+      <SuccessMessage showSuccessMessage={emailSent}>
+        An email has been sent to the new email address provided. Please click
+        on the link to confirm the email address update.
+      </SuccessMessage>
     </FormWrapper>
   );
 }

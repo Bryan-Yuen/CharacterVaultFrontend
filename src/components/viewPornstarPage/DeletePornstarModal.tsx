@@ -4,9 +4,10 @@ import { DELETE_PORNSTAR } from "@/mutations/pornstarMutations";
 import { useMutation } from "@apollo/client";
 import { useApolloClient } from "@apollo/client";
 import { useRouter } from "next/navigation";
+import { useSuccessAlertContext } from "@/contexts/ShowSuccessAlertContext";
 
 interface propDefs {
-  pornstar_id: number;
+  pornstar_url_slug: string;
   pornstar_name: string;
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -14,12 +15,15 @@ interface propDefs {
 export default function DeletePornstarModal(props: propDefs) {
   const client = useApolloClient();
   const router = useRouter();
+
+  const { showSuccessfulPopup, setSuccessText } = useSuccessAlertContext();
+
   const [genericError, setGenericError] = useState(false);
 
   const [deletePornstar] = useMutation(DELETE_PORNSTAR, {
     variables: {
       deletePornstarInput: {
-        pornstar_id: props.pornstar_id,
+        pornstar_url_slug: props.pornstar_url_slug,
       },
     },
     errorPolicy: "all",
@@ -40,14 +44,28 @@ export default function DeletePornstarModal(props: propDefs) {
         return;
       } else if (result.data) {
         const normalizedId = client.cache.identify({
-          pornstar_id: props.pornstar_id,
+          pornstar_url_slug: props.pornstar_url_slug,
           __typename: "PornstarWithTags",
         });
         client.cache.evict({ id: normalizedId });
         client.cache.gc();
 
         props.setModalIsOpen(false);
-        router.back();
+        setSuccessText("Pornstar Deleted");
+        showSuccessfulPopup();
+        //router.push("/dashboard");
+        //router.back();
+        const referrer = document.referrer;
+
+        // If the referrer contains "/dashboard" or is the same domain
+        if (
+          referrer.includes(window.location.hostname) &&
+          referrer.includes("/dashboard")
+        ) {
+          router.back(); // Go back to the previous page
+        } else {
+          router.push("/dashboard"); // Redirect to the dashboard
+        }
       }
     } catch (error) {
       console.error("An unexpected error occurred:", error);
@@ -81,6 +99,11 @@ export default function DeletePornstarModal(props: propDefs) {
             </button>
           </div>
         </form>
+        {genericError && (
+          <span className={styles["server-error-message"]}>
+            Server Error. Please Refresh Page or try again later.
+          </span>
+        )}
       </div>
     </div>
   );

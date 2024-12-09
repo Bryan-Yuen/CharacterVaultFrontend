@@ -8,27 +8,50 @@ export default function ResourcesBody() {
     <main className={styles["resources-body-container"]}>
       <div className={styles["content-container"]}>
         <h1 className={styles["resources-header"]}>Resources</h1>
+        <div>
+          Welcome to MyFapSheet. The purpose of this website was to keep track
+          of your favorite pornstars as you discover them. We have custom
+          pictures so you can upload a good picture for your pornstar instead
+          of using website’s default image. We have a simple tagging system so
+          if you wake up feeling tanned latinas, you can add those tags in the
+          search bar and it will show all your favorite tanned latina pornstars.
+          The add links functionality can be used save your video links for your
+          pornstars. We recommend adding a title or studio name in case the
+          video gets taken down. Thank you for using our service. More features
+          will be coming in the future.
+        </div>
+        <h2 className={styles["resources-subheader"]}>
+          Demo List
+        </h2>
+        <span className={styles["demo-list-content"]}>Use this list as an example of the kind of tags you could use. Feel free to create your own tags.</span>
+        <Link
+          href={"/demo-list"}
+          className={styles["demo-list-link"]}
+          target="_blank"
+        >
+          View Demo List
+        </Link>
         <h2 className={styles["resources-subheader"]}>
           10 pornstars to get you started
         </h2>
         <ul className={styles["pornstar-list"]}>
           <li className={styles["pornstar"]}>
-            1. Violet Myers - latina, black hair, ass, big natural tits
+            1. Violet Myers - latina, black hair, big ass, big natural tits
           </li>
           <li className={styles["pornstar"]}>
-            2. Lia Lin - asian, skinny, ass, tanned
+            2. Lia Lin - asian, skinny, black hair, tanned, big ass
           </li>
           <li className={styles["pornstar"]}>
-            3. Clara Trinity - asian, skinny, tanned
+            3. 404hotfound - amateur, european, redhead, big natural tits
           </li>
           <li className={styles["pornstar"]}>
-            4. Heather Vahn - white, black hair, big tits
+            4. Harmony Wonder - latina, black hair, skinny, teen
           </li>
           <li className={styles["pornstar"]}>
-            5. Alexa Vega - latina, ass, milf, big tits
+            5. Alexa Vega - latina, big ass, milf, big tits, blonde
           </li>
           <li className={styles["pornstar"]}>
-            6. Brittney White - black, big natural tits
+            6. Brittney White - black, big natural tits, black hair
           </li>
           <li className={styles["pornstar"]}>
             7. Darcia Lee - european, black hair, big natural tits
@@ -37,44 +60,50 @@ export default function ResourcesBody() {
             8. Aubrey Edible - middle eastern, black hair
           </li>
           <li className={styles["pornstar"]}>
-            9. Lolly Gartner - blonde, european, teen, big natural tits
+            9. Haily Rose - indian, big natural tits, black hair
           </li>
           <li className={styles["pornstar"]}>
-            10. Sophia Locke - redhead, white, milf, big tits
+            10. Dava Foxx - white, black hair, big tits, tanned, glasses
           </li>
         </ul>
         <h2 className={styles["resources-subheader"]}>Helpful Links</h2>
         <ul className={styles["link-list"]}>
           <li className={styles["link-item"]}>
-            <a href="https://www.pornpics.com/" target="_blank">
-              https://www.pornpics.com/ (good for HD pictures)
+            <a href="https://pornpics.com/" target="_blank">
+              https://pornpics.com/
             </a>
+            <span> (good for HD pictures)</span>
           </li>
           <li className={styles["link-item"]}>
-            <a href="https://www.iafd.com/" target="_blank">
-              https://www.iafd.com/ (pornstar database, see all films for a
-              pornstar)
+            <a href="https://iafd.com/" target="_blank">
+              https://iafd.com/
             </a>
+            <span className={styles["link-message"]}> (pornstar database, see all films for a
+              pornstar)</span>
           </li>
           <li className={styles["link-item"]}>
             <a href="https://iceporncasting.net/" target="_blank">
-              https://iceporncasting.net/ (free casting videos)
+              https://iceporncasting.net/
             </a>
+            <span className={styles["link-message"]}> (free casting videos)</span>
           </li>
           <li className={styles["link-item"]}>
             <a href="https://erothots.co/" target="_blank">
-              https://erothots.co/ (free onlyfans videos)
+              https://erothots.co/
             </a>
+            <span className={styles["link-message"]}> (free onlyfans videos)</span>
           </li>
           <li className={styles["link-item"]}>
-            <a href="https://www.xfreehd.com/" target="_blank">
-              https://www.xfreehd.com/ (free premium videos)
+            <a href="https://xfreehd.com/" target="_blank">
+              https://xfreehd.com/
             </a>
+            <span className={styles["link-message"]}> (free premium videos)</span>
           </li>
           <li className={styles["link-item"]}>
             <a href="https://euroxxx.net/" target="_blank">
-              https://euroxxx.net/ (free premium videos)
+              https://euroxxx.net/
             </a>
+            <span className={styles["link-message"]}> (free premium videos)</span>
           </li>
         </ul>
       </div>

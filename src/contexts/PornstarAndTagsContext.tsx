@@ -15,6 +15,7 @@ type PornstarAndTagsContext = {
   setNameSearchTerm : React.Dispatch<React.SetStateAction<string>>
 }
 
+// this is used to manage teh search bar and the dashboard. pornstar tags just means the selected tags from the search bar
 export const PornstarAndTagsContext = createContext<PornstarAndTagsContext | null>(null)
 
 // will change tagtoggle later

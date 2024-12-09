@@ -29,6 +29,7 @@ const UploadImage = ({
   imageUpdate
 }: propDefs) => {
   const [onDragOver, setOnDragOver] = useState<boolean>(false);
+  //const divInputRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [pornstarPicturePath, setPornstarPicturePath] = useState<
@@ -78,11 +79,13 @@ const UploadImage = ({
     fileInputRef.current.click();
   };
 
+  // we'll do this later, user has to click on box which sucks
+  /*
   const pasteHandler = (e: ClipboardEvent<HTMLDivElement>) => {
     // Prevent default behavior (Prevent file from being opened)
     e.preventDefault();
     console.log("aba")
-   /*
+
     const items = (e.clipboardData || e.nativeEvent.clipboardData).items;
 
     for (const item of items) {
@@ -91,12 +94,13 @@ const UploadImage = ({
         setSelectedImage(file)
       }
     }
-    */
+
 
     // maybe see if we have to check for null here or why we don't
     //setSelectedImage(e.dataTransfer.files[0]);
     //if (onDragOver) setOnDragOver(false);
   };
+  */
 
   const fileInputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     console.log(event);
@@ -154,7 +158,8 @@ const UploadImage = ({
           onDrop={dropHandler}
           onDragOver={dragOverHandler}
           onDragLeave={dragLeaveHandler}
-          onPaste={pasteHandler}
+          //onPaste={pasteHandler}
+          //ref={divInputRef}
         >
           <input
             type="file"
@@ -170,9 +175,11 @@ const UploadImage = ({
             alt="Upload Icon"
             height={32}
             width={32}
+            onClick={handleClick}
+            className={styles['upload-icon']}
           />
-          <span className={styles['file-upload-container-text']} onClick={handleClick}>Upload Picture</span>
-          <span className={styles['file-upload-container-text']}>Drag & Drop or Copy & Paste</span>
+          <span className={styles['upload-picture-text']} onClick={handleClick}>Upload Picture or</span>
+          <span className={styles['file-upload-container-text']}>Drag & Drop</span>
         </div>
       )}
     </div>

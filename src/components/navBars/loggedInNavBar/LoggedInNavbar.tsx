@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import styles from "./LoggedInNavbar.module.scss";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter,usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import AccountDropdown from "./AccountDropdown";
 import SearchTagManagerAddPornstarContainer from "./SearchTagManagerAddPornstarContainer";
-import { ThreeDots } from 'react-loader-spinner'
+
 
 export default function LoggedInNavbar() {
   const pathname = usePathname()

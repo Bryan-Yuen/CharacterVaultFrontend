@@ -10,7 +10,7 @@
 /* remember for smaller computers will need scroll */
 .content-container{
   color:white;
-  width: 1000px;
+  width: 760px;
   max-width: 100%;
   display: flex;
   flex-direction: column;
@@ -50,11 +50,27 @@
   align-items: flex-start;
 }
 
+.link-item{
+  display:flex;
+}
+
+.demo-list-content{
+  margin-top:5px;
+}
+
 .pornstar, .link-item{
   padding:0;
 }
 
 .link-item a{
-  color:white;
-  text-decoration: none;
+  color: #64a4dd;
+}
+
+.link-message{
+  white-space: pre;
+}
+
+.demo-list-link {
+  margin-top:5px;
+  color: #64a4dd;
 }

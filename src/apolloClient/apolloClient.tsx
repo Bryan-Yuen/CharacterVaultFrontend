@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import "dotenv/config";
-// hello123
+// hello420
 
 // guarantees at least on url
 if (!process.env.NEXT_PUBLIC_PRODUCTION_URL) {

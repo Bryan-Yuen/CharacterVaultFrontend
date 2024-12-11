@@ -16,9 +16,9 @@ export default function DemoListNavbar() {
             <Image
               priority
               src="/MyFapSheetSVG.svg"
-              alt="Down Icon"
+              alt="paper with droplets"
               height={0}
-              width={32}
+              width={0}
               className={styles["website-icon"]}
             />
             <div className={styles["website-name"]}>MyFapSheet</div>

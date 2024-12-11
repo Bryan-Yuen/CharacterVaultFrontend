@@ -47,9 +47,16 @@
   margin-top:20px;
 }
 
-.website-icon{
-  height:100%;
+.website-icon-small{
+  height:auto;
   margin:10px;
+  width:50px;
+}
+
+.website-icon-large{
+  height:auto;
+  margin:10px;
+  width:65px;
 }
 
 @media only screen and (max-width: 728px) {

@@ -15,7 +15,7 @@ export default function FeaturesBody() {
       </div>
       <Image
         priority
-        src="https://pub-2b5d30d2053a4e3a92288345756fc27a.r2.dev/pornstar-example.png"
+        src="https://home-page-pictures.myfapsheet.com/pornstar-example.png"
         alt="example pornstar page"
         height={267}
         width={475}

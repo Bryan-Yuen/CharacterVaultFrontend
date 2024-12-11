@@ -17,8 +17,8 @@ export default function PlanSection() {
               src="/MyFapSheetSVG.svg"
               alt="paper with droplets"
               height={0}
-              width={50}
-              className={styles["website-icon"]}
+              width={0}
+              className={styles["website-icon-small"]}
             />
               <div>Add up to 25 pornstars</div>
               <Link
@@ -36,8 +36,8 @@ export default function PlanSection() {
               src="/MyFapSheetSVG.svg"
               alt="paper with droplets"
               height={0}
-              width={65}
-              className={styles["website-icon"]}
+              width={0}
+              className={styles["website-icon-large"]}
             />
               <div>Add up to 1000 pornstars</div>
               <Link

@@ -18,9 +18,9 @@ export default function NonDashboardNavbar() {
           <Image
               priority
               src="/MyFapSheetSVG.svg"
-              alt="Down Icon"
+              alt="paper with droplets"
               height={0}
-              width={32}
+              width={0}
               className={styles["website-icon"]}
             />
           <div className={styles['website-name']}>MyFapSheet</div>
@@ -29,7 +29,7 @@ export default function NonDashboardNavbar() {
           <Image
             priority
             src="/profile-picture-svg.svg"
-            alt="Down Icon"
+            alt="profile icon"
             height={32}
             width={32}
           />

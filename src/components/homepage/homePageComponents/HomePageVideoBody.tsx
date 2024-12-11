@@ -12,15 +12,15 @@ export default function HomePageVideoBody() {
 
       <video className={styles["hero-video"]} width="1000" controls>
         <source
-          src="https://pub-250210f504394affbc2c93cf1b8da2f7.r2.dev/Timeline%201%20final.mp4#t=0.1"
+          src="https://home-page-video.myfapsheet.com/Timeline%201%20final.mp4#t=0.1"
           type="video/mp4"
         />
         <source
-          src="https://pub-250210f504394affbc2c93cf1b8da2f7.r2.dev/Timeline%201%20final.webm"
+          src="https://home-page-video.myfapsheet.com/Timeline%201%20final.webm"
           type="video/webm"
         />
         <source
-          src="https://pub-250210f504394affbc2c93cf1b8da2f7.r2.dev/Timeline-1-final.ogg"
+          src="https://home-page-video.myfapsheet.com/Timeline-1-final.ogg"
           type="video/ogg"
         />
         Your browser does not support the video tag.

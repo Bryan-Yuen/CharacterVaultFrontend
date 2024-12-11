@@ -26,7 +26,7 @@ export default function DemoListBody() {
       <div className={styles["pornstar-tiles-container"]}>
         {DemoListPornstars.map((pornstar: any, index) => (
           <PornstarTile
-          key={index}
+          key={Math.floor(Math.random() * 10000)}
           pornstar_url_slug=""
             pornstar_name={pornstar.pornstar_name}
             pornstar_picture_path={pornstar.pornstar_picture_path}

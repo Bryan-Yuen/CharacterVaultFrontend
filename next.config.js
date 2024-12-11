@@ -1,6 +1,28 @@
+// me telling nextjs which url's my external pictures are allowed from
 /** @type {import('next').NextConfig} */
 const nextConfig = { images: {
-  domains: ['testing-pictures.myfapsheet.com','pub-f8c29b76b6bc4836aac4b8dabb8b6b25.r2.dev','pub-0438e6ba77424f1ba2b187821a90f36a.r2.dev','pub-2b5d30d2053a4e3a92288345756fc27a.r2.dev'],
+  remotePatterns: [
+    {
+      protocol: 'https',
+      hostname: 'testing-pictures.myfapsheet.com',
+      pathname: '**',
+    },
+    {
+      protocol: 'https',
+      hostname: 'home-page-pictures.myfapsheet.com',
+      pathname: '**',
+    },
+    {
+      protocol: 'https',
+      hostname: 'demo-pornstars.myfapsheet.com',
+      pathname: '**',
+    },
+    {
+      protocol: 'https',
+      hostname: 'home-page-video.myfapsheet.com',
+      pathname: '**',
+    },
+  ],
 }}
 
 module.exports = nextConfig

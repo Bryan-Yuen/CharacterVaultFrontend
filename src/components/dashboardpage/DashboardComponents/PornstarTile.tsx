@@ -40,13 +40,14 @@ export default function PornstarTile(props: propDefs) {
             width={300}
             height={450}
             className={styles['silhouette-picture']}
+            priority
           />
         )}
         <div className={styles['pornstar-tile-bottom-container']}>
           <h1 className={styles['pornstar-name']}>{props.pornstar_name}</h1>
           <ul className={styles['pornstar-tags-list']}>
             {props.tags?.slice().sort().map((tag: any) => (
-              <li className={styles['pornstar-tags-list-item']}>{tag}</li>
+              <li className={styles['pornstar-tags-list-item']} key={props.pornstar_url_slug + "-" + tag}>{tag}</li>
             ))}
           </ul>
         </div>

@@ -44,7 +44,6 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
           // then we convert the new filtered array of objects to only string array
           .map((item: any) => item.user_tag_text)
       );
-      console.log("im in useeffect tags");
     }
   }, [pornstarTags, data]);
 
@@ -77,8 +76,6 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
   const toggleDownButton = () => {
     if (!clicked) if (inputRef.current) inputRef.current.focus();
     setClicked((prev) => !prev);
-    console.log("hi");
-    console.log(clicked);
   };
 
   const handleTagClickNew = async () => {

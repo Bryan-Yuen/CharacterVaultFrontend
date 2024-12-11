@@ -24,14 +24,12 @@ export default function SuccessAlertIsOpenContextProvider({children} : SuccessAl
     setSuccessAlertIsOpen(true);
 
     setTimeout(() => {
-      console.log("settimeout called")
       // reset
       setSuccessAlertIsOpen(false);
       setSuccessText('')
     }, 3000);
   };
 
-  console.log("im in context", successAlertIsOpen)
   return (
     <SuccessAlertIsOpenContext.Provider value={{
       successAlertIsOpen,

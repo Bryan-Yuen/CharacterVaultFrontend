@@ -1,4 +1,4 @@
-name: Deploy Application
+name: Build Application CI
 on:
   push:
     branches:

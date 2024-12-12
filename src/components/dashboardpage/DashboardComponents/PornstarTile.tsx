@@ -13,6 +13,7 @@ interface propDefs {
 }
 
 export default function PornstarTile(props: propDefs) {
+  console.log("pornstar name",props.pornstar_name)
   return (
       <Link href={props.demoListTile ? 'register' : 'pornstar/' + props.pornstar_url_slug}
         className={`${styles["pornstar-tile-container"]} ${styles[props.shufflePornstarContainer ? 'shufflePornstarContainer' : '']}`}

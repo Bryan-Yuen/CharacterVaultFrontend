@@ -18,6 +18,7 @@ export default function ViewPornstarBody() {
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState<boolean>(false);
 
   const [isDesktop, setDesktop] = useState(false);
+
   useEffect(() => {
     if (window.innerWidth > 800) {
       setDesktop(true);
@@ -36,11 +37,22 @@ export default function ViewPornstarBody() {
     return () => window.removeEventListener("resize", updateMedia);
   }, []);
 
+  function capitalizeWords(str: string) {
+    return str
+      .split(" ") // Split the string into an array of words
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize each word
+      .join(" "); // Join the array back into a string
+  }
+
   const { loading, error, data } = useQuery(GET_PORNSTAR, {
     variables: {
       getPornstarInput: {
         pornstar_url_slug: params.id,
       },
+    },
+    onCompleted: (data) => {
+      document.title =
+        capitalizeWords(data.getPornstar.pornstar_name) + " - MyFapSheet";
     },
   });
 
@@ -48,7 +60,7 @@ export default function ViewPornstarBody() {
   if (error) {
     if (error.graphQLErrors && error.graphQLErrors.length > 0) {
       const errorCode = error.graphQLErrors[0].extensions.code;
-      console.log(error.graphQLErrors)
+      console.log(error.graphQLErrors);
       switch (errorCode) {
         // scenario if user deleted the pornstar and clicked on the old pornstar link in web browser
         // or if user refreshes the page after error from save button maybe because pornstar is deleted
@@ -150,7 +162,10 @@ export default function ViewPornstarBody() {
             ))}
           <ul className={styles["pornstar-tags-list"]}>
             {data.getPornstar.pornstar_tags?.map((tag: any) => (
-              <li className={styles["pornstar-tags-list-item"]}>
+              <li
+                className={styles["pornstar-tags-list-item"]}
+                key={params.id + "-" + tag}
+              >
                 {tag.tag_text}
               </li>
             ))}

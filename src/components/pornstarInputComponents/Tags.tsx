@@ -316,9 +316,9 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
         </div>
         {clicked && (
           <ul className={styles["search-results-container"]}>
-            {filteredData.map((accountTagText) => (
+            {filteredData.map((accountTagText, i) => (
               <li
-                key={Math.random() * 100}
+                key={i}
                 onClick={() => handleTagClick(accountTagText)}
                 className={styles["search-item-container"]}
               >

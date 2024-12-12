@@ -6,7 +6,7 @@ import ForgotPasswordBody from "@/components/forgotPasswordPage/ForgotPasswordBo
 import { ApolloProvider } from "@apollo/client";
 import client from "../../apolloClient/apolloClient";
 
-export default function forgotPassword() {
+export default function ForgotPassword() {
   return (
     <ApolloProvider client={client}>
       <HomePageNavBar />

@@ -82,10 +82,10 @@ export default function SupportBody() {
       versionError={versionError}
       rateLimitError={rateLimitError}
     >
-      <FormHeader header="Contact Form" />
+      <FormHeader header="Support/Feedback Form" />
       <span className={styles["sub-copy"]}>
         Use this form to contact us about any questions, issues, or feedback
-        about your account
+        about your account. Feel free to also use this form to provide feedback on our website.
       </span>
       <FormInput
         inputIsInvalid={subjectIsInvalid}

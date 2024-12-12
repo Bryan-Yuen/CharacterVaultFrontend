@@ -47,7 +47,7 @@ export default function ShuffleButtonAndPornstar() {
     <div className={styles["shuffle-button-and-pornstar-container"]}>
       <div className={styles["buttons-container"]}>
         <Link
-          href={"/tagManager"}
+          href={"/tag-manager"}
           className={`${styles["header"]} ${styles["tag-manager"]}`}
         >
           Tag Manager

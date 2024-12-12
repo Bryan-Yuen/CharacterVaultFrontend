@@ -32,7 +32,7 @@ export default function ResourcesBody() {
           View Demo List
         </Link>
         <h2 className={styles["resources-subheader"]}>
-          10 pornstars to get you started
+          Some pornstars you can add to your list
         </h2>
         <ul className={styles["pornstar-list"]}>
           <li className={styles["pornstar"]}>
@@ -57,7 +57,7 @@ export default function ResourcesBody() {
             7. Darcia Lee - european, black hair, big natural tits
           </li>
           <li className={styles["pornstar"]}>
-            8. Aubrey Edible - middle eastern, black hair
+            8. Aubrey Edible - middle eastern, black hair, teen
           </li>
           <li className={styles["pornstar"]}>
             9. Haily Rose - indian, big natural tits, black hair
@@ -70,40 +70,40 @@ export default function ResourcesBody() {
         <ul className={styles["link-list"]}>
           <li className={styles["link-item"]}>
             <a href="https://pornpics.com/" target="_blank">
-              https://pornpics.com/
+              https://pornpics.com/&nbsp;
             </a>
-            <span> (good for HD pictures)</span>
+            <span className={styles["link-message"]}>(good for HD pictures)</span>
           </li>
           <li className={styles["link-item"]}>
             <a href="https://iafd.com/" target="_blank">
-              https://iafd.com/
+              https://iafd.com/&nbsp;
             </a>
-            <span className={styles["link-message"]}> (pornstar database, see all films for a
+            <span className={styles["link-message"]}>(pornstar database, see all films for a
               pornstar)</span>
           </li>
           <li className={styles["link-item"]}>
             <a href="https://iceporncasting.net/" target="_blank">
-              https://iceporncasting.net/
+              https://iceporncasting.net/&nbsp;
             </a>
-            <span className={styles["link-message"]}> (free casting videos)</span>
+            <span className={styles["link-message"]}>(free casting videos)</span>
           </li>
           <li className={styles["link-item"]}>
             <a href="https://erothots.co/" target="_blank">
-              https://erothots.co/
+              https://erothots.co/&nbsp;
             </a>
-            <span className={styles["link-message"]}> (free onlyfans videos)</span>
+            <span className={styles["link-message"]}>(free onlyfans videos)</span>
           </li>
           <li className={styles["link-item"]}>
             <a href="https://xfreehd.com/" target="_blank">
-              https://xfreehd.com/
+              https://xfreehd.com/&nbsp;
             </a>
-            <span className={styles["link-message"]}> (free premium videos)</span>
+            <span className={styles["link-message"]}>(free premium videos)</span>
           </li>
           <li className={styles["link-item"]}>
             <a href="https://euroxxx.net/" target="_blank">
-              https://euroxxx.net/
+              https://euroxxx.net/&nbsp;
             </a>
-            <span className={styles["link-message"]}> (free premium videos)</span>
+            <span className={styles["link-message"]}>(free premium videos)</span>
           </li>
         </ul>
       </div>

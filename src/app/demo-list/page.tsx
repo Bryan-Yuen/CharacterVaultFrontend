@@ -7,7 +7,7 @@ import { ApolloProvider } from "@apollo/client";
 import client from "@/apolloClient/apolloClient";
 import PornstarAndTagsContextProvider from "@/contexts/PornstarAndTagsContext";
 
-export default function demoList() {
+export default function DemoList() {
   return (
     <ApolloProvider client={client}>
       <PornstarAndTagsContextProvider>

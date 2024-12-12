@@ -7,7 +7,7 @@ import client from "@/apolloClient/apolloClient";
 //import ApolloClientWrapper from "@/components/utilities/ApolloClientWrapper";
 import HomePageAuthenticationWrapper from "@/components/utilities/HomePageAuthenticationWrapper";
 
-export default function register() {
+export default function Register() {
   return (
     <ApolloProvider client={client}>
 

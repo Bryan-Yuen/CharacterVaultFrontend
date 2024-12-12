@@ -6,7 +6,7 @@ import ContactPageBody from "@/components/contactPage/ContactPageBody";
 import { ApolloProvider } from "@apollo/client";
 import client from "../../apolloClient/apolloClient";
 
-export default function contact() {
+export default function Contact() {
   return (
     <ApolloProvider client={client}>
       <HomePageNavBar />

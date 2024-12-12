@@ -8,7 +8,7 @@ export default function SearchTagManagerAddPornstarContainer() {
   return (
     <div className={styles["middle-container"]}>
         <Link
-          href={"/tagManager"}
+          href={"/tag-manager"}
           className={`${styles["header"]} ${styles["tag-manager"]}`}
         >
           Tag Manager

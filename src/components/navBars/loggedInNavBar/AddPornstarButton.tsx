@@ -18,7 +18,7 @@ export default function AddPornstarButton({phone} : propDefs) {
 
   const addPornstarHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    if (fullPornstars.length < 25) router.push("/addPornstar");
+    if (fullPornstars.length < 25) router.push("/add-pornstar");
     else setPornstarLimitUpgradeModalIsOpen(true);
   };
 

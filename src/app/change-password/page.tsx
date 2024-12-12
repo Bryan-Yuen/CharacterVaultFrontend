@@ -8,7 +8,7 @@ import client from "../../apolloClient/apolloClient";
 import { Suspense } from 'react'
 
 // the public change password page after the password reset link
-export default function changePassword() {
+export default function ChangePassword() {
   return (
     <ApolloProvider client={client}>
       <HomePageNavBar />

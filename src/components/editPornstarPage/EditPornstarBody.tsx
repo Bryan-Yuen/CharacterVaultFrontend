@@ -48,6 +48,13 @@ export default function EditPornstarBody() {
   const router = useRouter();
   const params = useParams<{ id: string }>();
 
+  function capitalizeWords(str: string) {
+    return str
+      .split(" ") // Split the string into an array of words
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize each word
+      .join(" "); // Join the array back into a string
+  }
+
   const { loading, error, data } = useQuery(GET_PORNSTAR, {
     variables: {
       getPornstarInput: {
@@ -56,6 +63,8 @@ export default function EditPornstarBody() {
     },
     errorPolicy: "all",
     onCompleted: (data) => {
+      document.title =
+      "Edit - " + capitalizeWords(data.getPornstar.pornstar_name) + " - MyFapSheet";
       setPornstarTags(
         data.getPornstar.pornstar_tags.map((tag: any) => tag.tag_text)
       );

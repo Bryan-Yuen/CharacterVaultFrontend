@@ -27,7 +27,7 @@ const nextConfig = {
   },
   swcMinify: true, // Ensure SWC minification is enabled
   compiler: {
-    removeConsole: process.env.NEXT_PUBLIC_ENVIRONMENT === 'PRODUCTION'
+    removeConsole: process.env.NEXT_PUBLIC_LOGGING_ENVIRONMENT === 'PRODUCTION'
       ? {
           exclude: ['error', 'warn'], // Keep error and warn logs if needed
         }

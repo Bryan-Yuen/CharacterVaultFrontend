@@ -2,6 +2,7 @@ name: Build Application CI
 on:
   push:
     branches:
+      - main
       - development
 jobs:
   build-and-deploy:

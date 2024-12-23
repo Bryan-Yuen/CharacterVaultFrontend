@@ -36,3 +36,8 @@ jobs:
           npm install
           npm run build
           pm2 restart ProdMyFapSheetFrontend
+          curl https://api.cloudflare.com/client/v4/zones/${{ secrets.ZONE_ID }}/purge_cache \
+            -H 'Content-Type: application/json' \
+            -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}" \
+            -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}" \
+            -d '{"purge_everything":true}'

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@apollo/client";
 //import styles from './AuthenticationWrapper.module.scss';
 import Loading from "@/components/utilities/Loading";
-import Error from "@/components/utilities/Error";
+import ErrorMessage from "@/components/utilities/ErrorMessage";
 
 interface WrapperProps {
   children: ReactNode;
@@ -34,34 +34,34 @@ export default function AuthenticationWrapper({ children }: WrapperProps) {
       switch (errorCode) {
         case "VERSION_ERROR":
           return (
-            <Error>
+            <ErrorMessage>
               Version Error. A new web version is available. Please refresh your
               page.
-            </Error>
+            </ErrorMessage>
           );
         case "RATE_LIMIT_ERROR":
           return (
-            <Error>
+            <ErrorMessage>
               Too many requests for this resource. Please wait and try again
               again later. Contact support if you think this is was an error.
-            </Error>
+            </ErrorMessage>
           );
         default:
           return (
-            <Error>
+            <ErrorMessage>
               Error loading user data. Please refresh the page and try again.
               <br></br>
               If error persists please contact support@myfapsheet.com for help
-            </Error>
+            </ErrorMessage>
           );
       }
     }
     return (
-      <Error>
+      <ErrorMessage>
         Error loading user data. Please refresh the page and try again.
         <br></br>
         If error persists please contact support@myfapsheet.com for help
-      </Error>
+      </ErrorMessage>
     );
   }
 

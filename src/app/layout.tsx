@@ -5,7 +5,7 @@ import ChildrenWithProvider from "./ChildrenWithProvider";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 if (!process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && process.env.NEXT_PUBLIC_ENVIRONMENT === "PRODUCTION") {
-  throw new Error("no production ga id");
+  throw new Error("no production ga id in production");
 }
 
 const inter = Inter({ subsets: ["latin"] });

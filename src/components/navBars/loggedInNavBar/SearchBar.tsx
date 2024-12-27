@@ -4,7 +4,7 @@ import { GET_USER_TAGS } from "@/queries/userTagQueries";
 import { useQuery } from "@apollo/client";
 import { usePornstarAndTagsContext } from "@/contexts/PornstarAndTagsContext";
 import Loading from "@/components/utilities/Loading";
-import Error from "@/components/utilities/Error";
+import ErrorMessage from "@/components/utilities/ErrorMessage";
 
 export default function SearchBar() {
   const {
@@ -81,34 +81,34 @@ export default function SearchBar() {
       switch (errorCode) {
         case "VERSION_ERROR":
           return (
-            <Error>
+            <ErrorMessage>
               Version Error. A new web version is available. Please refresh your
               page.
-            </Error>
+            </ErrorMessage>
           );
         case "RATE_LIMIT_ERROR":
           return (
-            <Error>
+            <ErrorMessage>
               Too many requests for this resource. Please wait and try again
               again later. Contact support if you think this is was an error.
-            </Error>
+            </ErrorMessage>
           );
         default:
           return (
-            <Error>
+            <ErrorMessage>
               Error loading tags. Please refresh the page and try again.
               <br></br>
               If error persists please contact support@myfapsheet.com for help
-            </Error>
+            </ErrorMessage>
           );
       }
     }
     return (
-      <Error>
+      <ErrorMessage>
         Error loading tags. Please refresh the page and try again.
         <br></br>
         If error persists please contact support@myfapsheet.com for help
-      </Error>
+      </ErrorMessage>
     );
   }
 

@@ -13,7 +13,7 @@ import { GET_USER_TAGS } from "@/queries/userTagQueries";
 import { ADD_USER_TAG } from "@/mutations/userTagMutations";
 import { useQuery, useMutation, useApolloClient } from "@apollo/client";
 import Loading from "../utilities/Loading";
-import Error from "../utilities/Error";
+import ErrorMessage from "../utilities/ErrorMessage";
 import GenericError from "../utilities/GenericError";
 import MutationVersionError from "../utilities/MutationVersionError";
 import RateLimitError from "../utilities/RateLimitError";
@@ -25,7 +25,6 @@ interface propDefs {
 }
 
 export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
-  console.log("tags render");
   const client = useApolloClient();
 
   const [accountTags, setAccountTags] = useState<string[]>([]);
@@ -227,34 +226,34 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
       switch (errorCode) {
         case "VERSION_ERROR":
           return (
-            <Error>
+            <ErrorMessage>
               Version Error. A new web version is available. Please refresh your
               page.
-            </Error>
+            </ErrorMessage>
           );
         case "RATE_LIMIT_ERROR":
           return (
-            <Error>
+            <ErrorMessage>
               Too many requests for this resource. Please wait and try again
               again later. Contact support if you think this is was an error.
-            </Error>
+            </ErrorMessage>
           );
         default:
           return (
-            <Error>
+            <ErrorMessage>
               Error loading tags. Please refresh the page and try again.
               <br></br>
               If error persists please contact support@myfapsheet.com for help
-            </Error>
+            </ErrorMessage>
           );
       }
     }
     return (
-      <Error>
+      <ErrorMessage>
         Error loading tags. Please refresh the page and try again.
         <br></br>
         If error persists please contact support@myfapsheet.com for help
-      </Error>
+      </ErrorMessage>
     );
   }
 

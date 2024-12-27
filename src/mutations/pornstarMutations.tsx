@@ -3,8 +3,9 @@ import { gql } from "@apollo/client";
 const ADD_PORNSTAR = gql`
   mutation Mutation($addPornstarInput: AddPornstarInputType!) {
     addPornstar(addPornstarInput: $addPornstarInput) {
-      s3Url
+      secured_data
       pornstar_url_slug
+      pornstar_picture_path
     }
   }
 `;
@@ -12,7 +13,7 @@ const ADD_PORNSTAR = gql`
 const EDIT_PORNSTAR = gql`
   mutation Mutation($editPornstarInput: EditPornstarInputType!) {
     editPornstar(editPornstarInput: $editPornstarInput) {
-      s3Url
+      secured_data
       pornstar_picture_path
     }
   }

@@ -19,8 +19,12 @@ import RateLimitError from "../utilities/RateLimitError";
 import "dotenv/config";
 import { useSuccessAlertContext } from '@/contexts/ShowSuccessAlertContext';
 
-if (!process.env.NEXT_PUBLIC_BUCKET_URL) {
-  throw new Error("no bucket url");
+if (!process.env.NEXT_PUBLIC_PORNSTAR_PICTURES_BUCKET_URL) {
+  throw new Error("no pornstar picture bucket url");
+}
+
+if (!process.env.NEXT_PUBLIC_CLOUDFLARE_UPLOAD_WORKER_URL) {
+  throw new Error("no cloudflare upload worker url");
 }
 
 export interface PornstarLinkObj {
@@ -114,24 +118,31 @@ export default function AddPornstarBody() {
             setGenericError(true);
         }
       } else if (result.data) {
-        const url = result.data.addPornstar.s3Url;
-        if (url) {
+        const secured_data = result.data.addPornstar.secured_data;
+
+        if (secured_data) {
           try {
-            await fetch(url, {
-              method: "PUT",
+            const response = await fetch(process.env.NEXT_PUBLIC_CLOUDFLARE_UPLOAD_WORKER_URL || "", {
+              method: "POST",
               headers: {
                 "Content-Type": selectedImage?.type || "",
+                "X-Secured-Data": secured_data,
               },
               body: selectedImage,
             });
+            if (!response.ok) {
+              // If the response status is not 200, throw an error
+              throw new Error(`Request failed with status ${response.status}`);
+            }
+            console.log("response",response)
+            console.log(response.json)
+            const responseBody = await response.text(); // Since `message` is a plain string
+            console.log("Response Message:", responseBody);
           } catch (error) {
             console.error(error);
             setGenericError(true);
           }
         }
-        const imageUrl = url.split("?")[0];
-        const imageKey = imageUrl.split("/")[3];
-        const newImageUrl = process.env.NEXT_PUBLIC_BUCKET_URL + imageKey;
 
         client.cache.modify({
           fields: {
@@ -141,7 +152,7 @@ export default function AddPornstarBody() {
                   __typename: "PornstarWithTags",
                   pornstar_url_slug: result.data.addPornstar.pornstar_url_slug,
                   pornstar_name: pornstarName,
-                  pornstar_picture_path: selectedImage ? newImageUrl : null,
+                  pornstar_picture_path: selectedImage ? result.data.addPornstar.pornstar_picture_path : null,
                   pornstar_tags_text: pornstarTags,
                 },
                 fragment: gql`

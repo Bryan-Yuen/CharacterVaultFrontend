@@ -13,7 +13,6 @@ interface propDefs {
 
 
 export default memo(function PornstarLinks({ pornstarLinks, setPornstarLinks }: propDefs) {
-  console.log("i am in link comp")
   const addInput = () => {
     const newInputList = [...pornstarLinks, { pornstar_link_title: '', pornstar_link_url: '' }]; // Add an empty input
     setPornstarLinks(newInputList);

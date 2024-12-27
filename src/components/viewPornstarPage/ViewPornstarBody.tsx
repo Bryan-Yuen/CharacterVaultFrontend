@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DeletePornstarModal from "./DeletePornstarModal";
 import Loading from "../utilities/Loading";
-import Error from "../utilities/Error";
+import ErrorMessage from "../utilities/ErrorMessage";
 import { useRouter } from "next/navigation";
 
 export default function ViewPornstarBody() {
@@ -69,35 +69,35 @@ export default function ViewPornstarBody() {
           return null;
         case "VERSION_ERROR":
           return (
-            <Error>
+            <ErrorMessage>
               Version Error. A new web version is available. Please refresh your
               page.
-            </Error>
+            </ErrorMessage>
           );
         case "RATE_LIMIT_ERROR":
           return (
-            <Error>
+            <ErrorMessage>
               Too many requests for this resource. Please wait and try again
               again later. Contact support if you think this is was an error.
-            </Error>
+            </ErrorMessage>
           );
         default:
           return (
-            <Error>
+            <ErrorMessage>
               Error loading pornstar data. Please refresh the page and try
               again.
               <br></br>
               If error persists please contact support@myfapsheet.com for help
-            </Error>
+            </ErrorMessage>
           );
       }
     }
     return (
-      <Error>
+      <ErrorMessage>
         Error loading pornstar data. Please refresh the page and try again.
         <br></br>
         If error persists please contact support@myfapsheet.com for help
-      </Error>
+      </ErrorMessage>
     );
   }
 

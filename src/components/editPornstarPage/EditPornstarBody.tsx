@@ -14,11 +14,16 @@ import Link from "next/link";
 import MobileUploadImage from "../pornstarInputComponents/MobileUploadImage";
 import { RotatingLines } from "react-loader-spinner";
 import Loading from "../utilities/Loading";
-import Error from "../utilities/Error";
+import ErrorMessage from "../utilities/ErrorMessage";
 import GenericError from "../utilities/GenericError";
 import MutationVersionError from "../utilities/MutationVersionError";
 import RateLimitError from "../utilities/RateLimitError";
 import { useSuccessAlertContext } from '@/contexts/ShowSuccessAlertContext';
+import "dotenv/config";
+
+if (!process.env.NEXT_PUBLIC_CLOUDFLARE_UPLOAD_WORKER_URL) {
+  throw new Error("no cloudflare upload worker url");
+}
 
 export enum ImageUpdateStatus {
   AddOrEdit = "ADD_OR_EDIT",
@@ -309,17 +314,26 @@ export default function EditPornstarBody() {
             setGenericError(true);
         }
       } else if (result.data) {
-        const url = result.data.editPornstar.s3Url;
+        const secured_data = result.data.editPornstar.secured_data;
 
-        if (url) {
+        if (secured_data) {
           try {
-            await fetch(url, {
-              method: "PUT",
+            const response = await fetch(process.env.NEXT_PUBLIC_CLOUDFLARE_UPLOAD_WORKER_URL || "", {
+              method: "POST",
               headers: {
                 "Content-Type": selectedImage?.type || "",
+                "X-Secured-Data": secured_data,
               },
               body: selectedImage,
             });
+            if (!response.ok) {
+              // If the response status is not 200, throw an error
+              throw new Error(`Request failed with status ${response.status}`);
+            }
+            console.log("response",response)
+            console.log(response.json)
+            const responseBody = await response.text(); // Since `message` is a plain string
+            console.log("Response Message:", responseBody);
           } catch (error) {
             console.error(error);
             setGenericError(true);
@@ -380,35 +394,35 @@ export default function EditPornstarBody() {
           return null;
         case "VERSION_ERROR":
           return (
-            <Error>
+            <ErrorMessage>
               Version Error. A new web version is available. Please refresh your
               page.
-            </Error>
+            </ErrorMessage>
           );
         case "RATE_LIMIT_ERROR":
           return (
-            <Error>
+            <ErrorMessage>
               Too many requests for this resource. Please wait and try again
               again later. Contact support if you think this is was an error.
-            </Error>
+            </ErrorMessage>
           );
         default:
           return (
-            <Error>
+            <ErrorMessage>
               Error loading pornstar data. Please refresh the page and try
               again.
               <br></br>
               If error persists please contact support@myfapsheet.com for help
-            </Error>
+            </ErrorMessage>
           );
       }
     }
     return (
-      <Error>
+      <ErrorMessage>
         Error loading pornstar data. Please refresh the page and try again.
         <br></br>
         If error persists please contact support@myfapsheet.com for help
-      </Error>
+      </ErrorMessage>
     );
   }
 

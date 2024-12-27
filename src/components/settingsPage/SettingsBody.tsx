@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { GET_USER_PROFILE } from "@/queries/userQueries";
 import { UPDATE_USER_IS_INTERESTED } from "@/mutations/userMutations";
 import Loading from "@/components/utilities/Loading";
-import Error from "@/components/utilities/Error";
+import ErrorMessage from "@/components/utilities/ErrorMessage";
 import { useEffect, useState } from "react";
 import GenericError from "../utilities/GenericError";
 import MutationVersionError from "../utilities/MutationVersionError";
@@ -90,34 +90,34 @@ export default function SettingsBody() {
       switch (errorCode) {
         case "VERSION_ERROR":
           return (
-            <Error>
+            <ErrorMessage>
               Version Error. A new web version is available. Please refresh your
               page.
-            </Error>
+            </ErrorMessage>
           );
         case "RATE_LIMIT_ERROR":
           return (
-            <Error>
+            <ErrorMessage>
               Too many requests for this resource. Please wait and try again
               again later. Contact support if you think this is was an error.
-            </Error>
+            </ErrorMessage>
           );
         default:
           return (
-            <Error>
+            <ErrorMessage>
               Error loading tags. Please refresh the page and try again.
               <br></br>
               If error persists please contact support@myfapsheet.com for help
-            </Error>
+            </ErrorMessage>
           );
       }
     }
     return (
-      <Error>
+      <ErrorMessage>
         Error loading tags. Please refresh the page and try again.
         <br></br>
         If error persists please contact support@myfapsheet.com for help
-      </Error>
+      </ErrorMessage>
     );
   }
 

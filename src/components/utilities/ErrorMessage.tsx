@@ -1,11 +1,11 @@
 import React, { ReactNode } from "react";
-import styles from "./Error.module.scss";
+import styles from "./ErrorMessage.module.scss";
 
-interface ErrorProps {
+interface ErrorMessageProps {
   children: ReactNode;
 }
 
-export default function Error({ children }: ErrorProps) {
+export default function ErrorMessage({ children }: ErrorMessageProps) {
   return (
     <div className={styles["error-container"]}>
       <div className={styles["error"]}>{children}</div>

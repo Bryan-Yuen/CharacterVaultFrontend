@@ -1,12 +1,8 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import "dotenv/config";
-// commit1212
 
-// guarantees at least on url
-if (!process.env.NEXT_PUBLIC_PRODUCTION_SERVER_URL) {
-  if (!process.env.NEXT_PUBLIC_DEVELOPMENT_URL) {
-    throw new Error("no url");
-  }
+if (!process.env.NEXT_PUBLIC_PRODUCTION_SERVER_URL && process.env.NEXT_PUBLIC_ENVIRONMENT === "PRODUCTION") {
+  throw new Error("no production server url in production");
 }
 
 if (!process.env.NEXT_PUBLIC_APP_VERSION) {
@@ -19,7 +15,7 @@ const client = new ApolloClient({
   },
   uri: process.env.NEXT_PUBLIC_ENVIRONMENT === "PRODUCTION"
     ? process.env.NEXT_PUBLIC_PRODUCTION_SERVER_URL
-    : process.env.NEXT_PUBLIC_DEVELOPMENT_URL,
+    : process.env.NEXT_PUBLIC_DEVELOPMENT_SERVER_URL,
   cache: new InMemoryCache({
     typePolicies: {
       PornstarWithTags: {

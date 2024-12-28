@@ -17,7 +17,7 @@ import GenericError from "../utilities/GenericError";
 import MutationVersionError from "../utilities/MutationVersionError";
 import RateLimitError from "../utilities/RateLimitError";
 import "dotenv/config";
-import { useSuccessAlertContext } from '@/contexts/ShowSuccessAlertContext';
+import { useSuccessAlertContext } from "@/contexts/ShowSuccessAlertContext";
 
 if (!process.env.NEXT_PUBLIC_PORNSTAR_PICTURES_BUCKET_URL) {
   throw new Error("no pornstar picture bucket url");
@@ -44,7 +44,7 @@ export default function AddPornstarBody() {
   const router = useRouter();
   const client = useApolloClient();
 
-  const {showSuccessfulPopup , setSuccessText} = useSuccessAlertContext();
+  const { showSuccessfulPopup, setSuccessText } = useSuccessAlertContext();
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
@@ -55,7 +55,7 @@ export default function AddPornstarBody() {
   const [isDesktop, setDesktop] = useState(false);
 
   // lets maybe change this name to fail to add ponstar error instead of generic
-  const [pornstarNameExists, setPornstarNameExists] = useState(false)
+  const [pornstarNameExists, setPornstarNameExists] = useState(false);
   const [genericError, setGenericError] = useState(false);
   const [versionError, setVersionError] = useState(false);
   const [rateLimitError, setRateLimitError] = useState(false);
@@ -84,7 +84,7 @@ export default function AddPornstarBody() {
         pornstar_links_title_url: pornstarLinks,
       },
     },
-    errorPolicy: "all"
+    errorPolicy: "all",
   });
 
   const addPornstarHandler = async (e: FormEvent<HTMLFormElement>) => {
@@ -112,7 +112,7 @@ export default function AddPornstarBody() {
             setVersionError(true);
             break;
           case "RATE_LIMIT_ERROR":
-            setRateLimitError(true)
+            setRateLimitError(true);
             break;
           default:
             setGenericError(true);
@@ -122,24 +122,29 @@ export default function AddPornstarBody() {
 
         if (secured_data) {
           try {
-            const response = await fetch(process.env.NEXT_PUBLIC_CLOUDFLARE_UPLOAD_WORKER_URL || "", {
-              method: "POST",
-              headers: {
-                "Content-Type": selectedImage?.type || "",
-                "X-Secured-Data": secured_data,
-              },
-              body: selectedImage,
-            });
+            const response = await fetch(
+              process.env.NEXT_PUBLIC_CLOUDFLARE_UPLOAD_WORKER_URL || "",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": selectedImage?.type || "",
+                  "X-Secured-Data": secured_data,
+                },
+                body: selectedImage,
+              }
+            );
             if (!response.ok) {
-              // If the response status is not 200, throw an error
-              throw new Error(`Request failed with status ${response.status}`);
+              const errorMessage = await response.text(); // Read the response body as text
+              console.error(`Error from server: ${errorMessage}`);
+              throw new Error(errorMessage); // Optional: Re-throw the error
             }
-            console.log("response",response)
-            console.log(response.json)
+            console.log("response", response);
+            console.log(response.json);
             const responseBody = await response.text(); // Since `message` is a plain string
             console.log("Response Message:", responseBody);
-          } catch (error) {
+          } catch (error: any) {
             console.error(error);
+            console.log("error message", error.message);
             setGenericError(true);
           }
         }
@@ -152,7 +157,9 @@ export default function AddPornstarBody() {
                   __typename: "PornstarWithTags",
                   pornstar_url_slug: result.data.addPornstar.pornstar_url_slug,
                   pornstar_name: pornstarName,
-                  pornstar_picture_path: selectedImage ? result.data.addPornstar.pornstar_picture_path : null,
+                  pornstar_picture_path: selectedImage
+                    ? result.data.addPornstar.pornstar_picture_path
+                    : null,
                   pornstar_tags_text: pornstarTags,
                 },
                 fragment: gql`
@@ -169,7 +176,7 @@ export default function AddPornstarBody() {
           },
         });
 
-        setSuccessText("Pornstar added")
+        setSuccessText("Pornstar added");
         showSuccessfulPopup();
         router.push("/dashboard");
       }

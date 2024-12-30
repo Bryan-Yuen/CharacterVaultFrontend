@@ -62,7 +62,7 @@ export default function HomePageVideoBody() {
         />
         Your browser does not support the video tag.
       </video> */}
-      <VideoJS options={videoJsOptions} onReady={handlePlayerReady}/>
+      {/*<VideoJS options={videoJsOptions} onReady={handlePlayerReady}/> */}
     </div>
   );
 }

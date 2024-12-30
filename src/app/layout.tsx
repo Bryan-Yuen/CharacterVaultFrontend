@@ -25,9 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/*      <GoogleTagManager
+    <GoogleTagManager
         gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID || ""}
-      />*/}
+      />
       <body className={inter.className}>
         <ChildrenWithProvider>{children}</ChildrenWithProvider>
       </body>

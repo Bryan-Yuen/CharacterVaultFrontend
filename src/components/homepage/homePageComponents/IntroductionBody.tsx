@@ -21,10 +21,11 @@ export default function IntroductionBody() {
             Save your favorite pornstars here
           </h2>
           <span className={styles["introduction-body-content"]}>Create your list and add and manage your favorite pornstars with our interactive dashboard.</span>
+          {/*page scrolls up when pressing back button from another link, and its probably because of prefetch when links come into viewport*/}
           <Link
             href={"/register"}
-            //className={styles["introduction-cta"]}
             className={`${globalStyles["blue-link-button"]} ${styles["introduction-cta"]}`}
+            prefetch={false}
           >
             Create Your List
           </Link>

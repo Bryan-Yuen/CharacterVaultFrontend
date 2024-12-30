@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./DemoListBody.module.scss";
 import PornstarTile from "../dashboardpage/DashboardComponents/PornstarTile";
 import DemoListPornstars from "./DemoListPornstars";
+import ScrollToTop from "../utilities/ScrollToTop";
 
 export interface FullPornstar {
   pornstar_id: number;
@@ -18,6 +19,8 @@ export default function DemoListBody() {
   //we could actually utilize the full pornstars state if we're keeping it instead of duplicating the logic for tags
   return (
     <main className={styles["demo-list-body"]}>
+      {/* nextjs had weird bug that keeps scroll position of previous page, this is temp workaround */}
+      <ScrollToTop/>
       <h1 className={styles["header"]}>Demo List</h1>
       <span>
         The images here were AI generated. Feel free to add your own pornstar

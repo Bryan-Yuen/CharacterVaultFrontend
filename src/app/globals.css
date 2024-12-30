@@ -36,10 +36,11 @@ button:hover{
 }
 
 /* videojs styles */
-#vjs_video_671 , #vjs_video_671_html5_api {
+.video-js , .video-js video {
   border-radius: 8px;
 }
 
 .vjs-poster img {
   object-fit: cover!important;
+  border-radius: 8px;
 }

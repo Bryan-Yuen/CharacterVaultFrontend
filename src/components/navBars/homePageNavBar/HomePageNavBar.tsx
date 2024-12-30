@@ -27,13 +27,13 @@ export default function HomePageNavBar() {
           <div className={styles["login-sign-up-container"]}>
             <Link
               href={"/login"}
-              className={styles["login"]}
+              className={styles["login-button"]}
             >
               Login
             </Link>
             <Link
               href={"/register"}
-              className={`${globalStyles["blue-link-button"]} ${styles["sign-up"]}`}
+              className={`${globalStyles["blue-link-button"]} ${styles["sign-up-button"]}`}
             >
               Sign Up
             </Link>

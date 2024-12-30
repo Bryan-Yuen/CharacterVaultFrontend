@@ -24,7 +24,7 @@ export default function IntroductionBody() {
           <Link
             href={"/register"}
             //className={styles["introduction-cta"]}
-            className={`${globalStyles["blue-link-button"]} ${styles["button-alignment"]}`}
+            className={`${globalStyles["blue-link-button"]} ${styles["introduction-cta"]}`}
           >
             Create Your List
           </Link>

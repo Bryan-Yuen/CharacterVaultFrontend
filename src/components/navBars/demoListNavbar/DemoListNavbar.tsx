@@ -26,7 +26,7 @@ export default function DemoListNavbar() {
           <div className={styles["login-sign-up-container"]}>
             <Link
               href={"/register"}
-              className={`${globalStyles["blue-link-button"]} ${styles["sign-up"]}`}
+              className={`${globalStyles["blue-link-button"]} ${styles["demo-list-sign-up-button"]}`}
             >
               Create Your List
             </Link>

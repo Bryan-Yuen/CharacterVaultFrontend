@@ -23,7 +23,7 @@ export default function PlanSection() {
               <div>Add up to 25 pornstars</div>
               <Link
             href={"/register"}
-            className={`${globalStyles["blue-link-button"]} ${styles["plan-cta"]}`}
+            className={`${globalStyles["blue-link-button"]} ${styles["basic-plan-cta"]}`}
           >
             Create Your List
           </Link>
@@ -42,7 +42,7 @@ export default function PlanSection() {
               <div>Add up to 1000 pornstars</div>
               <Link
             href={"/register"}
-            className={`${globalStyles["blue-link-button"]} ${styles["plan-cta"]}`}
+            className={`${globalStyles["blue-link-button"]} ${styles["premium-plan-cta"]}`}
           >
             Coming Soon
           </Link>

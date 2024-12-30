@@ -21,7 +21,13 @@ export default function HomePageVideoBody() {
     sources: [{
       src: 'https://home-page-video.myfapsheet.com/Timeline%201%20final.mp4',
       type: 'video/mp4'
-    }]
+    },{
+      src: 'https://home-page-video.myfapsheet.com/Timeline%201%20final.webm',
+      type: 'video/webm'
+    },{
+      src: 'https://home-page-video.myfapsheet.com/Timeline-1-final.ogg',
+      type: 'video/ogg'
+    },]
   };
 
   const handlePlayerReady = (player : any) => {

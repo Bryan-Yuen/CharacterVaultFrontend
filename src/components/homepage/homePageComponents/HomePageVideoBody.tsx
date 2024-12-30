@@ -1,16 +1,14 @@
 "use client";
 
-import React, { useRef, useEffect } from 'react';
-import ReactPlayer from "react-player";
+import React, {useRef} from 'react';
 import styles from "./HomePageVideoBody.module.scss";
-import Image from "next/image";
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import VideoJS from './VideoJS';
 
 
 export default function HomePageVideoBody() {
-  const playerRef = React.useRef(null);
+  const playerRef = useRef(null);
 
   const videoJsOptions = {
     autoplay: false,
@@ -62,7 +60,7 @@ export default function HomePageVideoBody() {
         />
         Your browser does not support the video tag.
       </video> */}
-      {/*<VideoJS options={videoJsOptions} onReady={handlePlayerReady}/> */}
+      <VideoJS options={videoJsOptions} onReady={handlePlayerReady}/>
     </div>
   );
 }

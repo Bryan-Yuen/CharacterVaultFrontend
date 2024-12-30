@@ -34,3 +34,12 @@ button:hover{
   --accent-color: #ffcc00;
   /* Add more colors as needed */
 }
+
+/* videojs styles */
+#vjs_video_671 , #vjs_video_671_html5_api {
+  border-radius: 8px;
+}
+
+.vjs-poster img {
+  object-fit: cover!important;
+}

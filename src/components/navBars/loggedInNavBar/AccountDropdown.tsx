@@ -101,7 +101,10 @@ export default function AccountDropdown(props: propDefs) {
           Resources
         </Link>
         <Link className={styles["setting-list-item"]} href={"/support"}>
-          Support/Feedback
+          Support
+        </Link>
+        <Link className={styles["setting-list-item"]} href={"/feedback"}>
+          Feedback
         </Link>
         <button
           className={`${styles["setting-list-item"]} ${styles["log-out-button"]}`}

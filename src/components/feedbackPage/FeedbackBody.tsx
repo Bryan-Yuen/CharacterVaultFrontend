@@ -1,9 +1,9 @@
 import React, { useState, FormEvent } from "react";
 import useInput from "../hooks/useInput";
 import useTextAreaInput from "../hooks/useTextAreaInput";
-import styles from "./ContactPageBody.module.scss";
+import styles from "./FeedbackBody.module.scss";
 import { useMutation } from "@apollo/client";
-import { CONTACT_FORM } from "@/mutations/contactMutations";
+import { FEEDBACK_FORM } from "@/mutations/contactMutations";
 import FormWrapper from "../utilities/FormWrapper";
 import FormInput from "../utilities/FormInput";
 import FormTextArea from "../utilities/FormTextArea";
@@ -12,14 +12,14 @@ import FormSubmitButton from "../utilities/FormSubmitButton";
 import FormHeader from "../utilities/FormHeader";
 import SuccessMessage from "../utilities/SuccessMessage";
 
-export default function ContactPageBody() {
+export default function FeedbackBody() {
   const {
-    input: contactEmail,
-    inputIsValid: contactEmailIsValid,
-    inputIsInvalid: contactEmailIsInvalid,
-    inputChangeHandler: contactEmailChangeHandler,
-    inputBlurHandler: contactEmailBlurHandler,
-  } = useInput((input) => /^\S+@\S+\.\S+$/.test(input));
+    input: subject,
+    inputIsValid: subjectIsValid,
+    inputIsInvalid: subjectIsInvalid,
+    inputChangeHandler: subjectChangeHandler,
+    inputBlurHandler: subjectBlurHandler,
+  } = useInput((input) => input.length > 0);
 
   const {
     input: textArea,
@@ -29,10 +29,10 @@ export default function ContactPageBody() {
     inputBlurHandler: textAreaBlurHandler,
   } = useTextAreaInput((input) => input.length > 0);
 
-  const [contactForm, { loading }] = useMutation(CONTACT_FORM, {
+  const [feedbackForm, { loading }] = useMutation(FEEDBACK_FORM, {
     variables: {
-      contactFormInput: {
-        form_email: contactEmail,
+      feedbackFormInput: {
+        form_subject: subject,
         form_message: textArea,
       },
     },
@@ -45,11 +45,10 @@ export default function ContactPageBody() {
   const [versionError, setVersionError] = useState(false);
   const [rateLimitError, setRateLimitError] = useState(false);
 
-  const contactSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
+  const feedbackSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
-      const result = await contactForm();
+      const result = await feedbackForm();
       if (!result) {
         setGenericError(true);
         return;
@@ -78,27 +77,26 @@ export default function ContactPageBody() {
 
   return (
     <FormWrapper
-      onSubmit={contactSubmitHandler}
+      onSubmit={feedbackSubmitHandler}
       genericError={genericError}
       versionError={versionError}
       rateLimitError={rateLimitError}
     >
-      <FormHeader header="Contact Form"></FormHeader>
+      <FormHeader header="Feedback Form" />
       <span className={styles["sub-copy"]}>
-        Contact us for any questions related to your account or about our
-        website
+        Use this form to provide any feedback or ask questions about features on the website. We always appreaciate any feedback and will consider improving based on it.
       </span>
       <FormInput
-        inputIsInvalid={contactEmailIsInvalid}
-        label="Email"
-        placeholder="Enter your email"
-        onChangeHandler={contactEmailChangeHandler}
-        onBlurHandler={contactEmailBlurHandler}
-        value={contactEmail}
+        inputIsInvalid={subjectIsInvalid}
+        label="Subject"
+        placeholder="subject"
+        onChangeHandler={subjectChangeHandler}
+        onBlurHandler={subjectBlurHandler}
+        value={subject}
       >
         <FormInputInvalidMessage
-          inputIsInvalid={contactEmailIsInvalid}
-          message="Blank or invalid email format."
+          inputIsInvalid={subjectIsInvalid}
+          message="Subject cannot be blank."
         />
       </FormInput>
       <FormTextArea
@@ -115,13 +113,13 @@ export default function ContactPageBody() {
         />
       </FormTextArea>
       <FormSubmitButton
-        formIsInvalid={!(contactEmailIsValid && textAreaIsValid)}
+        formIsInvalid={!(subjectIsValid && textAreaIsValid)}
         loading={loading}
         buttonText="Send"
       />
       <SuccessMessage showSuccessMessage={emailSent}>
-        Your message has been sent. You should receive an response in the
-        email provided shortly.
+        Your message has been sent. You should receive an response in your
+        email shortly.
       </SuccessMessage>
     </FormWrapper>
   );

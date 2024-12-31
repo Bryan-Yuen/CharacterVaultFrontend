@@ -82,10 +82,9 @@ export default function SupportBody() {
       versionError={versionError}
       rateLimitError={rateLimitError}
     >
-      <FormHeader header="Support/Feedback Form" />
+      <FormHeader header="Support Form" />
       <span className={styles["sub-copy"]}>
-        Use this form to contact us about any questions, issues, or feedback
-        about your account. Feel free to also use this form to provide feedback on our website.
+        Use this form to contact us about any questions or issues with your account or problems with website.
       </span>
       <FormInput
         inputIsInvalid={subjectIsInvalid}
@@ -97,7 +96,7 @@ export default function SupportBody() {
       >
         <FormInputInvalidMessage
           inputIsInvalid={subjectIsInvalid}
-          message="Blank or invalid email format."
+          message="Subject cannot be blank."
         />
       </FormInput>
       <FormTextArea
@@ -119,7 +118,7 @@ export default function SupportBody() {
         buttonText="Send"
       />
       <SuccessMessage showSuccessMessage={emailSent}>
-        Your message has been sent. You should receive an response from your
+        Your message has been sent. You should receive an response in your
         email shortly.
       </SuccessMessage>
     </FormWrapper>

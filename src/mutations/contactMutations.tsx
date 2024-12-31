@@ -12,5 +12,11 @@ mutation Mutation($supportFormInput: SupportEmailInputType!) {
 }
 `;
 
+const FEEDBACK_FORM = gql`
+mutation Mutation($feedbackFormInput: FeedbackEmailInputType!) {
+  feedbackForm(feedbackFormInput: $feedbackFormInput)
+}
+`;
 
-export {CONTACT_FORM, SUPPORT_FORM};
+
+export {CONTACT_FORM, SUPPORT_FORM, FEEDBACK_FORM};

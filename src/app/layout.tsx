@@ -4,6 +4,10 @@ import "./globals.css";
 import ChildrenWithProvider from "./ChildrenWithProvider";
 import { GoogleTagManager } from "@next/third-parties/google";
 
+if (!process.env.NEXT_PUBLIC_ENVIRONMENT) {
+  throw new Error("no environment");
+}
+
 if (
   !process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID &&
   process.env.NEXT_PUBLIC_ENVIRONMENT === "PRODUCTION"
@@ -16,6 +20,18 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "MyFapSheet",
   description: "The place to save your favorite pornstars",
+  robots: {
+    index:
+      process.env.NEXT_PUBLIC_ENVIRONMENT === "LOCAL_DEVELOPMENT" ||
+      process.env.NEXT_PUBLIC_ENVIRONMENT === "DEVELOPMENT"
+        ? false
+        : true,
+    follow:
+      process.env.NEXT_PUBLIC_ENVIRONMENT === "LOCAL_DEVELOPMENT" ||
+      process.env.NEXT_PUBLIC_ENVIRONMENT === "DEVELOPMENT"
+        ? false
+        : true,
+  },
 };
 
 export default function RootLayout({
@@ -25,7 +41,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-    <GoogleTagManager
+      <GoogleTagManager
         gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID || ""}
       />
       <body className={inter.className}>

@@ -6,19 +6,35 @@ import ApolloClientWrapper from "@/components/utilities/ApolloClientWrapper";
 import HomePageAuthenticationWrapper from "@/components/utilities/HomePageAuthenticationWrapper";
 import type { Metadata } from "next";
 
+if (!process.env.NEXT_PUBLIC_ENVIRONMENT) {
+  throw new Error("no environment");
+}
+
 export const metadata: Metadata = {
   title: "MyFapSheet",
   description: "Save your favorite pornstars",
+  robots: {
+    index:
+      process.env.NEXT_PUBLIC_ENVIRONMENT === "LOCAL_DEVELOPMENT" ||
+      process.env.NEXT_PUBLIC_ENVIRONMENT === "DEVELOPMENT"
+        ? false
+        : true,
+    follow:
+      process.env.NEXT_PUBLIC_ENVIRONMENT === "LOCAL_DEVELOPMENT" ||
+      process.env.NEXT_PUBLIC_ENVIRONMENT === "DEVELOPMENT"
+        ? false
+        : true,
+  },
 };
 
 export default function Home() {
   return (
     <ApolloClientWrapper>
       <HomePageAuthenticationWrapper>
-      <NavBar />
-      <HomePageBody />
-      <Footer />
+        <NavBar />
+        <HomePageBody />
+        <Footer />
       </HomePageAuthenticationWrapper>
-      </ApolloClientWrapper>
+    </ApolloClientWrapper>
   );
 }

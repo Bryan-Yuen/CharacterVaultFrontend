@@ -7,7 +7,7 @@ if (!process.env.NEXT_PUBLIC_ENVIRONMENT) {
 
 export const metadata: Metadata = {
   title: "Contact - MyFapSheet",
-  description: "Contact the website",
+  description: "Contact MyFapSheet. Ask questions about the website.",
   robots: {
     index:
       process.env.NEXT_PUBLIC_ENVIRONMENT === "LOCAL_DEVELOPMENT" ||

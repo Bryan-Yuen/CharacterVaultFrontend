@@ -7,7 +7,7 @@ if (!process.env.NEXT_PUBLIC_ENVIRONMENT) {
 
 export const metadata: Metadata = {
   title: "Login - MyFapSheet",
-  description: "Login to your account",
+  description: "Login to MyFapSheet. Save your favorite porntars.",
   robots: {
     index:
       process.env.NEXT_PUBLIC_ENVIRONMENT === "LOCAL_DEVELOPMENT" ||

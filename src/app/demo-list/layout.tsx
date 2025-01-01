@@ -7,7 +7,7 @@ if (!process.env.NEXT_PUBLIC_ENVIRONMENT) {
 
 export const metadata: Metadata = {
   title: "Demo List - MyFapSheet",
-  description: "Demo list of example list with AI pornstars",
+  description: "MyFapSheet example list with AI pornstars.",
   robots: {
     index:
       process.env.NEXT_PUBLIC_ENVIRONMENT === "LOCAL_DEVELOPMENT" ||

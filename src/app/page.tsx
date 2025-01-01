@@ -12,7 +12,8 @@ if (!process.env.NEXT_PUBLIC_ENVIRONMENT) {
 
 export const metadata: Metadata = {
   title: "MyFapSheet",
-  description: "Save your favorite pornstars",
+  description:
+    "Create your list and add and manage your favorite pornstars. Upload custom images, tags, and video links.",
   robots: {
     index:
       process.env.NEXT_PUBLIC_ENVIRONMENT === "LOCAL_DEVELOPMENT" ||

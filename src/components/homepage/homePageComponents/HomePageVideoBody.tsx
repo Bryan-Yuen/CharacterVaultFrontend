@@ -15,7 +15,7 @@ export default function HomePageVideoBody() {
     controls: true,
     responsive: true,
     fluid: true,
-    poster: 'https://home-page-pictures.myfapsheet.com/home-page-video-poster.png',
+    poster: 'https://home-page-pictures.myfapsheet.com/home-page-video-poster.webp',
     sources: [{
       src: 'https://home-page-video.myfapsheet.com/Timeline%201%20final.mp4',
       type: 'video/mp4'

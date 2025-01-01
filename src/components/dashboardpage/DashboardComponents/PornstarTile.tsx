@@ -29,7 +29,6 @@ export default function PornstarTile(props: propDefs) {
           */
           <Image
           loader={r2ImageLoader}
-          unoptimized
           src={props.pornstar_picture_path}
           alt={props.pornstar_name}
           width={300}

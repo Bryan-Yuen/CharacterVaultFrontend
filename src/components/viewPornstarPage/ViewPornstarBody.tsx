@@ -9,6 +9,7 @@ import DeletePornstarModal from "./DeletePornstarModal";
 import Loading from "../utilities/Loading";
 import ErrorMessage from "../utilities/ErrorMessage";
 import { useRouter } from "next/navigation";
+import { r2ImageLoader } from '@/components/utilities/r2ImageLoader';
 
 export default function ViewPornstarBody() {
   // read a route's dynamic params filled in by the current URL.
@@ -107,6 +108,7 @@ export default function ViewPornstarBody() {
         {isDesktop &&
           (data.getPornstar.pornstar_picture_path ? (
             <Image
+              loader={r2ImageLoader}
               alt={data.getPornstar.pornstar_name}
               src={data.getPornstar.pornstar_picture_path}
               width={300}

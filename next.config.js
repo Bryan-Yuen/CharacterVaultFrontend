@@ -23,6 +23,16 @@ const nextConfig = {
         hostname: "home-page-video.myfapsheet.com",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "pornstar-pictures.myfapsheet.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "pornstar-pictures-cdn.myfapsheet.com",
+        pathname: "**",
+      },
     ],
   },
   swcMinify: true, // Ensure SWC minification is enabled

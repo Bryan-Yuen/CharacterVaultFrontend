@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import styles from "./UploadImage.module.scss";
 import Image from "next/image";
+import { r2ImageLoader } from "../utilities/r2ImageLoader";
 
 const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3 MB in bytes (3,145,728)
 
@@ -163,6 +164,7 @@ const UploadImage = ({
         <div>
           <Image
             priority
+            loader={r2ImageLoader}
             src={
               selectedImage
                 ? URL.createObjectURL(selectedImage)

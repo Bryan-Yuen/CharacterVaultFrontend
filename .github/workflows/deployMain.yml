@@ -35,6 +35,7 @@ jobs:
           git status
           npm install
           npm run build
+          npm run sitemap
           pm2 restart ProdMyFapSheetFrontend
           curl https://api.cloudflare.com/client/v4/zones/${{ secrets.ZONE_ID }}/purge_cache \
             -H 'Content-Type: application/json' \

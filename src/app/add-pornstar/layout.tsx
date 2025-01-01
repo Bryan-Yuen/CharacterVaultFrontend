@@ -1,24 +1,12 @@
 import { Metadata } from "next";
-import AddPornstar from "./page"; // import your Demo's page
-
-if (!process.env.NEXT_PUBLIC_ENVIRONMENT) {
-  throw new Error("no environment");
-}
+import AddPornstar from "./page"; // import your Demo's pages
 
 export const metadata: Metadata = {
   title: "Add Pornstar - MyFapSheet",
   description: "Add a new pornstar",
   robots: {
-    index:
-      process.env.NEXT_PUBLIC_ENVIRONMENT === "LOCAL_DEVELOPMENT" ||
-      process.env.NEXT_PUBLIC_ENVIRONMENT === "DEVELOPMENT"
-        ? false
-        : true,
-    follow:
-      process.env.NEXT_PUBLIC_ENVIRONMENT === "LOCAL_DEVELOPMENT" ||
-      process.env.NEXT_PUBLIC_ENVIRONMENT === "DEVELOPMENT"
-        ? false
-        : true,
+    index: false,
+    follow: false,
   },
 };
 export default AddPornstar;

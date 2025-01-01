@@ -4,9 +4,11 @@ import "./globals.css";
 import ChildrenWithProvider from "./ChildrenWithProvider";
 import { GoogleTagManager } from "@next/third-parties/google";
 
+/*
 if (!process.env.NEXT_PUBLIC_ENVIRONMENT) {
   throw new Error("no environment");
 }
+  */
 
 if (
   !process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID &&
@@ -17,6 +19,7 @@ if (
 
 const inter = Inter({ subsets: ["latin"] });
 
+/*
 export const metadata: Metadata = {
   title: "MyFapSheet",
   description: "The place to save your favorite pornstars",
@@ -33,6 +36,7 @@ export const metadata: Metadata = {
         : true,
   },
 };
+*/
 
 export default function RootLayout({
   children,

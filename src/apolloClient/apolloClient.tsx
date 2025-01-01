@@ -1,6 +1,10 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import "dotenv/config";
 
+if (!process.env.NEXT_PUBLIC_ENVIRONMENT) {
+  throw new Error("no server url");
+}
+
 if (!process.env.NEXT_PUBLIC_SERVER_URL) {
   throw new Error("no server url");
 }
@@ -38,7 +42,7 @@ const client = new ApolloClient({
         */
     },
   }),
-  //credentials: "include",
+  credentials: process.env.NEXT_PUBLIC_ENVIRONMENT === "LOCAL_DEVELOPMENT" ? "include" : "same-origin",
 });
 
 export default client;

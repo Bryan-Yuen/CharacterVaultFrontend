@@ -9,16 +9,8 @@ export const metadata: Metadata = {
   title: "Update Password - MyFapSheet",
   description: "Update your password",
   robots: {
-    index:
-      process.env.NEXT_PUBLIC_ENVIRONMENT === "LOCAL_DEVELOPMENT" ||
-      process.env.NEXT_PUBLIC_ENVIRONMENT === "DEVELOPMENT"
-        ? false
-        : true,
-    follow:
-      process.env.NEXT_PUBLIC_ENVIRONMENT === "LOCAL_DEVELOPMENT" ||
-      process.env.NEXT_PUBLIC_ENVIRONMENT === "DEVELOPMENT"
-        ? false
-        : true,
+    index: false,
+    follow: false,
   },
 };
 export default UpdatePassword;

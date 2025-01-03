@@ -19,7 +19,7 @@ export default function RegisterBody() {
     inputIsInvalid: registerUsernameIsInvalid,
     inputChangeHandler: registerUsernameChangeHandler,
     inputBlurHandler: registerUsernameBlurHandler,
-  } = useInput((input) => input.length >= 4 && /^[a-z0-9]+$/i.test(input));
+  } = useInput((input) => input.length >= 3 && /^[a-z0-9]+$/i.test(input));
 
   const {
     input: registerEmail,
@@ -130,13 +130,13 @@ export default function RegisterBody() {
       <FormInput
         inputIsInvalid={registerUsernameIsInvalid || uniqueUsernameIsInvalid}
         label="Username"
-        placeholder="At least 4 characters"
+        placeholder="At least 3 characters"
         onChangeHandler={registerUsernameChangeHandler}
         onBlurHandler={registerUsernameBlurHandler}
       >
         <FormInputInvalidMessage
           inputIsInvalid={registerUsernameIsInvalid}
-          message="Minimum 4 characters and no special characters."
+          message="Minimum 3 characters and no special characters."
         />
         <FormInputInvalidMessage
           inputIsInvalid={uniqueUsernameIsInvalid}

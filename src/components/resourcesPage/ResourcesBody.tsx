@@ -94,8 +94,8 @@ export default function ResourcesBody() {
             <span className={styles["link-message"]}>(free onlyfans videos)</span>
           </li>
           <li className={styles["link-item"]}>
-            <a href="https://xfreehd.com/" target="_blank">
-              https://xfreehd.com/&nbsp;
+            <a href="https://topvid.tv/" target="_blank">
+            https://topvid.tv/&nbsp;
             </a>
             <span className={styles["link-message"]}>(free premium videos)</span>
           </li>

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./DemoListBody.module.scss";
-import PornstarTile from "../dashboardpage/DashboardComponents/PornstarTile";
+import DemoListPornstarTile from "./DemoListComponents/DemoListPornstarTile";
 import DemoListPornstars from "./DemoListPornstars";
 import ScrollToTop from "../utilities/ScrollToTop";
 
@@ -28,13 +28,12 @@ export default function DemoListBody() {
       </span>
       <div className={styles["pornstar-tiles-container"]}>
         {DemoListPornstars.map((pornstar: any, index) => (
-          <PornstarTile
+          <DemoListPornstarTile
           key={Math.floor(Math.random() * 10000)}
           pornstar_url_slug=""
             pornstar_name={pornstar.pornstar_name}
             pornstar_picture_path={pornstar.pornstar_picture_path}
             tags={pornstar.pornstar_tags}
-            demoListTile={true}
           />
         ))}
       </div>

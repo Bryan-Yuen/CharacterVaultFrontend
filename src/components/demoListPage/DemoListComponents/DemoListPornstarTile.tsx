@@ -1,8 +1,7 @@
 import React from 'react';
-import styles from './PornstarTile.module.scss';
+import styles from './DemoListPornstarTile.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
-import { r2ImageLoader } from '@/components/utilities/r2ImageLoader';
 
 interface propDefs {
   pornstar_url_slug: string;
@@ -12,9 +11,9 @@ interface propDefs {
   shufflePornstarContainer?: boolean;
 }
 
-export default function PornstarTile(props: propDefs) {
+export default function DemoListPornstarTile(props: propDefs) {
   return (
-      <Link href={'pornstar/' + props.pornstar_url_slug}
+      <Link href={'register'}
         className={`${styles["pornstar-tile-container"]} ${styles[props.shufflePornstarContainer ? 'shufflePornstarContainer' : '']}`}
       >
         {props.pornstar_picture_path ? (
@@ -27,7 +26,6 @@ export default function PornstarTile(props: propDefs) {
           />
           */
           <Image
-          loader={r2ImageLoader}
           src={props.pornstar_picture_path}
           alt={props.pornstar_name}
           width={300}

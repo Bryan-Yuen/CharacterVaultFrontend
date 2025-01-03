@@ -71,7 +71,7 @@ export default function EditPornstarBody() {
       document.title =
       "Edit - " + capitalizeWords(data.getPornstar.pornstar_name) + " - MyFapSheet";
       setPornstarTags(
-        data.getPornstar.pornstar_tags.map((tag: any) => tag.tag_text)
+        data.getPornstar.pornstar_tags.map((tag: any) => tag.pornstar_tag_text)
       );
       setPornstarName(data.getPornstar.pornstar_name);
       setPornstarLinks(data.getPornstar.pornstar_links);

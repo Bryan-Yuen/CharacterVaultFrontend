@@ -24,7 +24,7 @@ const client = new ApolloClient({
         keyFields: ["pornstar_url_slug"],
       },
       PornstarTag: {
-        keyFields: ["tag_id"],
+        keyFields: ["pornstar_tag_id"],
       },
       UserTag: {
         keyFields: ["user_tag_id"],

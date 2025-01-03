@@ -7,8 +7,8 @@ query GetPornstar($getPornstarInput: GetPornstarInputType!) {
     pornstar_name
     pornstar_picture_path
     pornstar_tags {
-      tag_text
-      tag_id
+      pornstar_tag_text
+      pornstar_tag_id
     }
     pornstar_links {
       pornstar_link_title

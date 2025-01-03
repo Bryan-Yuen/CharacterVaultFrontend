@@ -168,7 +168,7 @@ export default function ViewPornstarBody() {
                 className={styles["pornstar-tags-list-item"]}
                 key={params.id + "-" + tag}
               >
-                {tag.tag_text}
+                {tag.pornstar_tag_text}
               </li>
             ))}
           </ul>

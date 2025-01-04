@@ -60,40 +60,16 @@
     display:flex;
     flex-direction: column;
   }
-  
-  .pornstar-name-input-container{
-    margin-top:10px;
-  }
-  
-  .pornstar-name-input{
-    display:block;
-    width:100%;
-    background-color: rgb(83, 83, 83);
-    color: white;
-    font-size: 16px;
-    border: 1px solid gray;
-    border-radius: 4px;
-    padding: 10px;
-  }
-  
-  .pornstar-name-input::placeholder {
-    color: white;
-    opacity:.5;
-  }
-  
-  .pornstar-name-input:focus {
-    outline-style: none;
-    border: 1px solid rgb(255, 255, 255)
-  }
+
   
   .sign-up-button-container{
     margin-top:20px;
   }
   
   .sign-up-button{
-    background-color: rgb(70, 70, 70);
+    background-color: rgb(201, 60, 60);
       font-size: 20px;
-      border: 1px solid gray;
+      border: 1px solid rgb(201, 60, 60);
       color: white;
       width: 100%;
       height: 40px;

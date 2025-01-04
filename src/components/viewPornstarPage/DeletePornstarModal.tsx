@@ -92,7 +92,7 @@ export default function DeletePornstarModal(props: propDefs) {
           onSubmit={deletePornstarHandler}
           className={styles["form-container"]}
         >
-          <span>{props.pornstar_name} will be removed from all pornstars</span>
+          <span>{props.pornstar_name} and all its data will be removed.</span>
           <div className={styles["sign-up-button-container"]}>
             <button className={styles["sign-up-button"]} type="submit">
               Delete

@@ -131,12 +131,12 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
         });
 
         if (
-          !pornstarTags.some((pornstarTag) => pornstarTag.includes(searchTerm))
+          !pornstarTags.some((pornstarTag) => pornstarTag.includes(searchTerm.toLowerCase()))
         ) {
-          setPornstarTags([...pornstarTags, searchTerm]);
+          setPornstarTags([...pornstarTags, searchTerm.toLowerCase()]);
           // need to remove from the search bar now
           setAccountTags((prevItems) =>
-            prevItems.filter((item) => item !== searchTerm)
+            prevItems.filter((item) => item !== searchTerm.toLowerCase())
           );
           // consider if this is appropriate for clicking an item or leaving the search term there.
           //setSearchTerm('');

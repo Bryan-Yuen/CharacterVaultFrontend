@@ -156,7 +156,7 @@ export default function SettingsBody() {
         </div>
         <div className={styles["update-container"]}>
           <span>
-            Thank you for using MyFapSheet. We are currently in the beta phase
+            Thank you for supporting MyFapSheet. We are currently in the beta phase
             of our service so we will only be allowing a maximum of 25
             pornstars. In the future, the premium plan will allow up to 1000
             pornstars and will be $3.99/month.

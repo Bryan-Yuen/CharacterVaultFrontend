@@ -279,7 +279,7 @@ export default function EditPornstarBody() {
         variables: {
           editPornstarInput: {
             pornstar_url_slug: params.id,
-            pornstar_name: pornstarName,
+            pornstar_name: pornstarName.toLowerCase(),
             pornstar_picture: selectedImage !== null,
             pornstar_tags_text: pornstarTags,
             imageUpdate: imageUpdate,
@@ -354,7 +354,7 @@ export default function EditPornstarBody() {
           data: {
             __typename: "PornstarWithTags",
             pornstar_url_slug: params.id,
-            pornstar_name: pornstarName,
+            pornstar_name: pornstarName.toLowerCase(),
             pornstar_picture_path:
               result.data.editPornstar.pornstar_picture_path,
             pornstar_tags_text: pornstarTags,

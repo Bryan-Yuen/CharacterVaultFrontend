@@ -45,9 +45,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <GoogleTagManager
-        gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID || ""}
-      />
+      {process.env.NEXT_PUBLIC_ENVIRONMENT === "LOCAL_DEVELOPMENT" ||
+      process.env.NEXT_PUBLIC_ENVIRONMENT === "DEVELOPMENT" ? (
+        <></>
+      ) : (
+        <GoogleTagManager
+          gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID || ""}
+        />
+      )}
       <body className={inter.className}>
         <ChildrenWithProvider>{children}</ChildrenWithProvider>
       </body>

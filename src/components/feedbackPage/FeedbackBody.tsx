@@ -84,7 +84,7 @@ export default function FeedbackBody() {
     >
       <FormHeader header="Feedback Form" />
       <span className={styles["sub-copy"]}>
-        Use this form to provide any feedback or ask questions about features on the website. We always appreaciate any feedback and will consider improving based on it.
+        Use this form to provide any feedback or ask questions about features on the website. We always appreciate any feedback and will consider implemeting it.
       </span>
       <FormInput
         inputIsInvalid={subjectIsInvalid}

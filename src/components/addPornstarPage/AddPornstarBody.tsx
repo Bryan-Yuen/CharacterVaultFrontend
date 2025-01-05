@@ -78,7 +78,7 @@ export default function AddPornstarBody() {
   const [addPornstar, { loading }] = useMutation(ADD_PORNSTAR, {
     variables: {
       addPornstarInput: {
-        pornstar_name: pornstarName,
+        pornstar_name: pornstarName.toLowerCase(),
         pornstar_picture: selectedImage !== null,
         pornstar_tags_text: pornstarTags,
         pornstar_links_title_url: pornstarLinks,
@@ -156,7 +156,7 @@ export default function AddPornstarBody() {
                 data: {
                   __typename: "PornstarWithTags",
                   pornstar_url_slug: result.data.addPornstar.pornstar_url_slug,
-                  pornstar_name: pornstarName,
+                  pornstar_name: pornstarName.toLowerCase(),
                   pornstar_picture_path: selectedImage
                     ? result.data.addPornstar.pornstar_picture_path
                     : null,

@@ -6,8 +6,8 @@ import DemoListSection from "@/components/homepage/homePageComponents/DemoListSe
 import PlanSection from "@/components/homepage/homePageComponents/PlanSection";
 import styles from "./HomePageBody.module.scss";
 
-
 export default function HomePageBody() {
+
   return (
     <main className={styles["home-page-body-container"]}>
     <HomePageVideoBody />

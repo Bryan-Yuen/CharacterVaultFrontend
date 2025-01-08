@@ -74,6 +74,9 @@ export default function PornstarTilesContainer() {
   const filteredData = realFilterPornstarByTags.filter((item: any) =>
     item.pornstar_name.toLowerCase().includes(nameSearchTerm.toLowerCase())
   );
+  console.log("realfilterbytags",realFilterPornstarByTags)
+  console.log("namesearh",nameSearchTerm)
+  console.log("filtereddata",filteredData)
 
   return (
     <>

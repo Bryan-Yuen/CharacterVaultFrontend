@@ -64,6 +64,7 @@ export default function SearchBar() {
       setAccountTags((prevItems) => prevItems.filter((item) => item !== tag));
       // resets the input
       setSearchTerm("");
+      setNameSearchTerm("")
       // consider if this is appropriate for clicking an item or leaving the search term there.
       //setSearchTerm('');
       // on mobile we do not want focus because the keyboard will keep showing up. only desktop is good

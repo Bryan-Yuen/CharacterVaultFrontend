@@ -512,6 +512,7 @@ export default function EditPornstarBody() {
             <Link
               href={"/pornstar/" + params.id}
               className={`${styles["cancel-button"]}`}
+              prefetch={false}
             >
               Cancel
             </Link>

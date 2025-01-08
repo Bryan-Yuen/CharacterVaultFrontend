@@ -61,7 +61,7 @@ const UploadImage = ({
 
     if (file.size > MAX_FILE_SIZE) {
       setOnDragOver(false);
-      alert("Error: Image file size must be 2Mb or less.");
+      alert("Error: Image file size must be 3Mb or less.");
       return;
     }
 
@@ -125,7 +125,7 @@ const UploadImage = ({
     console.log(event);
     if (event.target.files !== null) {
       if (event.target.files[0].size > MAX_FILE_SIZE) {
-        alert("Error: Image file size must be 2Mb or less.");
+        alert("Error: Image file size must be 3Mb or less.");
         return;
       }
       console.log(event.target.files[0]);

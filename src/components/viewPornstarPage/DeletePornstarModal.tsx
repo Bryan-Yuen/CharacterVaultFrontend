@@ -58,6 +58,9 @@ export default function DeletePornstarModal(props: propDefs) {
         //router.back();
         const referrer = document.referrer;
 
+        // unfortunately can't use this because user could clicked edit pornstar and then back to view
+        // and the it will bounce back to edit pornstar
+        /*
         // If the referrer contains "/dashboard" or is the same domain
         if (
           referrer.includes(window.location.hostname) &&
@@ -67,6 +70,8 @@ export default function DeletePornstarModal(props: propDefs) {
         } else {
           router.push("/dashboard"); // Redirect to the dashboard
         }
+          */
+        router.push("/dashboard");
       }
     } catch (error) {
       console.error("An unexpected error occurred:", error);

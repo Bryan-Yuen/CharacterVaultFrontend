@@ -2,6 +2,8 @@ import React, { useState, ChangeEvent, useRef, memo } from "react";
 import styles from "./MobileUploadImage.module.scss";
 import Image from "next/image";
 
+const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3 MB in bytes (3,145,728)
+
 export enum ImageUpdateStatus {
   AddOrEdit = "ADD_OR_EDIT",
   Delete = "DELETE",
@@ -41,6 +43,10 @@ export default memo(function MobileUploadImage({
   const fileInputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     console.log(event);
     if (event.target.files !== null) {
+      if (event.target.files[0].size > MAX_FILE_SIZE) {
+        alert("Error: Image file size must be 3Mb or less.");
+        return;
+      }
       console.log(event.target.files[0]);
       // there is a change also check if this exist because this is optional
       console.log("fireeee");

@@ -66,7 +66,10 @@ export default function ViewPornstarBody() {
         // scenario if user deleted the pornstar and clicked on the old pornstar link in web browser
         // or if user refreshes the page after error from save button maybe because pornstar is deleted
         case "PORNSTAR_NOT_FOUND":
-          router.push("/dashboard");
+          //router.push("/dashboard");
+          //window.location.reload();
+          // we want to refresh page after push to dashboard because user could've clicked on deleted pornstar in dashboard
+          window.location.href = '/dashboard';
           return null;
         case "VERSION_ERROR":
           return (
@@ -114,6 +117,7 @@ export default function ViewPornstarBody() {
               width={300}
               height={450}
               className={styles["user-image"]}
+              placeholder="blur"
             />
           ) : (
             <Image

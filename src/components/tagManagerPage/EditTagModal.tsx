@@ -61,7 +61,7 @@ export default function EditTagModal({
     if (uniqueTagIsInvalid) setUniqueTagIsInvalid(false);
   }, [tag]);
 
-  const {showSuccessfulPopup , setSuccessText} = useSuccessAlertContext();
+  const {showSuccessfulPopup , setSuccessText, setTriggeredFrom} = useSuccessAlertContext();
 
   const [uniqueTagIsInvalid, setUniqueTagIsInvalid] = useState(false);
 
@@ -135,6 +135,7 @@ export default function EditTagModal({
 
         setModalIsOpen(false);
         setSuccessText("Tag added")
+        setTriggeredFrom("TAGMANAGER")
         showSuccessfulPopup();
       }
     } catch (error) {

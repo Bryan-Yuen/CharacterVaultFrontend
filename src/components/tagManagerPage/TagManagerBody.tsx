@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useRef } from "react";
+import React, { useState, ChangeEvent, useRef, useEffect } from "react";
 import styles from "./TagManager.module.scss";
 import { GET_USER_TAGS } from "@/queries/userTagQueries";
 import { useQuery } from "@apollo/client";
@@ -23,7 +23,7 @@ export default function TagManagerBody() {
 
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState<boolean>(false);
 
-  const { successAlertIsOpen, successText } = useSuccessAlertContext();
+  const { successAlertIsOpen, successText, triggeredFrom, setSuccessAlertIsOpen } = useSuccessAlertContext();
 
   const [selectedTagText, setSelectedTagText] = useState<string>("");
   const [selectedTagId, setSelectedTagId] = useState<number>(0);
@@ -32,6 +32,12 @@ export default function TagManagerBody() {
   const [clicked, setClicked] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // if from dashboard page remove continuous popup from 3 seconds
+  useEffect(() => {
+    if (triggeredFrom !== "TAGMANAGER")
+      setSuccessAlertIsOpen(false)
+  }, []);
 
   const handleClick = () => {
     if (!clicked) setClicked(true);

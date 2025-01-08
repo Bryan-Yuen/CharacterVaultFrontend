@@ -11,6 +11,8 @@ type SuccessAlertIsOpenContext = {
   successAlertIsOpen : boolean;
   setSuccessAlertIsOpen : React.Dispatch<React.SetStateAction<boolean>>;
   showSuccessfulPopup: () => void;
+  triggeredFrom : string;
+  setTriggeredFrom: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const SuccessAlertIsOpenContext = createContext<SuccessAlertIsOpenContext | null>(null)
@@ -19,6 +21,7 @@ export const SuccessAlertIsOpenContext = createContext<SuccessAlertIsOpenContext
 export default function SuccessAlertIsOpenContextProvider({children} : SuccessAlertIsOpenContextProviderProps) {
   const [successAlertIsOpen, setSuccessAlertIsOpen] = useState<boolean>(false);
   const [successText, setSuccessText] = useState<string>('');
+  const [triggeredFrom, setTriggeredFrom] = useState<string>('');
 
   const showSuccessfulPopup = () => {
     setSuccessAlertIsOpen(true);
@@ -36,7 +39,9 @@ export default function SuccessAlertIsOpenContextProvider({children} : SuccessAl
       setSuccessAlertIsOpen,
       showSuccessfulPopup,
       successText,
-      setSuccessText
+      setSuccessText,
+      triggeredFrom,
+      setTriggeredFrom
     }}>
       {children}
     </SuccessAlertIsOpenContext.Provider>

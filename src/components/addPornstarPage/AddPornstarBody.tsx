@@ -44,7 +44,7 @@ export default function AddPornstarBody() {
   const router = useRouter();
   const client = useApolloClient();
 
-  const { showSuccessfulPopup, setSuccessText } = useSuccessAlertContext();
+  const { showSuccessfulPopup, setSuccessText, setTriggeredFrom } = useSuccessAlertContext();
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
@@ -177,6 +177,7 @@ export default function AddPornstarBody() {
         });
 
         setSuccessText("Pornstar added");
+        setTriggeredFrom("DASHBOARD")
         showSuccessfulPopup();
         router.push("/dashboard");
       }

@@ -89,7 +89,7 @@ export default function EditPornstarBody() {
     setInput: setPornstarName,
   } = useInput((input) => input.length >= 1);
 
-  const {showSuccessfulPopup, setSuccessText} = useSuccessAlertContext();
+  const {showSuccessfulPopup, setSuccessText, setTriggeredFrom} = useSuccessAlertContext();
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
@@ -370,6 +370,7 @@ export default function EditPornstarBody() {
         });
 
         setSuccessText("Changes saved")
+        setTriggeredFrom("DASHBOARD")
         showSuccessfulPopup();
         router.push("/dashboard");
         // we can checkout seeing if user was on dashboard 2 pages ago later

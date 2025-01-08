@@ -21,7 +21,7 @@ export default function DeleteTagModal({
 }: propDefs) {
   const client = useApolloClient();
 
-  const {showSuccessfulPopup , setSuccessText} = useSuccessAlertContext();
+  const {showSuccessfulPopup , setSuccessText, setTriggeredFrom} = useSuccessAlertContext();
 
   const [genericError, setGenericError] = useState(false);
   const [versionError, setVersionError] = useState(false);
@@ -85,6 +85,7 @@ export default function DeleteTagModal({
 
         setModalIsOpen(false);
         setSuccessText("Tag deleted")
+        setTriggeredFrom("TAGMANAGER")
         showSuccessfulPopup();
       }
     } catch (error) {

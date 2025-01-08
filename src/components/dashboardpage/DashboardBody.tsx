@@ -12,7 +12,7 @@ import SuccessPopUp from "../utilities/SuccessPopUp";
 export default function DashboardBody() {
   const [isDesktop, setDesktop] = useState(false);
   const [isPhone, setPhone] = useState(false);
-  const { successAlertIsOpen, successText } = useSuccessAlertContext();
+  const { successAlertIsOpen, successText, triggeredFrom, setSuccessAlertIsOpen } = useSuccessAlertContext();
 
   useEffect(() => {
     const updateMedia = () => {
@@ -32,6 +32,11 @@ export default function DashboardBody() {
     window.addEventListener("resize", updateMedia);
     return () => window.removeEventListener("resize", updateMedia);
   }, []);
+
+    useEffect(() => {
+      if (triggeredFrom !== "DASHBOARD")
+        setSuccessAlertIsOpen(false)
+    }, []);
 
   return (
     <div className={styles["dashboard-body"]}>

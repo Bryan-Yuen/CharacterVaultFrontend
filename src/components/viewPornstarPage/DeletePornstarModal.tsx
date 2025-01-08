@@ -16,7 +16,7 @@ export default function DeletePornstarModal(props: propDefs) {
   const client = useApolloClient();
   const router = useRouter();
 
-  const { showSuccessfulPopup, setSuccessText } = useSuccessAlertContext();
+  const { showSuccessfulPopup, setSuccessText, setTriggeredFrom } = useSuccessAlertContext();
 
   const [genericError, setGenericError] = useState(false);
 
@@ -52,6 +52,7 @@ export default function DeletePornstarModal(props: propDefs) {
 
         props.setModalIsOpen(false);
         setSuccessText("Pornstar Deleted");
+        setTriggeredFrom("DASHBOARD")
         showSuccessfulPopup();
         //router.push("/dashboard");
         //router.back();

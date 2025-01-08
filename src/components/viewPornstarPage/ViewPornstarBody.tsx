@@ -117,7 +117,6 @@ export default function ViewPornstarBody() {
               width={300}
               height={450}
               className={styles["user-image"]}
-              placeholder="blur"
             />
           ) : (
             <Image

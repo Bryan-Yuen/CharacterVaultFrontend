@@ -61,3 +61,13 @@
     font-size:20px;
   }
 }
+
+@media only screen and (max-width: 374px) {
+  .website-name{
+    font-size:18px;
+  }
+  
+  .demo-list-sign-up-button{
+    font-size:18px;
+  }
+}

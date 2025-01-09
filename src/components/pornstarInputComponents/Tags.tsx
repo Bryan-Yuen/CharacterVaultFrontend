@@ -18,6 +18,7 @@ import GenericError from "../utilities/GenericError";
 import MutationVersionError from "../utilities/MutationVersionError";
 import RateLimitError from "../utilities/RateLimitError";
 import { gql } from "@apollo/client";
+import { RotatingLines } from "react-loader-spinner";
 
 interface propDefs {
   pornstarTags: string[];
@@ -49,6 +50,7 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
   const [searchTerm, setSearchTerm] = useState<string>("");
   // handle when user clicks the input bar to make dropdown
   const [clicked, setClicked] = useState<boolean>(false);
+  const [createNewTagDisabled, setCreateNewTagDisabled] = useState<boolean>(false);
 
   const [genericError, setGenericError] = useState(false);
   const [versionError, setVersionError] = useState(false);
@@ -79,6 +81,7 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
 
   const handleTagClickNew = async () => {
     if (!searchTerm) return;
+    setCreateNewTagDisabled(true);
     try {
       const result = await addUserTag({
         variables: {
@@ -144,6 +147,7 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
           if (inputRef.current) inputRef.current.focus();
 
           setSearchTerm("");
+          setCreateNewTagDisabled(false);
         }
         //setSearchTerm("")
       }
@@ -326,10 +330,21 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
             ))}
             <li
               key={"new"}
-              onClick={handleTagClickNew}
+              onClick={createNewTagDisabled ? undefined : handleTagClickNew}
               className={styles["search-item-container"]}
             >
-              Create new tag "{searchTerm}"
+              {createNewTagDisabled ? (
+                        <RotatingLines
+                          visible={true}
+                          width="25"
+                          strokeWidth="5"
+                          strokeColor="white"
+                          animationDuration="0.75"
+                          ariaLabel="rotating-lines-loading"
+                        />
+                      ) : (
+                        `Create new tag "${searchTerm}"`
+                      )}
             </li>
           </ul>
         )}

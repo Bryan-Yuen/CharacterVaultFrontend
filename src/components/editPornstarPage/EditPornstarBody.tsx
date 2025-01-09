@@ -18,7 +18,7 @@ import ErrorMessage from "../utilities/ErrorMessage";
 import GenericError from "../utilities/GenericError";
 import MutationVersionError from "../utilities/MutationVersionError";
 import RateLimitError from "../utilities/RateLimitError";
-import { useSuccessAlertContext } from '@/contexts/ShowSuccessAlertContext';
+import { useSuccessAlertContext } from "@/contexts/ShowSuccessAlertContext";
 import "dotenv/config";
 
 if (!process.env.NEXT_PUBLIC_CLOUDFLARE_UPLOAD_WORKER_URL) {
@@ -69,7 +69,9 @@ export default function EditPornstarBody() {
     errorPolicy: "all",
     onCompleted: (data) => {
       document.title =
-      "Edit - " + capitalizeWords(data.getPornstar.pornstar_name) + " - MyFapSheet";
+        "Edit - " +
+        capitalizeWords(data.getPornstar.pornstar_name) +
+        " - MyFapSheet";
       setPornstarTags(
         data.getPornstar.pornstar_tags.map((tag: any) => tag.pornstar_tag_text)
       );
@@ -89,7 +91,8 @@ export default function EditPornstarBody() {
     setInput: setPornstarName,
   } = useInput((input) => input.length >= 1);
 
-  const {showSuccessfulPopup, setSuccessText, setTriggeredFrom} = useSuccessAlertContext();
+  const { showSuccessfulPopup, setSuccessText, setTriggeredFrom } =
+    useSuccessAlertContext();
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
@@ -116,7 +119,7 @@ export default function EditPornstarBody() {
 
   const [isDesktop, setDesktop] = useState(false);
 
-  const [pornstarNameExists, setPornstarNameExists] = useState(false)
+  const [pornstarNameExists, setPornstarNameExists] = useState(false);
   const [genericError, setGenericError] = useState(false);
   const [versionError, setVersionError] = useState(false);
   const [rateLimitError, setRateLimitError] = useState(false);
@@ -318,20 +321,23 @@ export default function EditPornstarBody() {
 
         if (secured_data) {
           try {
-            const response = await fetch(process.env.NEXT_PUBLIC_CLOUDFLARE_UPLOAD_WORKER_URL || "", {
-              method: "POST",
-              headers: {
-                "Content-Type": selectedImage?.type || "",
-                "X-Secured-Data": secured_data,
-              },
-              body: selectedImage,
-            });
+            const response = await fetch(
+              process.env.NEXT_PUBLIC_CLOUDFLARE_UPLOAD_WORKER_URL || "",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": selectedImage?.type || "",
+                  "X-Secured-Data": secured_data,
+                },
+                body: selectedImage,
+              }
+            );
             if (!response.ok) {
               // If the response status is not 200, throw an error
               throw new Error(`Request failed with status ${response.status}`);
             }
-            console.log("response",response)
-            console.log(response.json)
+            console.log("response", response);
+            console.log(response.json);
             const responseBody = await response.text(); // Since `message` is a plain string
             console.log("Response Message:", responseBody);
           } catch (error) {
@@ -355,8 +361,9 @@ export default function EditPornstarBody() {
             __typename: "PornstarWithTags",
             pornstar_url_slug: params.id,
             pornstar_name: pornstarName.toLowerCase(),
-            pornstar_picture_path:
-              result.data.editPornstar.pornstar_picture_path + (imageUpdate.didChange ? "?new" : ""),
+            pornstar_picture_path: selectedImage
+              ? URL.createObjectURL(selectedImage)
+              : result.data.editPornstar.pornstar_picture_path,
             pornstar_tags_text: pornstarTags,
           },
           fragment: gql`
@@ -369,8 +376,8 @@ export default function EditPornstarBody() {
           `,
         });
 
-        setSuccessText("Changes saved")
-        setTriggeredFrom("DASHBOARD")
+        setSuccessText("Changes saved");
+        setTriggeredFrom("DASHBOARD");
         showSuccessfulPopup();
         router.push("/dashboard");
         // we can checkout seeing if user was on dashboard 2 pages ago later

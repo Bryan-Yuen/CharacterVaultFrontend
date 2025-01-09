@@ -144,9 +144,10 @@ justify-content: center;
   border-radius: 4px;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 890px) {
   .flex-child-right-side{
     margin-left:0;
+    width:100%;
   }
 
   .header-container{
@@ -171,9 +172,11 @@ justify-content: center;
   .user-image, .silhouette-image{
     /*width:100%;*/
     /*biggest width for iphone SE or 375px and above*/
-    width:400px;
+  
+    //width:320px;
     max-width: 100%;
     height:auto;
+
   }
 
 }

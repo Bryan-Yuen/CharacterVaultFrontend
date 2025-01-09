@@ -9,8 +9,8 @@ import React, {
 import styles from "./UploadImage.module.scss";
 import Image from "next/image";
 import { CDNImageLoader } from "../utilities/CDNImageLoader";
+import { MAX_FILE_SIZE, PORNSTAR_IMAGE_WIDTH, PORNSTAR_IMAGE_HEIGHT } from "@/constants/constants";
 
-const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3 MB in bytes (3,145,728)
 
 export enum ImageUpdateStatus {
   AddOrEdit = "ADD_OR_EDIT",
@@ -172,8 +172,8 @@ const UploadImage = ({
             }
             alt="user uploaded image"
             className={styles["image"]}
-            width={300}
-            height={450}
+            width={PORNSTAR_IMAGE_WIDTH}
+            height={PORNSTAR_IMAGE_HEIGHT}
           />
           <br />
           <button

@@ -8,27 +8,26 @@ import Link from "next/link";
 import DeletePornstarModal from "./DeletePornstarModal";
 import Loading from "../utilities/Loading";
 import ErrorMessage from "../utilities/ErrorMessage";
-import { useRouter } from "next/navigation";
-import { CDNImageLoader } from '@/components/utilities/CDNImageLoader';
+import { CDNImageLoader } from "@/components/utilities/CDNImageLoader";
+import { PORNSTAR_IMAGE_WIDTH, PORNSTAR_IMAGE_HEIGHT } from '@/constants/constants';
 
 export default function ViewPornstarBody() {
   // read a route's dynamic params filled in by the current URL.
   const params = useParams<{ id: string }>();
-  const router = useRouter();
 
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState<boolean>(false);
 
   const [isDesktop, setDesktop] = useState(false);
 
   useEffect(() => {
-    if (window.innerWidth > 800) {
+    if (window.innerWidth > 890) {
       setDesktop(true);
     } else {
       setDesktop(false);
     }
 
     const updateMedia = () => {
-      if (window.innerWidth > 800) {
+      if (window.innerWidth > 890) {
         setDesktop(true);
       } else {
         setDesktop(false);
@@ -69,7 +68,7 @@ export default function ViewPornstarBody() {
           //router.push("/dashboard");
           //window.location.reload();
           // we want to refresh page after push to dashboard because user could've clicked on deleted pornstar in dashboard
-          window.location.href = '/dashboard';
+          window.location.href = "/dashboard";
           return null;
         case "VERSION_ERROR":
           return (
@@ -105,6 +104,7 @@ export default function ViewPornstarBody() {
     );
   }
 
+  // probably put the width and height in constant
   return (
     <div className={styles["component-container"]}>
       <div className={styles["flex-form-container"]}>
@@ -114,16 +114,16 @@ export default function ViewPornstarBody() {
               loader={CDNImageLoader}
               alt={data.getPornstar.pornstar_name}
               src={data.getPornstar.pornstar_picture_path}
-              width={300}
-              height={450}
+              width={PORNSTAR_IMAGE_WIDTH}
+              height={PORNSTAR_IMAGE_HEIGHT}
               className={styles["user-image"]}
             />
           ) : (
             <Image
               src="/silhouette.jpg"
               alt="silhouette"
-              width={300}
-              height={450}
+              width={PORNSTAR_IMAGE_WIDTH}
+              height={PORNSTAR_IMAGE_HEIGHT}
               className={styles["silhouette-image"]}
             />
           ))}
@@ -150,18 +150,19 @@ export default function ViewPornstarBody() {
           {!isDesktop &&
             (data.getPornstar.pornstar_picture_path ? (
               <Image
+                loader={CDNImageLoader}
                 alt={data.getPornstar.pornstar_name}
                 src={data.getPornstar.pornstar_picture_path}
-                width={300}
-                height={450}
+                width={PORNSTAR_IMAGE_WIDTH}
+                height={PORNSTAR_IMAGE_HEIGHT}
                 className={styles["user-image"]}
               />
             ) : (
               <Image
                 src="/silhouette.jpg"
                 alt="silhouette"
-                width={300}
-                height={450}
+                width={PORNSTAR_IMAGE_WIDTH}
+                height={PORNSTAR_IMAGE_HEIGHT}
                 className={styles["silhouette-image"]}
               />
             ))}

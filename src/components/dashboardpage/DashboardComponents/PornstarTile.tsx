@@ -3,6 +3,7 @@ import styles from './PornstarTile.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
 import { CDNImageLoader } from '@/components/utilities/CDNImageLoader';
+import { PORNSTAR_IMAGE_WIDTH, PORNSTAR_IMAGE_HEIGHT } from '@/constants/constants';
 
 interface propDefs {
   pornstar_url_slug: string;
@@ -30,16 +31,16 @@ export default function PornstarTile(props: propDefs) {
           loader={CDNImageLoader}
           src={props.pornstar_picture_path}
           alt={props.pornstar_name}
-          width={300}
-            height={450}
+          width={PORNSTAR_IMAGE_WIDTH}
+            height={PORNSTAR_IMAGE_HEIGHT}
           className={styles['user-uploaded-picture']}
         />
         ) : (
           <Image
             src="/silhouette.jpg"
             alt="silhouette"
-            width={300}
-            height={450}
+            width={PORNSTAR_IMAGE_WIDTH}
+            height={PORNSTAR_IMAGE_HEIGHT}
             className={styles['silhouette-picture']}
             priority
           />

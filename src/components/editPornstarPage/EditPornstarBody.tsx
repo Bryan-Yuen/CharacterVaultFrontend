@@ -356,7 +356,7 @@ export default function EditPornstarBody() {
             pornstar_url_slug: params.id,
             pornstar_name: pornstarName.toLowerCase(),
             pornstar_picture_path:
-              result.data.editPornstar.pornstar_picture_path,
+              result.data.editPornstar.pornstar_picture_path + (imageUpdate.didChange ? "?new" : ""),
             pornstar_tags_text: pornstarTags,
           },
           fragment: gql`

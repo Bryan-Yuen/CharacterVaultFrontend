@@ -158,7 +158,7 @@ export default function AddPornstarBody() {
                   pornstar_url_slug: result.data.addPornstar.pornstar_url_slug,
                   pornstar_name: pornstarName.toLowerCase(),
                   pornstar_picture_path: selectedImage
-                    ? result.data.addPornstar.pornstar_picture_path
+                    ? result.data.addPornstar.pornstar_picture_path + "?new"
                     : null,
                   pornstar_tags_text: pornstarTags,
                 },

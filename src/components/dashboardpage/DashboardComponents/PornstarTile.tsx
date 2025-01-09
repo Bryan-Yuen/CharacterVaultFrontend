@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './PornstarTile.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
-import { r2ImageLoader } from '@/components/utilities/r2ImageLoader';
+import { CDNImageLoader } from '@/components/utilities/CDNImageLoader';
 
 interface propDefs {
   pornstar_url_slug: string;
@@ -27,7 +27,7 @@ export default function PornstarTile(props: propDefs) {
           />
           */
           <Image
-          loader={r2ImageLoader}
+          loader={CDNImageLoader}
           src={props.pornstar_picture_path}
           alt={props.pornstar_name}
           width={300}

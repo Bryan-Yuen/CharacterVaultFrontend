@@ -1,5 +1,5 @@
 .component-container{
-  padding: 20px;
+  padding: 20px 30px;
   padding-top:35px;
     color: white;
     display: flex;
@@ -144,7 +144,7 @@ justify-content: center;
   border-radius: 4px;
 }
 
-@media only screen and (max-width: 890px) {
+@media only screen and (max-width: 910px) {
   .flex-child-right-side{
     margin-left:0;
     width:100%;
@@ -160,6 +160,8 @@ justify-content: center;
 
   .component-container{
     padding-top:20px;
+    /* just so phone users have more padding at bottom of page */
+    padding-bottom:50px;
   }
 
   .user-image, .silhouette-image{
@@ -170,7 +172,7 @@ justify-content: center;
 
 @media only screen and (max-width: 500px) {
   .user-image, .silhouette-image{
-    /*width:100%;*/
+    width:100%;
     /*biggest width for iphone SE or 375px and above*/
   
     //width:320px;

@@ -20,14 +20,14 @@ export default function ViewPornstarBody() {
   const [isDesktop, setDesktop] = useState(false);
 
   useEffect(() => {
-    if (window.innerWidth > 890) {
+    if (window.innerWidth > 910) {
       setDesktop(true);
     } else {
       setDesktop(false);
     }
 
     const updateMedia = () => {
-      if (window.innerWidth > 890) {
+      if (window.innerWidth > 910) {
         setDesktop(true);
       } else {
         setDesktop(false);

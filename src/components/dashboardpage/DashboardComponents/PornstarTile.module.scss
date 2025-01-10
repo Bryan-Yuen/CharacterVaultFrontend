@@ -55,12 +55,16 @@
   border: rgb(22, 122, 207) 2px solid;
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 460px) {
   .user-uploaded-picture, .silhouette-picture{
-    /*width:100%;*/
-    /*biggest width for iphone SE or 375px and above*/
-    width:320px;
+    width:100%;
     height:auto;
   }
+
+  .pornstar-tile-container{
+    width:100%;
+    margin:8px 0;
+  }
+  
 
 }

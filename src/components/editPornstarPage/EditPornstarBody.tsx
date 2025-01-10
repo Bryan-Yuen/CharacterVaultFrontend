@@ -118,6 +118,7 @@ export default function EditPornstarBody() {
     useState<number>(-1);
 
   const [isDesktop, setDesktop] = useState(false);
+  const [editPornstarLoading, setEditPornstarLoading] = useState(false);
 
   const [pornstarNameExists, setPornstarNameExists] = useState(false);
   const [genericError, setGenericError] = useState(false);
@@ -278,6 +279,7 @@ export default function EditPornstarBody() {
     );
 
     try {
+      setEditPornstarLoading(true);
       const result = await editPornstar({
         variables: {
           editPornstarInput: {
@@ -297,6 +299,7 @@ export default function EditPornstarBody() {
 
       if (!result) {
         setGenericError(true);
+        setEditPornstarLoading(false);
         return;
       }
 
@@ -378,6 +381,7 @@ export default function EditPornstarBody() {
         setSuccessText("Changes saved");
         setTriggeredFrom("DASHBOARD");
         showSuccessfulPopup();
+        setEditPornstarLoading(false);
         router.push("/dashboard");
         // we can checkout seeing if user was on dashboard 2 pages ago later
         //router.back();
@@ -385,6 +389,7 @@ export default function EditPornstarBody() {
       }
     } catch (error) {
       console.error("An unexpected error occurred:", error);
+      setEditPornstarLoading(false);
       setGenericError(true);
     }
   };
@@ -525,8 +530,9 @@ export default function EditPornstarBody() {
             <button
               type="submit"
               className={`${styles["add-pornstar-button"]}`}
+              disabled={editPornstarLoading}
             >
-              {loadingEditPornstar ? (
+              {editPornstarLoading ? (
                 <RotatingLines
                   visible={true}
                   width="25"

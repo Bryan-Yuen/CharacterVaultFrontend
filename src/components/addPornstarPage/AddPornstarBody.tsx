@@ -53,6 +53,7 @@ export default function AddPornstarBody() {
   const [pornstarLinks, setPornstarLinks] = useState<PornstarLinkObj[]>([]);
 
   const [isDesktop, setDesktop] = useState(false);
+  const [addPornstarLoading, setAddPornstarLoading] = useState(false);
 
   // lets maybe change this name to fail to add ponstar error instead of generic
   const [pornstarNameExists, setPornstarNameExists] = useState(false);
@@ -96,9 +97,11 @@ export default function AddPornstarBody() {
     }
 
     try {
+      setAddPornstarLoading(true);
       const result = await addPornstar();
       if (!result) {
         setGenericError(true);
+        setAddPornstarLoading(false);
         return;
       }
       if (result.errors && result.errors.length > 0) {
@@ -179,10 +182,12 @@ export default function AddPornstarBody() {
         setSuccessText("Pornstar added");
         setTriggeredFrom("DASHBOARD")
         showSuccessfulPopup();
+        setAddPornstarLoading(false)
         router.push("/dashboard");
       }
     } catch (error) {
       console.error("An unexpected error occurred:", error);
+      setAddPornstarLoading(false)
       setGenericError(true);
     }
   };
@@ -233,8 +238,9 @@ export default function AddPornstarBody() {
             <button
               type="submit"
               className={`${styles["add-pornstar-button"]}`}
+              disabled={addPornstarLoading}
             >
-              {loading ? (
+              {addPornstarLoading ? (
                 <RotatingLines
                   visible={true}
                   width="25"

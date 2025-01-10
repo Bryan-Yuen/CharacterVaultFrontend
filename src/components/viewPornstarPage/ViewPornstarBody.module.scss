@@ -172,7 +172,8 @@ justify-content: center;
 
 @media only screen and (max-width: 500px) {
   .user-image, .silhouette-image{
-    width:100%;
+    /*stretches image to max size for screen size */
+    width:400px;
     /*biggest width for iphone SE or 375px and above*/
   
     //width:320px;

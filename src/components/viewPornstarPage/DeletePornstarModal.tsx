@@ -5,6 +5,7 @@ import { useMutation } from "@apollo/client";
 import { useApolloClient } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { useSuccessAlertContext } from "@/contexts/ShowSuccessAlertContext";
+import { RotatingLines } from "react-loader-spinner";
 
 interface propDefs {
   pornstar_url_slug: string;
@@ -16,8 +17,10 @@ export default function DeletePornstarModal(props: propDefs) {
   const client = useApolloClient();
   const router = useRouter();
 
-  const { showSuccessfulPopup, setSuccessText, setTriggeredFrom } = useSuccessAlertContext();
+  const { showSuccessfulPopup, setSuccessText, setTriggeredFrom } =
+    useSuccessAlertContext();
 
+  const [deletePornstarLoading, setDeletePornstarLoading] = useState(false);
   const [genericError, setGenericError] = useState(false);
 
   const [deletePornstar] = useMutation(DELETE_PORNSTAR, {
@@ -33,15 +36,17 @@ export default function DeletePornstarModal(props: propDefs) {
     e.preventDefault();
 
     try {
+      setDeletePornstarLoading(true);
       const result = await deletePornstar();
 
       if (!result) {
         setGenericError(true);
+        setDeletePornstarLoading(false);
         return;
       }
       if (result.errors && result.errors.length > 0) {
+        setDeletePornstarLoading(false);
         setGenericError(true);
-        return;
       } else if (result.data) {
         const normalizedId = client.cache.identify({
           pornstar_url_slug: props.pornstar_url_slug,
@@ -52,8 +57,9 @@ export default function DeletePornstarModal(props: propDefs) {
 
         props.setModalIsOpen(false);
         setSuccessText("Pornstar Deleted");
-        setTriggeredFrom("DASHBOARD")
+        setTriggeredFrom("DASHBOARD");
         showSuccessfulPopup();
+        setDeletePornstarLoading(false);
         //router.push("/dashboard");
         //router.back();
         const referrer = document.referrer;
@@ -75,6 +81,7 @@ export default function DeletePornstarModal(props: propDefs) {
       }
     } catch (error) {
       console.error("An unexpected error occurred:", error);
+      setDeletePornstarLoading(false);
       setGenericError(true);
     }
   };
@@ -100,8 +107,23 @@ export default function DeletePornstarModal(props: propDefs) {
         >
           <span>{props.pornstar_name} and all its data will be removed.</span>
           <div className={styles["sign-up-button-container"]}>
-            <button className={styles["sign-up-button"]} type="submit">
-              Delete
+            <button
+              className={styles["sign-up-button"]}
+              type="submit"
+              disabled={deletePornstarLoading}
+            >
+              {deletePornstarLoading ? (
+                <RotatingLines
+                  visible={true}
+                  width="25"
+                  strokeWidth="5"
+                  strokeColor="white"
+                  animationDuration="0.75"
+                  ariaLabel="rotating-lines-loading"
+                />
+              ) : (
+                "Delete"
+              )}
             </button>
           </div>
         </form>

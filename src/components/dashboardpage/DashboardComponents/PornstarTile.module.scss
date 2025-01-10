@@ -15,7 +15,8 @@
   color:white;
   /*match the picture and for overflow of name*/
   max-width: 100%;
-    width: 300px;
+  /*match the picture and for overflow of name*/
+    width: 320px;
 }
 
 .pornstar-name{
@@ -66,5 +67,9 @@
     margin:8px 0;
   }
   
-
+  .pornstar-tile-bottom-container{
+    /*match the picture and for overflow of name*/
+    max-width: 400px;
+      width: 100%;
+  }
 }

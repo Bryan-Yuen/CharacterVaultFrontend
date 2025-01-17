@@ -1,7 +1,7 @@
 .navbar {
   background-color: rgb(68, 68, 68);
   background-color: rgb(0, 0, 0);
-  padding: 0px 30px;
+  padding: 0px 100px;
   height:75px;
   display:flex;
   justify-content: center;
@@ -17,8 +17,8 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  width:1400px;
-  max-width: 1400px;
+  width:1500px;
+  max-width: 1500px;
 }
 
 .login {
@@ -50,6 +50,12 @@
   margin-left:10px;
   font-weight:400;
   font-size:20px;
+}
+
+@media only screen and (max-width: 800px) {
+  .navbar{
+    padding:0 30px;
+  }
 }
 
 @media only screen and (max-width: 450px) {

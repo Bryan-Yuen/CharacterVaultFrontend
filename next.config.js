@@ -20,6 +20,11 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "demo-list-pornstar-pictures.myfapsheet.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
         hostname: "home-page-video.myfapsheet.com",
         pathname: "**",
       },

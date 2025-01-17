@@ -1,19 +1,19 @@
 import React from 'react';
 import styles from './DemoListPornstarTile.module.scss';
 import Image from 'next/image';
-import Link from 'next/link';
 
 interface propDefs {
   pornstar_url_slug: string;
   pornstar_name: string;
   pornstar_picture_path: string | null;
   tags: string[];
+  affiliate_link: string;
   shufflePornstarContainer?: boolean;
 }
 
 export default function DemoListPornstarTile(props: propDefs) {
   return (
-      <Link href={'register'}
+      <a href={props.affiliate_link} target="_blank" 
         className={`${styles["pornstar-tile-container"]} ${styles[props.shufflePornstarContainer ? 'shufflePornstarContainer' : '']}`}
       >
         {props.pornstar_picture_path ? (
@@ -28,16 +28,17 @@ export default function DemoListPornstarTile(props: propDefs) {
           <Image
           src={props.pornstar_picture_path}
           alt={props.pornstar_name}
-          width={300}
-            height={450}
+          width={320}
+            height={480}
+            unoptimized
           className={styles['user-uploaded-picture']}
         />
         ) : (
           <Image
             src="/silhouette.jpg"
             alt="silhouette"
-            width={300}
-            height={450}
+            width={320}
+            height={480}
             className={styles['silhouette-picture']}
             priority
           />
@@ -50,7 +51,7 @@ export default function DemoListPornstarTile(props: propDefs) {
             ))}
           </ul>
         </div>
-    </Link>
+    </a>
   );
 }
 // here is where the edit component should live, next to the button, do the &&

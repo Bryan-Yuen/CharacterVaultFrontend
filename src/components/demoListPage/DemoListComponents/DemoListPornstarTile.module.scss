@@ -15,7 +15,8 @@
   color:white;
   /*match the picture and for overflow of name*/
   max-width: 100%;
-    width: 300px;
+  /*match the picture and for overflow of name*/
+    width: 320px;
 }
 
 .pornstar-name{
@@ -46,7 +47,7 @@
 .user-uploaded-picture, .silhouette-picture{
   object-fit: cover;
   max-width:100%;
-  width:300px;
+  /*width:320px;*/
   aspect-ratio:2/3;
   border-radius: 8px;
 }
@@ -55,12 +56,20 @@
   border: rgb(22, 122, 207) 2px solid;
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 460px) {
   .user-uploaded-picture, .silhouette-picture{
-    /*width:100%;*/
-    /*biggest width for iphone SE or 375px and above*/
-    width:320px;
+    width:100%;
     height:auto;
   }
 
+  .pornstar-tile-container{
+    width:100%;
+    margin:8px 0;
+  }
+  
+  .pornstar-tile-bottom-container{
+    /*match the picture and for overflow of name*/
+    max-width: 400px;
+      width: 100%;
+  }
 }

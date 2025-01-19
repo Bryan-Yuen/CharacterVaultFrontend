@@ -381,7 +381,8 @@ export default function EditPornstarBody() {
         setSuccessText("Changes saved");
         setTriggeredFrom("DASHBOARD");
         showSuccessfulPopup();
-        setEditPornstarLoading(false);
+        // no need for this
+        //setEditPornstarLoading(false);
         router.push("/dashboard");
         // we can checkout seeing if user was on dashboard 2 pages ago later
         //router.back();

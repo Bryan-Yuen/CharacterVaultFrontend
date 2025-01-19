@@ -182,7 +182,8 @@ export default function AddPornstarBody() {
         setSuccessText("Pornstar added");
         setTriggeredFrom("DASHBOARD")
         showSuccessfulPopup();
-        setAddPornstarLoading(false)
+        // no need for this
+        //setAddPornstarLoading(false)
         router.push("/dashboard");
       }
     } catch (error) {

@@ -59,7 +59,6 @@ export default function DeletePornstarModal(props: propDefs) {
         setSuccessText("Pornstar Deleted");
         setTriggeredFrom("DASHBOARD");
         showSuccessfulPopup();
-        setDeletePornstarLoading(false);
         //router.push("/dashboard");
         //router.back();
         const referrer = document.referrer;
@@ -77,6 +76,8 @@ export default function DeletePornstarModal(props: propDefs) {
           router.push("/dashboard"); // Redirect to the dashboard
         }
           */
+        // no need for this
+        //setDeletePornstarLoading(false);
         router.push("/dashboard");
       }
     } catch (error) {

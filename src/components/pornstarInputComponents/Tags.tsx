@@ -263,7 +263,7 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
 
   return (
     <>
-      <span className={styles["tags-label"]}>Tags</span>
+      <label className={styles["tags-label"]} htmlFor="pornstar-tags">Tags</label>
       <OutsideClickDetector onOutsideClick={handleOutsideClick}>
         {pornstarTags.length > 0 && (
           <div className={styles["selected-tags-container"]}>
@@ -289,6 +289,7 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
         >
           <input
             type="text"
+            id="pornstar-tags"
             className={styles["search-input"]}
             placeholder="Select or Create Tag"
             value={searchTerm}

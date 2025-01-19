@@ -9,8 +9,11 @@ import React, {
 import styles from "./UploadImage.module.scss";
 import Image from "next/image";
 import { CDNImageLoader } from "../utilities/CDNImageLoader";
-import { MAX_FILE_SIZE, PORNSTAR_IMAGE_WIDTH, PORNSTAR_IMAGE_HEIGHT } from "@/constants/constants";
-
+import {
+  MAX_FILE_SIZE,
+  PORNSTAR_IMAGE_WIDTH,
+  PORNSTAR_IMAGE_HEIGHT,
+} from "@/constants/constants";
 
 export enum ImageUpdateStatus {
   AddOrEdit = "ADD_OR_EDIT",
@@ -159,7 +162,7 @@ const UploadImage = ({
   // in the future check that !check at the bottom, it looks too bandagy we can check it out later but now it works
   return (
     <div className={styles["upload-image-container"]}>
-      <label>Upload Image</label>
+      <label className={styles['upload-image-label']} htmlFor="upload-image">Upload Image</label>
       {selectedImage || pornstarPicturePath ? (
         <div>
           <Image
@@ -193,6 +196,7 @@ const UploadImage = ({
           //ref={divInputRef}
         >
           <input
+          id="upload-image"
             type="file"
             accept="image/*"
             name="myImage"
@@ -200,21 +204,21 @@ const UploadImage = ({
             ref={fileInputRef}
             onChange={fileInputChangeHandler}
           />
-          <Image
-            priority
-            src="/uploadIcon.svg"
-            alt="Upload Icon"
-            height={32}
-            width={32}
-            onClick={handleClick}
-            className={styles["upload-icon"]}
-          />
-          <span className={styles["upload-picture-text"]} onClick={handleClick}>
-            Upload Picture or
+          <span className={styles["drag-and-drop-text"]}>
+            Drag and drop image
           </span>
-          <span className={styles["file-upload-container-text"]}>
-            Drag & Drop
-          </span>
+          <div className={styles["or-and-upload-icon-container"]}>
+            <span className={styles["or-text"]}>or</span>
+            <Image
+              priority
+              src="/upload-icon.svg"
+              alt="Upload Icon"
+              height={36}
+              width={36}
+              onClick={handleClick}
+              className={styles["upload-icon"]}
+            />
+          </div>
         </div>
       )}
     </div>

@@ -17,6 +17,10 @@
   background-color: rgb(122, 122, 122);
 }
 
+.upload-image-label{
+  font-size:18px;
+}
+
 .upload-image-container{
   margin-top:10px;
 }
@@ -25,14 +29,21 @@
   display: none;
 }
 
-.file-upload-container-text{
+.drag-and-drop-text{
   display:block;
-  margin-top:10px
+  margin-top:10px;
+  font-size: 20px;
 }
 
-.upload-picture-text{
-  display:block;
-  margin-top:10px
+.or-text{
+  font-size:20px;
+  margin-right:10px;
+}
+
+.or-and-upload-icon-container{
+  display:flex;
+  align-items: center;
+  margin-top:5px;
 }
 
 .upload-picture-text:hover, .upload-icon:hover{

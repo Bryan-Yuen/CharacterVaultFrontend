@@ -1,7 +1,7 @@
 .demo-list-body{
   padding: 0px 20px;
   padding-top:20px;
-  padding-bottom: 50px;
+  padding-bottom: 40px;
   display:flex;
   flex-direction: column;
   align-items: center;
@@ -11,12 +11,14 @@
   margin:0;
 }
 
-.explain-message{
+.explain-message, .find-pornstars-message-bottom{
   font-size:20px;
+  margin-top: 3px;
 }
 
 .find-pornstars-message {
   font-size: 28px;
+  margin-top:5px;
 }
 
 .affiliate-link {
@@ -36,4 +38,31 @@
  width:1800px;
  max-width:100%;
  margin-top:20px;
+}
+
+.bottom-demo-list-message{
+  font-size: 24px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.bottom-demo-list-cta{
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+@media only screen and (max-width: 500px) {
+  .explain-message, .find-pornstars-message-bottom{
+    font-size:16px;
+    align-self: flex-start;
+  }
+
+  .find-pornstars-message {
+    font-size: 24px;
+    margin-top:5px;
+  }
+
+  .find-pornstars-message-bottom{
+    margin-top:3px;
+  }
 }

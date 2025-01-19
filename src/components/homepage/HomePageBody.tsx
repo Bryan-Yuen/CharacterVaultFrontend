@@ -4,6 +4,7 @@ import IntroductionBody from "@/components/homepage/homePageComponents/Introduct
 import FeaturesBody from "@/components/homepage/homePageComponents/FeaturesBody";
 import DemoListSection from "@/components/homepage/homePageComponents/DemoListSection";
 import PlanSection from "@/components/homepage/homePageComponents/PlanSection";
+import MobileBottomAdBanner from './homePageComponents/MobileBottomAdBanner';
 import styles from "./HomePageBody.module.scss";
 
 export default function HomePageBody() {
@@ -15,6 +16,7 @@ export default function HomePageBody() {
     <FeaturesBody/>
     <DemoListSection/>
     <PlanSection/>
+    <MobileBottomAdBanner/>
   </main>
   )
 }

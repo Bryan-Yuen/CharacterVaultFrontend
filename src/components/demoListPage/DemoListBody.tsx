@@ -3,6 +3,8 @@ import styles from "./DemoListBody.module.scss";
 import DemoListPornstarTile from "./DemoListComponents/DemoListPornstarTile";
 import DemoListPornstars from "./DemoListPornstars";
 import ScrollToTop from "../utilities/ScrollToTop";
+import globalStyles from "@/sharedStyles/global-classes.module.scss";
+import Link from "next/link";
 
 export interface FullPornstar {
   pornstar_id: number;
@@ -40,8 +42,8 @@ export default function DemoListBody() {
           Passion-HD
         </a>
       </span>
-      <span className={styles["explain-message"]}>
-        or click on the pornstar to go to their scene page.
+      <span className={styles["find-pornstars-message-bottom"]}>
+        or click on each pornstar to go to their scene page.
       </span>
       <div className={styles["pornstar-tiles-container"]}>
         {DemoListPornstars.sort(function (a: any, b: any) {
@@ -59,6 +61,16 @@ export default function DemoListBody() {
           />
         ))}
       </div>
+      <span className={styles["bottom-demo-list-message"]}>
+        Create your own pornstar list now
+      </span>
+      <Link
+            href={"/register"}
+            className={`${globalStyles["blue-link-button"]} ${styles["bottom-demo-list-cta"]}`}
+            prefetch={false}
+          >
+            Create Your List
+          </Link>
     </main>
   );
 }

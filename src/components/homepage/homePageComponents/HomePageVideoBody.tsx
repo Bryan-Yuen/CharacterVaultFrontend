@@ -5,6 +5,7 @@ import styles from "./HomePageVideoBody.module.scss";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 import VideoJS from "./VideoJS";
+import Image from "next/image";
 
 export default function HomePageVideoBody() {
   const playerRef = useRef(null);
@@ -46,34 +47,51 @@ export default function HomePageVideoBody() {
   };
 
   return (
-    <div className={styles["video-section-container"]}>
+    <>
       <a
-      className={styles["affiliate-banner-link"]}
-        href="http://join.tiny4k.com/track/ST1MSr7NqHtkyDj3eK77rRrArWo"
-        target="_blank"
-      >
-        <img
-        className={styles["affiliate-banner-image"]}
-          src="https://cdn.fuckyoucash.com/uploads/banner/image/4819/1720.jpg"
-          width="160"
-          height="562"
-        />
-      </a>
-      <div className={styles["video-body-container"]}>
-        <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
-      </div>
-      <a
-      className={styles["affiliate-banner-link"]}
+        className={styles["mobile-affiliate-banner-link"]}
         href="http://join.exotic4k.com/track/ST1MSr7NqHtkyDj3eK77rRrArWo"
         target="_blank"
       >
-        <img
-        className={styles["affiliate-banner-image"]}
-          src="https://cdn.fuckyoucash.com/uploads/banner/image/4940/1767.jpg"
-          width="160"
-          height="562"
+        <Image
+          className={styles["mobile-affiliate-banner-image"]}
+          src="https://ad-banners.myfapsheet.com/mobile-exotic4k-banner.jpg"
+          width="900"
+          height="250"
+          alt="exotic4k advertisement banner"
         />
       </a>
-    </div>
+      <div className={styles["video-section-container"]}>
+        <a
+          className={styles["affiliate-banner-link"]}
+          href="http://join.tiny4k.com/track/ST1MSr7NqHtkyDj3eK77rRrArWo"
+          target="_blank"
+        >
+          <Image
+            className={styles["affiliate-banner-image"]}
+            src="https://ad-banners.myfapsheet.com/desktop-tiny4k-banner.jpg"
+            width="160"
+            height="562"
+            alt="tiny4k advertisement banner"
+          />
+        </a>
+        <div className={styles["video-body-container"]}>
+          <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+        </div>
+        <a
+          className={styles["affiliate-banner-link"]}
+          href="http://join.exotic4k.com/track/ST1MSr7NqHtkyDj3eK77rRrArWo"
+          target="_blank"
+        >
+          <Image
+            className={styles["affiliate-banner-image"]}
+            src="https://ad-banners.myfapsheet.com/desktop-exotic4k-banner.jpg"
+            width="160"
+            height="562"
+            alt="exotic4k advertisement banner"
+          />
+        </a>
+      </div>
+    </>
   );
 }

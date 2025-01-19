@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 20px;
   color: white;
   width:100%
 }
@@ -16,7 +16,7 @@
 
 .plans-row {
   display: flex;
-  flex-wrap: wrap;
+  /*flex-wrap: wrap;*/
   max-width: 650px;
   width: 100%;
   justify-content: space-between;
@@ -59,9 +59,10 @@
   width:65px;
 }
 
-@media only screen and (max-width: 728px) {
+@media only screen and (max-width: 700px) {
   .plans-row{
-    justify-content:center;
+            align-items: center;
+        flex-direction: column;
   }
 
   .plan-container:last-child{

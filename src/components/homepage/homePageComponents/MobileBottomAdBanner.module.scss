@@ -1,0 +1,19 @@
+.mobile-affiliate-banner-link {
+  display:none;
+}
+
+@media only screen and (max-width: 1017px) {
+  .mobile-affiliate-banner-link {
+    display:flex;
+    justify-content: center;
+    width:100%;
+    max-width: 500px;
+    margin-top:20px;
+  }
+  .mobile-affiliate-banner-image {
+    height:auto;
+    max-width: 100%;
+    border:none;
+    border-radius: 8px;
+  }
+}

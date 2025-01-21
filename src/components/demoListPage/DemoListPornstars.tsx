@@ -129,17 +129,17 @@ const examplePornstars = [
   },
   {
     pornstar_id: 17,
-    pornstar_name: "sarai",
+    pornstar_name: "lina love",
     pornstar_picture_path:
-      "https://demo-list-pornstar-pictures.myfapsheet.com/sarai.jpg",
+      "https://demo-list-pornstar-pictures.myfapsheet.com/lina-love.jpg",
     pornstar_tags: [
       "big natural tits",
-      "brunette",
+      "black hair",
       "latina",
       "tanned",
       "teen",
     ],
-        affiliate_link: "https://join.povd.com/track/ST1P7Zc4UVJ7spErWJyjtoEpPc5/video/pussy-worship"
+        affiliate_link: "https://join.exotic4k.com/track/ST1P7Zc4UVJ7spErWJyjtoEpPc5/video/latina-love"
   },
   {
     pornstar_id: 18,

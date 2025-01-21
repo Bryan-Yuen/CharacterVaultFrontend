@@ -17,15 +17,9 @@ export default function ViewPornstarBody() {
 
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState<boolean>(false);
 
-  const [isDesktop, setDesktop] = useState(false);
+  const [isDesktop, setDesktop] = useState(true);
 
   useEffect(() => {
-    if (window.innerWidth > 910) {
-      setDesktop(true);
-    } else {
-      setDesktop(false);
-    }
-
     const updateMedia = () => {
       if (window.innerWidth > 910) {
         setDesktop(true);
@@ -33,6 +27,7 @@ export default function ViewPornstarBody() {
         setDesktop(false);
       }
     };
+    updateMedia();
     window.addEventListener("resize", updateMedia);
     return () => window.removeEventListener("resize", updateMedia);
   }, []);

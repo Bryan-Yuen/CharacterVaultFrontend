@@ -117,7 +117,7 @@ export default function EditPornstarBody() {
   const [newPornstarLinksIdCounter, setNewPornstarLinksIdCounter] =
     useState<number>(-1);
 
-  const [isDesktop, setDesktop] = useState(false);
+  const [isDesktop, setDesktop] = useState(true);
   const [editPornstarLoading, setEditPornstarLoading] = useState(false);
 
   const [pornstarNameExists, setPornstarNameExists] = useState(false);
@@ -126,19 +126,14 @@ export default function EditPornstarBody() {
   const [rateLimitError, setRateLimitError] = useState(false);
 
   useEffect(() => {
-    if (window.innerWidth > 800) {
-      setDesktop(true);
-    } else {
-      setDesktop(false);
-    }
-
     const updateMedia = () => {
-      if (window.innerWidth > 800) {
+      if (window.innerWidth > 650) {
         setDesktop(true);
       } else {
         setDesktop(false);
       }
     };
+    updateMedia();
     window.addEventListener("resize", updateMedia);
     return () => window.removeEventListener("resize", updateMedia);
   }, []);
@@ -319,6 +314,7 @@ export default function EditPornstarBody() {
           default:
             setGenericError(true);
         }
+        setEditPornstarLoading(false);
       } else if (result.data) {
         const secured_data = result.data.editPornstar.secured_data;
 

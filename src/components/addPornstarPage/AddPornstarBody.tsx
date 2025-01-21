@@ -52,7 +52,7 @@ export default function AddPornstarBody() {
 
   const [pornstarLinks, setPornstarLinks] = useState<PornstarLinkObj[]>([]);
 
-  const [isDesktop, setDesktop] = useState(false);
+  const [isDesktop, setDesktop] = useState(true);
   const [addPornstarLoading, setAddPornstarLoading] = useState(false);
 
   // lets maybe change this name to fail to add ponstar error instead of generic
@@ -63,7 +63,7 @@ export default function AddPornstarBody() {
 
   useEffect(() => {
     const updateMedia = () => {
-      if (window.innerWidth > 800) {
+      if (window.innerWidth > 650) {
         setDesktop(true);
       } else {
         setDesktop(false);
@@ -120,6 +120,7 @@ export default function AddPornstarBody() {
           default:
             setGenericError(true);
         }
+        setAddPornstarLoading(false);
       } else if (result.data) {
         const secured_data = result.data.addPornstar.secured_data;
 

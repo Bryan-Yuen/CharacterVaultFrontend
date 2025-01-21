@@ -101,6 +101,16 @@ export default function PornstarTilesContainer() {
               />
             );
           })}
+        {tagsToggle &&
+          realFilterPornstarByTags.length == 0 &&
+          pornstarsData.getAllPornstarsAndTags.length > 0 && (
+            <span>No pornstars that match all these tags</span>
+          )}
+        {!tagsToggle &&
+          filteredData.length == 0 &&
+          pornstarsData.getAllPornstarsAndTags.length > 0 && (
+            <span>No pornstars with this name</span>
+          )}
         {pornstarsData.getAllPornstarsAndTags.length == 0 && (
           <Link href={"/resources"} className={styles["resources-copy"]}>
             Your list is empty. Add a pornstar or click here for resources.

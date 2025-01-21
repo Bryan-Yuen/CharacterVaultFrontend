@@ -193,6 +193,7 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
 
   // need to make sure it doesn't already exist in pornstar tags array
 
+  // in the future lets make the search term have greyed out letters of the first search term
   const handleKeyPress = (
     event: KeyboardEvent<HTMLInputElement>
     //tag: string

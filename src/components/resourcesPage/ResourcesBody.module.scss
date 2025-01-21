@@ -5,17 +5,18 @@
   min-height: calc(100vh - 75px);
   justify-content: flex-start;
   align-items: center;
+  padding: 20px;
+  padding-bottom:50px;
 }
 
 /* remember for smaller computers will need scroll */
 .content-container{
   color:white;
-  width: 760px;
+  width: 720px;
   max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
 }
 
 .resources-header{
@@ -31,6 +32,24 @@
   margin-top:10px;
 }
 
+.video-title{
+  align-self: flex-start;
+  margin-bottom:5px;
+}
+
+.video-body-container {
+  max-width: 1000px;
+  width: 100%;
+}
+
+.video-message{
+  align-self: flex-start;
+
+  a{
+    color: #64a4dd;
+  }
+}
+
 .dashboard-link{
   color:white;
   background-color: rgb(22, 122, 207);
@@ -40,7 +59,7 @@
 }
 
 .pornstar-list, .link-list{
-  list-style: none;
+  list-style-type: none;
   margin:0;
   margin-top:10px;
   padding:0;
@@ -60,6 +79,7 @@
 
 .pornstar, .link-item{
   padding:0;
+  margin-bottom:5px;
 }
 
 .link-item a{
@@ -67,6 +87,19 @@
 }
 
 .demo-list-link {
-  margin-top:5px;
-  color: #64a4dd;
+  background-color: rgb(22, 122, 207);
+  padding: 8px 10px;
+  border: none;
+  font-size: 16px;
+  border-radius: 4px;
+  margin-top: 10px;
+  color:white;
+  text-decoration: none;
+}
+
+.affiliate-links-container{
+  display:flex;
+  justify-content: space-between;
+  width:100%;
+  max-width: 300px;
 }

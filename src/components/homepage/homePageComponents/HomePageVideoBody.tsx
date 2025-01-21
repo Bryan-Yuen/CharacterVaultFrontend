@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import styles from "./HomePageVideoBody.module.scss";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
-import VideoJS from "./VideoJS";
+import VideoJS from "../../utilities/VideoJS";
 import Image from "next/image";
 
 export default function HomePageVideoBody() {
@@ -50,7 +50,7 @@ export default function HomePageVideoBody() {
     <>
       <a
         className={styles["mobile-affiliate-banner-link"]}
-        href="http://join.exotic4k.com/track/ST1MSr7NqHtkyDj3eK77rRrArWo"
+        href="https://join.exotic4k.com/track/ST1XXobpejFuXMLKkGaQLmr2qwS"
         target="_blank"
       >
         <Image
@@ -64,7 +64,7 @@ export default function HomePageVideoBody() {
       <div className={styles["video-section-container"]}>
         <a
           className={styles["affiliate-banner-link"]}
-          href="http://join.tiny4k.com/track/ST1MSr7NqHtkyDj3eK77rRrArWo"
+          href="https://join.tiny4k.com/track/ST1MSr7NqHtkyDj3eK77rRrArWo"
           target="_blank"
         >
           <Image
@@ -80,7 +80,7 @@ export default function HomePageVideoBody() {
         </div>
         <a
           className={styles["affiliate-banner-link"]}
-          href="http://join.exotic4k.com/track/ST1MSr7NqHtkyDj3eK77rRrArWo"
+          href="https://join.exotic4k.com/track/ST1MSr7NqHtkyDj3eK77rRrArWo"
           target="_blank"
         >
           <Image

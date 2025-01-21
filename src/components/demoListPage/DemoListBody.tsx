@@ -34,12 +34,12 @@ export default function DemoListBody() {
           Exotic4k,
         </a>
         {" "}
-        <a href="https://join.puremature.com/track/ST1MMBwuwPDFWYvhdT8bfM84RRh,30" target="_blank" className={styles["affiliate-link"]}>
-          PureMature,
+        <a href="https://join.tiny4k.com/track/ST1MMBwuwPDFWYvhdT8bfM84RRh" target="_blank" className={styles["affiliate-link"]}>
+          Tiny4k
         </a>{" "}
         and{" "}
-        <a href="https://join.passion-hd.com/track/ST1MMBwuwPDFWYvhdT8bfM84RRh" target="_blank" className={styles["affiliate-link"]}>
-          Passion-HD
+        <a href="https://join.puremature.com/track/ST1MMBwuwPDFWYvhdT8bfM84RRh,30" target="_blank" className={styles["affiliate-link"]}>
+          PureMature,
         </a>
       </span>
       <span className={styles["find-pornstars-message-bottom"]}>
@@ -52,7 +52,7 @@ export default function DemoListBody() {
             .localeCompare(b.pornstar_name.toLowerCase());
         }).map((pornstar: any, index) => (
           <DemoListPornstarTile
-            key={Math.floor(Math.random() * 10000)}
+            key={pornstar.pornstar_id}
             pornstar_url_slug=""
             pornstar_name={pornstar.pornstar_name}
             pornstar_picture_path={pornstar.pornstar_picture_path}

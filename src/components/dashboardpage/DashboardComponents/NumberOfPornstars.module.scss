@@ -1,0 +1,13 @@
+.number-of-pornstars-message{
+  position: absolute;
+  right:25px;
+}
+
+@media only screen and (max-width: 1100px) {
+  .number-of-pornstars-message{
+    position: relative;
+    align-self: flex-end;
+    margin-bottom: 10px;
+    right:0;
+  }
+}

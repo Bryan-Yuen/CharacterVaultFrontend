@@ -6,7 +6,7 @@ export default function MobileBottomAdBanner() {
   return (
     <a
       className={styles["mobile-affiliate-banner-link"]}
-      href="http://join.tiny4k.com/track/ST1MSr7NqHtkyDj3eK77rRrArWo"
+      href="https://join.tiny4k.com/track/ST1XXobpejFuXMLKkGaQLmr2qwS"
       target="_blank"
     >
       <Image

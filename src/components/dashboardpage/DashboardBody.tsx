@@ -8,6 +8,7 @@ import SearchBar from "../navBars/loggedInNavBar/SearchBar";
 import AddPornstarButton from "../navBars/loggedInNavBar/AddPornstarButton";
 import { useSuccessAlertContext } from "@/contexts/ShowSuccessAlertContext";
 import SuccessPopUp from "../utilities/SuccessPopUp";
+import NumberOfPornstars from "./DashboardComponents/NumberOfPornstars";
 
 export default function DashboardBody() {
   const [isDesktop, setDesktop] = useState(false);
@@ -41,6 +42,7 @@ export default function DashboardBody() {
   return (
     <div className={styles["dashboard-body"]}>
       {successAlertIsOpen && <SuccessPopUp successText={successText} />}
+      <NumberOfPornstars/>
       {isDesktop && <SearchTagManagerAddPornstarContainer />}
       {isPhone && <SearchBar />}
       {isPhone && <AddPornstarButton phone={true}/>}

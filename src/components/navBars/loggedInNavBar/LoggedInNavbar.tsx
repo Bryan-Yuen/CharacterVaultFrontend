@@ -58,6 +58,12 @@ export default function LoggedInNavbar() {
       </Link>
       {isDesktop && <SearchTagManagerAddPornstarContainer/>}
       <div className={styles["upgrade-button-profile-icon-container"]}>
+      <Link
+          href={"/resources"}
+          className={`${styles["header"]} ${styles["resources"]}`}
+        >
+          Resources
+        </Link>
         <button className={`${styles['account-button']} ${styles[accountDropdownIsOpen ? 'account-dropdown-active' : '']}`} onClick={() => setAccountDropdownIsOpen(true)}>
           <Image
             priority

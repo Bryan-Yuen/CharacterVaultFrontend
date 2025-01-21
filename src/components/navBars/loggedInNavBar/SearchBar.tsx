@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useRef } from "react";
+import React, { useState, ChangeEvent, useRef,   KeyboardEvent, } from "react";
 import styles from "./SearchBar.module.scss";
 import { GET_USER_TAGS } from "@/queries/userTagQueries";
 import { useQuery } from "@apollo/client";
@@ -72,6 +72,32 @@ export default function SearchBar() {
     }
   };
 
+  // we only do something if tagstoggle is true
+  const handleKeyPress = (
+      event: KeyboardEvent<HTMLInputElement>
+      //tag: string
+    ) => {
+      if (event.key === "Enter" && tagsToggle) {
+        event.preventDefault();
+  
+        if (!pornstarTags.includes(searchTerm)) {
+          // new tag
+          if (filteredData.length <= 0)
+            // do nothing
+            return;
+          else {
+            // gets first elem from filtered search bar results
+            setPornstarTags([...pornstarTags, filteredData[0]]);
+            // need to remove from the search bar now
+            setAccountTags((prevItems) =>
+              prevItems.filter((item) => item !== filteredData[0])
+            );
+          }
+          setSearchTerm("");
+        }
+      }
+    };
+
   const clickedInsideClass = clicked ? "input-active" : "";
 
   if (loading) return <Loading />;
@@ -128,6 +154,7 @@ export default function SearchBar() {
             placeholder="Filter by tags or Search by Name"
             value={searchTerm}
             onClick={handleClickInside}
+            onKeyDown={handleKeyPress}
             ref={inputRef}
             onChange={(event: ChangeEvent<HTMLInputElement>) => {
               setSearchTerm(event.target.value);

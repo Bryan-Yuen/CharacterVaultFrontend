@@ -13,14 +13,17 @@ export default function FeaturesBody() {
           <li className={styles["feature"]}><h3 className={styles["feature-title"]}>Add video links</h3><span className={styles["feature-content"]}>Save your favorite videos of each pornstars.</span></li>
         </ul>
       </div>
+      <a href="https://home-page-pictures.myfapsheet.com/ava-addams-example.webp" target="_blank">
       <Image
         priority
-        src="https://home-page-pictures.myfapsheet.com/pornstar-example.png"
+        src="https://home-page-pictures.myfapsheet.com/ava-addams-example.webp"
         alt="example pornstar page"
         height={267}
         width={475}
+        unoptimized={true}
         className={styles["edit-pornstar-image"]}
       />
+      </a>
     </div>
   );
 }

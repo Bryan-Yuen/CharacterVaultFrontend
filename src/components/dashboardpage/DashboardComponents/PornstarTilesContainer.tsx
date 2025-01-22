@@ -112,11 +112,16 @@ export default function PornstarTilesContainer() {
             <span>No pornstars with this name</span>
           )}
         {pornstarsData.getAllPornstarsAndTags.length == 0 && (
-          <Link href={"/resources"} className={styles["resources-copy"]}>
-            Your list is empty. Add a pornstar or click here for resources.
-          </Link>
+          <div className={styles["empty-pornstar-list-message-container"]}>
+          <span>Welcome to MyFapSheet<br></br> Please go to our <Link href={"/resources"} className={styles["resources-copy"]}>Resources</Link> page to watch a tutorial on <br></br>drag and drop uploading image before adding your first pornstar.</span>
+          </div>
         )}
       </div>
     </>
   );
 }
+/*
+<Link href={"/resources"} className={styles["resources-copy"]}>
+Your list is empty. Add a pornstar or click here for resources.
+</Link>
+*/

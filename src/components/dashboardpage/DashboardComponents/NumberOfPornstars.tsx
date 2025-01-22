@@ -11,6 +11,6 @@ export default function NumberOfPornstars({phone} : propDefs) {
   const { fullPornstars } = useFullPornstarsContext();
 
   return (
-    <div className={styles["number-of-pornstars-message"]}>Pornstars: <span className={styles["number"]}>{fullPornstars.length}/25</span></div>
+    <div className={styles["number-of-pornstars-message"]}>Pornstars: <span className={styles["number"]}>{fullPornstars.length}</span></div>
   )
 }

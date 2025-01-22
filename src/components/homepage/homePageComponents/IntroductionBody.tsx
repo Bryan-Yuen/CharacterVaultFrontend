@@ -7,14 +7,17 @@ import Link from "next/link";
 export default function IntroductionBody() {
   return (
     <div className={styles["introduction-body-container"]}>
+      <a href="https://home-page-pictures.myfapsheet.com/pornstars-dashboard-example.webp" target="_blank">
       <Image
         priority
-        src="https://home-page-pictures.myfapsheet.com/dashboard-example.png"
+        src="https://home-page-pictures.myfapsheet.com/pornstars-dashboard-example.webp"
         alt="dashboard"
         height={267}
         width={475}
+        unoptimized={true}
         className={styles["dashboard-image"]}
       />
+      </a>
       <div className={styles["right-side-container"]}>
         <div className={styles["content-container"]}>
           <h2 className={styles["introduction-body-title"]}>

@@ -6,14 +6,15 @@ import VideoJS from "../utilities/VideoJS";
 //import 'video.js/dist/video-js.css';
 
 export default function ResourcesBody() {
-  const playerRef = useRef(null);
+  const uploadPictureVideoPlayerRef = useRef(null);
+  const searchFilterShuffleVideoPlayerRef = useRef(null);
 
-  const videoJsOptions = {
+  const uploadPictureVideoJsOptions = {
     autoplay: false,
     controls: true,
     responsive: true,
     fluid: true,
-    //poster: "https://home-page-pictures.myfapsheet.com/home-page-video-poster.webp",
+    poster: "https://upload-picture-video.myfapsheet.com/upload-picture-poster.webp",
     sources: [
       {
         src: "https://upload-picture-video.myfapsheet.com/upload-picture-video.mp4",
@@ -26,8 +27,39 @@ export default function ResourcesBody() {
     ],
   };
 
-  const handlePlayerReady = (player: any) => {
-    playerRef.current = player;
+  const searchFilterShuffleVideoJsOptions = {
+    autoplay: false,
+    controls: true,
+    responsive: true,
+    fluid: true,
+    poster: "https://search-filter-shuffle-video.myfapsheet.com/search-filter-shuffle-poster.webp",
+    sources: [
+      {
+        src: "https://search-filter-shuffle-video.myfapsheet.com/search-filter-shuffle-video.mp4",
+        type: "video/mp4",
+      },
+      {
+        src: "https://search-filter-shuffle-video.myfapsheet.com/search-filter-shuffle-video.webm",
+        type: "video/webm",
+      },
+    ],
+  };
+
+  const handleUploadPictureVideoPlayerReady = (player: any) => {
+    uploadPictureVideoPlayerRef.current = player;
+
+    // You can handle player events here, for example:
+    player.on("waiting", () => {
+      videojs.log("player is waiting");
+    });
+
+    player.on("dispose", () => {
+      videojs.log("player will dispose");
+    });
+  };
+
+  const handleSearchFilterShuffleVideoPlayerReady = (player: any) => {
+    searchFilterShuffleVideoPlayerRef.current = player;
 
     // You can handle player events here, for example:
     player.on("waiting", () => {
@@ -49,7 +81,7 @@ export default function ResourcesBody() {
           Drag and Drop Upload Picture Tutorial
         </h2>
         <div className={styles["video-body-container"]}>
-          <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+          <VideoJS options={uploadPictureVideoJsOptions} onReady={handleUploadPictureVideoPlayerReady} />
         </div>
         <span className={styles["video-message"]}>
           We recommend uploading pictures on desktop with drag and drop for
@@ -64,7 +96,21 @@ export default function ResourcesBody() {
           </a>{" "}
           used in the video.
         </span>
-        <h2 className={styles["resources-subheader"]}>Demo List</h2>
+        <span className={styles["video-message"]}>
+          * For Mobile, you will have to manually save the photo and upload from gallery. In the future, we may have upload with image url.
+        </span>
+        <h2
+          className={`${styles["resources-subheader"]} ${styles["video-title"]}`}
+        >
+          Search Tags Filter and Shuffle Demo
+        </h2>
+        <div className={styles["video-body-container"]}>
+          <VideoJS options={searchFilterShuffleVideoJsOptions} onReady={handleSearchFilterShuffleVideoPlayerReady} />
+        </div>
+        <span className={styles["video-message"]}>
+          If you wake up feeling blonde milfs, you can easily type that in the search filter and see your options. You can also try the shuffle button if you want something random.
+        </span>
+        <h2 className={`${styles['resources-subheader']} ${styles['demo-list-header']}`}>Demo List</h2>
         <span className={styles["demo-list-content"]}>
           Check out our example pornstar list. Feel free to use our tags or
           create your own.
@@ -76,14 +122,14 @@ export default function ResourcesBody() {
         >
           View Demo List
         </Link>
-        <h2 className={styles["resources-subheader"]}>Resource Links</h2>
+        <h2 className={`${styles['resources-subheader']} ${styles['resources-links-header']}`} >Resource Links</h2>
         <ul className={styles["link-list"]}>
           <li className={styles["link-item"]}>
             <a href="https://pornpics.com/" target="_blank">
               https://pornpics.com/&nbsp;
             </a>
             <span className={styles["link-message"]}>
-              (good HD pornstar pictures)
+              (Find pornstar pictures here)
             </span>
           </li>
           <li className={styles["link-item"]}>
@@ -91,7 +137,7 @@ export default function ResourcesBody() {
               https://iafd.com/&nbsp;
             </a>
             <span className={styles["link-message"]}>
-              (pornstar database, see all films for a pornstar)
+              (Pornstar database, see all films for a pornstar)
             </span>
           </li>
           <li className={styles["link-item"]}>

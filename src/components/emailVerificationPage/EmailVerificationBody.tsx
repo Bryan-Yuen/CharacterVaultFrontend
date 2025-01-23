@@ -73,6 +73,9 @@ export default function EmailVerificationBody() {
        <span className={styles["span3"]}>
         Can't find the email?
        </span>
+       <span className={styles["span4"]}>
+       If you still don't see the email after 10 minutes<br></br> please email support@myfapsheet.com
+       </span>
        <button className={styles["resend-button"]}
           onClick={resendVerificationEmailHandler} disabled={resendVerificationEmailLoading}>
         {resendVerificationEmailLoading ? (

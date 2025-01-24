@@ -59,6 +59,7 @@ export default function HomePageVideoBody() {
           width="900"
           height="250"
           alt="exotic4k advertisement banner"
+          id="mobile-exotic4k-banner"
         />
       </a>
       <div className={styles["video-section-container"]}>
@@ -73,6 +74,7 @@ export default function HomePageVideoBody() {
             width="160"
             height="562"
             alt="tiny4k advertisement banner"
+            id="desktop-tiny4k-banner"
           />
         </a>
         <div className={styles["video-body-container"]}>
@@ -89,6 +91,7 @@ export default function HomePageVideoBody() {
             width="160"
             height="562"
             alt="exotic4k advertisement banner"
+            id="desktop-exotic4k-banner"
           />
         </a>
       </div>

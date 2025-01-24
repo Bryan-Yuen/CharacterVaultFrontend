@@ -15,6 +15,7 @@ export default function MobileBottomAdBanner() {
         width="900"
         height="250"
         alt="tiny4k advertisement banner"
+        id="mobile-tiny4k-banner"
       />
     </a>
   );

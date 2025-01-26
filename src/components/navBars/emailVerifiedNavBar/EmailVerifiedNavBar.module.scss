@@ -1,0 +1,90 @@
+.navbar {
+  background-color: rgb(68, 68, 68);
+  background-color: rgb(0, 0, 0);
+  padding: 0px 30px;
+  height:75px;
+  display:flex;
+  justify-content: center;
+  
+  a {
+    text-decoration: none;
+    color:white;
+  }
+}
+
+.navbar-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width:1400px;
+  max-width: 1400px;
+}
+
+.login-button {
+  font-size:20px;
+}
+
+.sign-up-button{
+  font-size:20px;
+  margin-left:25px;
+}
+
+.website-name-and-icon-container{
+  display:flex;
+  align-items: center;
+}
+
+.login-sign-up-container{
+  display:flex;
+  align-items: center;
+}
+
+.website-icon {
+  width:32px;
+  height:auto;
+}
+
+.website-name{
+  margin:0;
+  margin-left:10px;
+  font-weight:400;
+  font-size:20px;
+}
+
+.navbar-view-demo-list-cta{
+  text-decoration: none;
+  color:inherit;
+  padding: 8px 10px;
+  border-radius:4px;
+  background-color: rgb(32 135 49);;
+  align-self: center;
+  margin-right:30px;
+  font-size:16px;
+}
+
+@media only screen and (max-width: 600px) {
+  .navbar-view-demo-list-cta {
+    display:none;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .navbar{
+    padding:0 15px;
+  }
+}
+
+@media only screen and (max-width: 374px) {
+  .website-name{
+    font-size:18px;
+  }
+
+  .login-button {
+    font-size:18px;
+  }
+  
+  .sign-up-button{
+    font-size:18px;
+  }
+}

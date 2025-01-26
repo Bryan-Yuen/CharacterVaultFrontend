@@ -9,6 +9,7 @@ import Loading from "../utilities/Loading";
 import GenericError from "../utilities/GenericError";
 import QueryVersionError from "../utilities/QueryVersionError";
 import RateLimitError from "../utilities/RateLimitError";
+import Image from 'next/image';
 
 export default function EmailVerifiedBody() {
   const params = useSearchParams();
@@ -85,9 +86,12 @@ export default function EmailVerifiedBody() {
           )}
           {data && (
             <>
+            <div className={styles["header-container"]}>
+            <Image src={"/check.png"} className={styles["check-mark"]} alt="check mark" width={45} height={45}/>
               <h1 className={styles["header"]}>
                 Your email address has been successfully verified
               </h1>
+              </div>
               <span className={styles["call-to-action-message"]}>
                 Click here to login{" "}
                 <Link href={"/login"} className={styles["login-button"]}>

@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function IntroductionBody() {
   return (
     <div className={styles["introduction-body-container"]}>
-      <a href="https://home-page-pictures.myfapsheet.com/pornstars-dashboard-example.webp" target="_blank">
+      <a href="https://home-page-pictures.myfapsheet.com/pornstars-dashboard-example.webp" target="_blank" className={styles["dashboard-image-link"]}>
       <Image
         priority
         src="https://home-page-pictures.myfapsheet.com/pornstars-dashboard-example.webp"

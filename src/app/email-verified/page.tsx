@@ -1,7 +1,8 @@
 'use client'
 
 import React from "react";
-import HomePageNavBar from "@/components/navBars/homePageNavBar/HomePageNavBar";
+//import HomePageNavBar from "@/components/navBars/homePageNavBar/HomePageNavBar";
+import EmailVerifiedNavBar from "@/components/navBars/emailVerifiedNavBar/EmailVerifiedNavBar";
 import EmailVerifiedBody from "@/components/emailVerifiedPage/EmailVerifiedBody";
 import { ApolloProvider } from "@apollo/client";
 import client from "../../apolloClient/apolloClient";
@@ -12,7 +13,7 @@ import { Suspense } from 'react'
 export default function EmailVerified() {
   return (
     <ApolloProvider client={client}>
-      <HomePageNavBar />
+      <EmailVerifiedNavBar />
       <Suspense>
       <EmailVerifiedBody />
       </Suspense>

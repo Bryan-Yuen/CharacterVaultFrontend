@@ -235,7 +235,9 @@ export default function EditPornstarBody() {
   };
 
   const [editPornstar, { loading: loadingEditPornstar }] =
-    useMutation(EDIT_PORNSTAR);
+    useMutation(EDIT_PORNSTAR, {
+      errorPolicy: "all"
+    });
 
   function stripTypenames(value: any): any {
     if (Array.isArray(value)) {

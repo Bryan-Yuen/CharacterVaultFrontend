@@ -16,18 +16,18 @@ export default function HomePageVideoBody() {
     responsive: true,
     fluid: true,
     poster:
-      "https://home-page-pictures.myfapsheet.com/home-page-video-poster.webp",
+      "https://home-page-pictures.myfapsheet.com/homepage-video-poster.webp",
     sources: [
       {
-        src: "https://home-page-video.myfapsheet.com/Timeline%201%20final.mp4",
+        src: "https://home-page-video.myfapsheet.com/myfapsheet-homepage-ad-video.mp4",
         type: "video/mp4",
       },
       {
-        src: "https://home-page-video.myfapsheet.com/Timeline%201%20final.webm",
+        src: "https://home-page-video.myfapsheet.com/myfapsheet-homepage-ad-video.webm",
         type: "video/webm",
       },
       {
-        src: "https://home-page-video.myfapsheet.com/Timeline-1-final.ogg",
+        src: "https://home-page-video.myfapsheet.com/myfapsheet-homepage-ad-video.ogg",
         type: "video/ogg",
       },
     ],

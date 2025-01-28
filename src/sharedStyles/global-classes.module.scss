@@ -9,6 +9,10 @@
   color: white;
 }
 
+.blue-link-button:hover {
+  background-color: rgb(39 129 207);
+}
+
 /*Keep the border red even as the user goes back to it*/
 .invalid-input-border,
 .invalid-input-border:focus {

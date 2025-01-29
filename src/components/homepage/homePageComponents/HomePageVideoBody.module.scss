@@ -1,8 +1,14 @@
+.homepage-header{
+  font-size:40px;
+  margin-top:10px;
+  margin-bottom:15px;
+}
+
 .video-section-container {
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 30px;
+  margin-top: 0px;
 }
 
 .video-body-container {
@@ -67,3 +73,28 @@
     border-radius: 8px;
   }
 }
+
+@media only screen and (max-width: 550px) {
+  .homepage-header{
+    font-size:36px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .homepage-header{
+    font-size:30px;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .homepage-header{
+    font-size:27px;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  .homepage-header{
+    font-size:25px;
+  }
+}
+

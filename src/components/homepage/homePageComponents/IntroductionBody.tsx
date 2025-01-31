@@ -9,14 +9,14 @@ export default function IntroductionBody() {
       <div className={styles["introduction-body-container"]}>
         <div className={styles["dashboard-image-container"]}>
         <a
-          href="https://home-page-pictures.myfapsheet.com/ava-addams-pornstar-example.webp"
+          href="https://home-page-pictures.myfapsheet.com/ava-addams-example.webp"
           target="_blank"
           className={styles["dashboard-image-link"]}
         >
           <Image
             priority
-            src="https://home-page-pictures.myfapsheet.com/ava-addams-pornstar-example.webp"
-            alt="dashboard"
+            src="https://home-page-pictures.myfapsheet.com/ava-addams-example.webp"
+            alt="ava addams"
             height={267}
             width={475}
             unoptimized={true}

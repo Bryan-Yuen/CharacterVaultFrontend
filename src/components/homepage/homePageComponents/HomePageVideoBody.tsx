@@ -80,14 +80,14 @@ export default function HomePageVideoBody() {
           <div className={styles["hero-ctas-container"]}>
             <Link
               href={"/demo-list"}
-              className={`${styles["view-demo-list-cta"]}`}
+              className={`${styles["hero-view-demo-list-cta"]}`}
               prefetch={false}
             >
               View Demo List
             </Link>
             <Link
               href={"/register"}
-              className={`${globalStyles["blue-link-button"]} ${styles["introduction-cta"]}`}
+              className={`${globalStyles["blue-link-button"]} ${styles["hero-create-your-list-cta"]}`}
               prefetch={false}
             >
               Create Your List

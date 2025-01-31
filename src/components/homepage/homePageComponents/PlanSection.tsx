@@ -12,6 +12,7 @@ export default function PlanSection() {
         <div className={styles["plan-container"]}>
           <h3 className={styles["header"]}>Basic</h3>
           <div className={styles["price"]}>Free</div>
+          <div className={styles["website-icon-small-container"]}>
           <Image
             priority
             src="/MyFapSheetSVG.svg"
@@ -20,6 +21,7 @@ export default function PlanSection() {
             width={0}
             className={styles["website-icon-small"]}
           />
+          </div>
           <div>Add up to 25 pornstars</div>
           {/*page scrolls up when pressing back button from another link, and its probably because of prefetch when links come into viewport*/}
           <Link

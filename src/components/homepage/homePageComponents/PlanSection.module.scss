@@ -10,7 +10,7 @@
 }
 
 .plan-title{
-  font-size:29px;
+  font-size:30px;
   text-align:center;
 }
 
@@ -47,9 +47,17 @@
   margin-top:20px;
 }
 
+.website-icon-small-container{
+  width:65px;
+  height:84px;
+  margin:10px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .website-icon-small{
   height:auto;
-  margin:10px;
   width:50px;
 }
 
@@ -57,6 +65,10 @@
   height:auto;
   margin:10px;
   width:65px;
+}
+
+.price {
+  margin-top:3px;
 }
 
 @media only screen and (max-width: 700px) {

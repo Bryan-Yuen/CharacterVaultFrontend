@@ -1,20 +1,33 @@
 /*Need to make all of this collapse on mobile, or make it mobile first and turn into row on big screen.*/
 .introduction-body-container {
   display: flex;
-  flex-wrap: wrap;
+  /*flex-wrap: wrap;*/
   justify-content: space-between;
-  margin-top: 45px;
+  margin-top: 40px;
   /*padding:25px;*/
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
+}
+
+.dashboard-image-container{
+  display:flex;
+  align-items: center;
+  flex:1;
 }
 
 .right-side-container {
   color: white;
-  width:475px;
-  max-width: 475px;
+  width:100%;
+  max-width: 600px;
   display: flex;
   justify-content: center;
+  flex:1;
+  margin-left:30px;
+}
+
+.image-icon, .tag-icon, .link-icon {
+  width:50px;
+  height:100%;
 }
 
 .content-container{
@@ -47,17 +60,54 @@
   border-radius: 12px;
   height: auto;
     width: 100%;
-    max-width: 475px;
+    max-width: 600px;
 }
 
-@media only screen and (max-width: 1017px) {
+.feature-list{
+  color: white;
+  height:100%;
+  align-items: flex-start;
+
+	margin:0;
+  padding:0;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.feature {
+  margin: 22px 0;
+	font-size:20px;
+  list-style: none;
+  display:flex;
+}
+
+.feature-copy-container{
+  margin-left:20px;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.feature-title{
+  margin:0;
+  font-size:24px;
+}
+
+.feature-content{
+  font-size:16px;
+}
+
+@media only screen and (max-width: 1060px) {
   .introduction-body-container {
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
     margin-top:30px;
   }
 
   .dashboard-image-link {
-    margin-top:30px;
+    margin-top:10px;
     order:2;
   }
 

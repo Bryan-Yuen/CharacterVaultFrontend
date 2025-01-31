@@ -11,7 +11,7 @@ if (!process.env.NEXT_PUBLIC_ENVIRONMENT) {
 }
 
 export const metadata: Metadata = {
-  title: "MyFapSheet",
+  title: "MyFapSheet - Create your pornstar list",
   description:
     "Create your list and add and manage your favorite pornstars. Upload custom images, tags, and video links.",
   robots: {

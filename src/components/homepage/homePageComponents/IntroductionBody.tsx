@@ -6,34 +6,78 @@ import Link from "next/link";
 
 export default function IntroductionBody() {
   return (
-    <div className={styles["introduction-body-container"]}>
-      <a href="https://home-page-pictures.myfapsheet.com/pornstars-dashboard-example.webp" target="_blank" className={styles["dashboard-image-link"]}>
-      <Image
-        priority
-        src="https://home-page-pictures.myfapsheet.com/pornstars-dashboard-example.webp"
-        alt="dashboard"
-        height={267}
-        width={475}
-        unoptimized={true}
-        className={styles["dashboard-image"]}
-      />
-      </a>
-      <div className={styles["right-side-container"]}>
-        <div className={styles["content-container"]}>
-          <h2 className={styles["introduction-body-title"]}>
-            Save your favorite pornstars here
-          </h2>
-          <span className={styles["introduction-body-content"]}>Create your pornstar list and add and manage your favorite pornstars with our interactive dashboard.</span>
-          {/*page scrolls up when pressing back button from another link, and its probably because of prefetch when links come into viewport*/}
-          <Link
-            href={"/register"}
-            className={`${globalStyles["blue-link-button"]} ${styles["introduction-cta"]}`}
-            prefetch={false}
-          >
-            Create Your List
-          </Link>
+      <div className={styles["introduction-body-container"]}>
+        <div className={styles["dashboard-image-container"]}>
+        <a
+          href="https://home-page-pictures.myfapsheet.com/ava-addams-pornstar-example.webp"
+          target="_blank"
+          className={styles["dashboard-image-link"]}
+        >
+          <Image
+            priority
+            src="https://home-page-pictures.myfapsheet.com/ava-addams-pornstar-example.webp"
+            alt="dashboard"
+            height={267}
+            width={475}
+            unoptimized={true}
+            className={styles["dashboard-image"]}
+          />
+        </a>
+        </div>
+        <div className={styles["right-side-container"]}>
+          <ul className={styles["feature-list"]}>
+            <li className={styles["feature"]}>
+              <Image
+                priority
+                src="/image-icon.svg"
+                alt="image icon"
+                height={100}
+                width={300}
+                className={styles["image-icon"]}
+              />
+              <div className={styles["feature-copy-container"]}>
+                <h3 className={styles["feature-title"]}>
+                  Upload custom images
+                </h3>
+                <span className={styles["feature-content"]}>
+                  Use your favorite pornstar picture you find online.
+                </span>
+              </div>
+            </li>
+            <li className={styles["feature"]}>
+              <Image
+                priority
+                src="/tag-icon.svg"
+                alt="image icon"
+                height={100}
+                width={300}
+                className={styles["tag-icon"]}
+              />
+              <div className={styles["feature-copy-container"]}>
+                <h3 className={styles["feature-title"]}>Create custom tags</h3>
+                <span className={styles["feature-content"]}>
+                  Add tags and filter your pornstars by tags.
+                </span>
+              </div>
+            </li>
+            <li className={styles["feature"]}>
+              <Image
+                priority
+                src="/link-icon.svg"
+                alt="image icon"
+                height={100}
+                width={300}
+                className={styles["link-icon"]}
+              />
+              <div className={styles["feature-copy-container"]}>
+                <h3 className={styles["feature-title"]}>Add video links</h3>
+                <span className={styles["feature-content"]}>
+                  Save your favorite videos for each pornstar.
+                </span>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
-    </div>
   );
 }

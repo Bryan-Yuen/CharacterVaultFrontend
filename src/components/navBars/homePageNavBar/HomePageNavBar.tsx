@@ -25,13 +25,6 @@ export default function HomePageNavBar() {
           <div className={styles["website-name"]}>MyFapSheet</div>
         </Link>
         <div className={styles["login-sign-up-container"]}>
-        <Link
-        href={"/demo-list"}
-        className={`${styles["navbar-view-demo-list-cta"]}`}
-        prefetch={false}
-      >
-        View Demo List
-      </Link>
           <Link href={"/login"} className={styles["login-button"]}>
             Login
           </Link>

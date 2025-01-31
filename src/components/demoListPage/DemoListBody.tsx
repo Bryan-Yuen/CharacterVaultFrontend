@@ -62,7 +62,7 @@ export default function DemoListBody() {
         ))}
       </div>
       <span className={styles["bottom-demo-list-message"]}>
-        Create your own pornstar list now
+        Create your pornstar list now
       </span>
       <Link
             href={"/register"}

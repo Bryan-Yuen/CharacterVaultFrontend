@@ -1,0 +1,21 @@
+.middle-message-container {
+text-align: center;
+margin-top:40px;
+}
+
+.middle-message-title {
+  font-size:34px;
+  margin:0;
+  margin-bottom:10px;
+}
+
+.middle-message-content{
+  font-size:18px;
+}
+
+@media only screen and (max-width: 1060px) {
+  .middle-message-container {
+    margin-top:30px;
+    }
+}
+

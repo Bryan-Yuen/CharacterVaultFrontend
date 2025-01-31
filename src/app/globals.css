@@ -44,3 +44,26 @@ button:hover{
   object-fit: cover!important;
   border-radius: 8px;
 }
+
+/*hover to change play button background if video is hovered on*/
+.video-js:hover .vjs-big-play-button {
+  background-color: #5c5c5c!important;
+  background-color: #4f4f4f !important;
+}
+
+
+.video-js .vjs-big-play-button{
+  width: 80px!important;
+    height: 80px!important;
+    background-color: #252424 !important;
+    border-radius: 100%!important;
+    border: none!important;
+}
+
+.vjs-big-play-button .vjs-icon-placeholder:before {
+  font-size:50px!important;
+  align-items: center!important;
+  justify-content: center!important;
+  display: flex!important;
+;
+}

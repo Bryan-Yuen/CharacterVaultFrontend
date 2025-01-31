@@ -97,6 +97,13 @@
 }
 
 @media only screen and (max-width: 1060px) {
+  .hero-ctas-container a{
+    font-size:18px;
+  }
+}
+
+/*media query for 1024px twinred interstitital*/
+@media only screen and (max-width: 1020px) {
   .video-section-container {
     flex-direction:column;
     align-items:center;

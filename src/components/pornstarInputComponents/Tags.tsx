@@ -53,6 +53,7 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
   const handleFocus = () => setIsFocused(true);
+  /*
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     // Prevent closing when clicking inside dropdown
     if (
@@ -63,6 +64,7 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
     }
     setIsFocused(false);
   };
+  */
   const [createNewTagDisabled, setCreateNewTagDisabled] =
     useState<boolean>(false);
 
@@ -84,10 +86,11 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
     if (!clicked) setClicked(true);
   };
 
+  */
   const handleOutsideClick = () => {
     setClicked(false);
+    setIsFocused(false);
   };
-  */
 
   // maybe focus the input when you drop down
   const toggleDownButton = () => {
@@ -285,93 +288,96 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
       <label className={styles["tags-label"]} htmlFor="pornstar-tags">
         Tags
       </label>
-      {pornstarTags.length > 0 && (
-        <div className={styles["selected-tags-container"]}>
-          <ul>
-            {pornstarTags.map((tag, i) => (
-              <li key={i} onClick={() => removeTag(tag)}>
-                <span className={styles["selected-tag"]}>{tag}</span>
-                <Image
-                  priority
-                  src="/x.svg"
-                  alt="x"
-                  height={11}
-                  width={11}
-                  className={styles["x-button"]}
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      <div
-        className={`${styles["search-input-container"]} ${styles[clickedInsideClass]}`}
-      >
-        <input
-          type="text"
-          id="pornstar-tags"
-          className={styles["search-input"]}
-          placeholder="Select or Create Tag"
-          value={searchTerm}
-          onKeyDown={handleKeyPress}
-          onFocus={handleFocus}
-          onBlur={handleBlur} // Close only when clicking outside
-          ref={inputRef}
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            setSearchTerm(event.target.value)
-          }
-          /*
+      <OutsideClickDetector onOutsideClick={handleOutsideClick}>
+        {pornstarTags.length > 0 && (
+          <div className={styles["selected-tags-container"]}>
+            <ul>
+              {pornstarTags.map((tag, i) => (
+                <li key={i} onClick={() => removeTag(tag)}>
+                  <span className={styles["selected-tag"]}>{tag}</span>
+                  <Image
+                    priority
+                    src="/x.svg"
+                    alt="x"
+                    height={11}
+                    width={11}
+                    className={styles["x-button"]}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <div
+          className={`${styles["search-input-container"]} ${styles[clickedInsideClass]}`}
+        >
+          <input
+            type="text"
+            id="pornstar-tags"
+            className={styles["search-input"]}
+            placeholder="Select or Create Tag"
+            value={searchTerm}
+            onKeyDown={handleKeyPress}
+            onFocus={handleFocus}
+            //onBlur={handleBlur} // Close only when clicking outside
+            ref={inputRef}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              setSearchTerm(event.target.value)
+            }
+            /*
             onKeyDown={(event: KeyboardEvent<HTMLInputElement>) =>
               handleKeyPress(event, searchTerm)
             }
             */
-        />
-        <div
-          className={styles["down-button-container"]}
-          onClick={toggleDownButton}
-        >
-          <Image
-            priority
-            src="/downIcon.svg"
-            alt="Down Icon"
-            height={32}
-            width={32}
           />
+          <div
+            className={styles["down-button-container"]}
+            onClick={toggleDownButton}
+          >
+            <Image
+              priority
+              src="/downIcon.svg"
+              alt="Down Icon"
+              height={32}
+              width={32}
+            />
+          </div>
         </div>
-      </div>
-      {isFocused && (
-        <ul className={styles["search-results-container"]}>
-          {filteredData.map((accountTagText, i) => (
-            <li
-              key={i}
-              onClick={() => handleTagClick(accountTagText)}
-              className={styles["search-item-container"]}
-            >
-              <span className={styles["search-item"]}>{accountTagText}</span>
-            </li>
-          ))}
-          {((filteredData.length < 1 || searchTerm !== filteredData[0]) && searchTerm.length > 0) && (
-            <li
-              key={"new"}
-              onClick={createNewTagDisabled ? undefined : handleTagClickNew}
-              className={styles["search-item-container"]}
-            >
-              {createNewTagDisabled ? (
-                <RotatingLines
-                  visible={true}
-                  width="25"
-                  strokeWidth="5"
-                  strokeColor="white"
-                  animationDuration="0.75"
-                  ariaLabel="rotating-lines-loading"
-                />
-              ) : (
-                `Create new tag "${searchTerm}"`
+        {isFocused && (
+          <ul className={styles["search-results-container"]}>
+            {filteredData.map((accountTagText, i) => (
+              <li
+                key={i}
+                onClick={() => handleTagClick(accountTagText)}
+                className={styles["search-item-container"]}
+              >
+                <span className={styles["search-item"]}>{accountTagText}</span>
+              </li>
+            ))}
+            {(filteredData.length < 1 || searchTerm !== filteredData[0]) &&
+              searchTerm.length > 0 && (
+                <li
+                  key={"new"}
+                  onClick={createNewTagDisabled ? undefined : handleTagClickNew}
+                  className={styles["search-item-container"]}
+                >
+                  {createNewTagDisabled ? (
+                    <RotatingLines
+                      visible={true}
+                      width="25"
+                      strokeWidth="5"
+                      strokeColor="white"
+                      animationDuration="0.75"
+                      ariaLabel="rotating-lines-loading"
+                    />
+                  ) : (
+                    `Create new tag "${searchTerm}"`
+                  )}
+                </li>
               )}
-            </li>
-          )}
-        </ul>
-      )}
+          </ul>
+        )}
+      </OutsideClickDetector>
       <GenericError genericError={genericError} />
       <MutationVersionError versionError={versionError} />
       <RateLimitError rateLimitError={rateLimitError} />

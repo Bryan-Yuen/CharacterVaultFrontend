@@ -330,7 +330,7 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
                 <span className={styles["search-item"]}>{accountTagText}</span>
               </li>
             ))}
-            <li
+            {((filteredData.length < 1) || (searchTerm !== filteredData[0])) && <li
               key={"new"}
               onClick={createNewTagDisabled ? undefined : handleTagClickNew}
               className={styles["search-item-container"]}
@@ -347,7 +347,7 @@ export default memo(function Tags({ pornstarTags, setPornstarTags }: propDefs) {
                       ) : (
                         `Create new tag "${searchTerm}"`
                       )}
-            </li>
+            </li>}
           </ul>
         )}
       </OutsideClickDetector>

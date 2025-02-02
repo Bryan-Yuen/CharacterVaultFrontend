@@ -36,7 +36,7 @@ export default function PornstarTilesContainer() {
         item.pornstar_name.toLowerCase().includes(nameSearchTerm.toLowerCase())
       );
       setFilteredPornstarByName(filteredData)
-    },[pornstarTags,nameSearchTerm])
+    },[pornstarTags,nameSearchTerm,fullPornstars])
 
   if (pornstarsLoading) return <Loading />;
   if (pornstarsError) {

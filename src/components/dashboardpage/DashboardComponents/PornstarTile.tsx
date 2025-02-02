@@ -19,16 +19,18 @@ export default function PornstarTile(props: propDefs) {
         className={`${styles["pornstar-tile-container"]} ${styles[props.shufflePornstarContainer ? 'shufflePornstarContainer' : '']}`}
       >
         {props.pornstar_picture_path ? (
-          /*
-          <img
-            alt="user-uploaded"
-            src={props.pornstar_picture_path}
-            width={300}
-            className={styles['user-uploaded-picture']}
-          />
-          */
+         /*
           <Image
           loader={CDNImageLoader}
+          src={props.pornstar_picture_path}
+          alt={props.pornstar_name}
+          width={PORNSTAR_IMAGE_WIDTH}
+            height={PORNSTAR_IMAGE_HEIGHT}
+          className={styles['user-uploaded-picture']}
+        />
+        */
+        <Image
+          unoptimized={true}
           src={props.pornstar_picture_path}
           alt={props.pornstar_name}
           width={PORNSTAR_IMAGE_WIDTH}

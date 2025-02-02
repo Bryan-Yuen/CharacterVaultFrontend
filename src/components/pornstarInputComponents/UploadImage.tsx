@@ -167,7 +167,8 @@ const UploadImage = ({
         <div>
           <Image
             priority
-            loader={CDNImageLoader}
+            //loader={CDNImageLoader}
+            unoptimized={true}
             src={
               selectedImage
                 ? URL.createObjectURL(selectedImage)

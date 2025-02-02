@@ -106,13 +106,14 @@ export default function ViewPornstarBody() {
         {isDesktop &&
           (data.getPornstar.pornstar_picture_path ? (
             <Image
-              loader={CDNImageLoader}
-              alt={data.getPornstar.pornstar_name}
-              src={data.getPornstar.pornstar_picture_path}
-              width={PORNSTAR_IMAGE_WIDTH}
-              height={PORNSTAR_IMAGE_HEIGHT}
-              className={styles["user-image"]}
-            />
+            //loader={CDNImageLoader}
+            unoptimized={true}
+            alt={data.getPornstar.pornstar_name}
+            src={data.getPornstar.pornstar_picture_path}
+            width={PORNSTAR_IMAGE_WIDTH}
+            height={PORNSTAR_IMAGE_HEIGHT}
+            className={styles["user-image"]}
+          />
           ) : (
             <Image
               src="/silhouette.jpg"
@@ -145,7 +146,8 @@ export default function ViewPornstarBody() {
           {!isDesktop &&
             (data.getPornstar.pornstar_picture_path ? (
               <Image
-                loader={CDNImageLoader}
+                //loader={CDNImageLoader}
+                unoptimized={true}
                 alt={data.getPornstar.pornstar_name}
                 src={data.getPornstar.pornstar_picture_path}
                 width={PORNSTAR_IMAGE_WIDTH}

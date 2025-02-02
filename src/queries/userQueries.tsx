@@ -6,6 +6,7 @@ query Query {
       user_email
       user_username
       user_is_interested
+      user_is_premium
     }
   }
 `;

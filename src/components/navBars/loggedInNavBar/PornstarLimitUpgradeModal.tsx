@@ -20,10 +20,10 @@ interface propDefs {
 export default function PornstarLimitUpgradeModal(props: propDefs) {
   const client = useApolloClient();
 
-  const { loading, error, data } = useQuery(GET_USER_PROFILE , {
+  const { loading, error, data } = useQuery(GET_USER_PROFILE, {
     onCompleted: (data) => {
       setUserIsInterested(data.getUserProfile.user_is_interested);
-    }
+    },
   });
 
   const [userIsInterested, setUserIsInterested] = useState(true);
@@ -68,20 +68,19 @@ export default function PornstarLimitUpgradeModal(props: propDefs) {
           default:
             setGenericError(true);
         }
-      }
-     else if (result.data) {
-      client.writeQuery({
-        query: GET_USER_PROFILE,
-        data: {
-          getUserProfile: {
-            __typename: 'UserProfileReturn', // Ensure this matches your schema typename
-            user_is_interested: isChecked,  // Update the `user_is_interested` field
-            user_email: data.getUserProfile.user_email,
-            user_username: data.getUserProfile.user_username
+      } else if (result.data) {
+        client.writeQuery({
+          query: GET_USER_PROFILE,
+          data: {
+            getUserProfile: {
+              __typename: "UserProfileReturn", // Ensure this matches your schema typename
+              user_is_interested: isChecked, // Update the `user_is_interested` field
+              user_email: data.getUserProfile.user_email,
+              user_username: data.getUserProfile.user_username,
+            },
           },
-        },
-      });
-    }
+        });
+      }
       // do nothing if we get data back, which means success
     } catch (error) {
       console.error("An unexpected error occurred:", error);
@@ -141,7 +140,7 @@ export default function PornstarLimitUpgradeModal(props: propDefs) {
         </button>
         <div className={styles["modal-title"]}>Pornstar Limit Reached</div>
         <div className={styles["modal-content"]}>
-          <span>
+          {/*<span>
             Thank you for using MyFapSheet. We are currently in the beta phase
             of our service so we will only be allowing a maximum of 25
             pornstars. The premium plan that will allow up to 1000 pornstars and
@@ -159,7 +158,13 @@ export default function PornstarLimitUpgradeModal(props: propDefs) {
               Check here if you are interested in being notified by email when
               the premium plan releases.
             </label>
-          </div>
+          </div> */}
+          <span>
+            Update 2/1/2025: We have decided to stopped development of the
+            website indefinitely. If you are interested in adding more pornstars
+            of up to 1,000 please email support@myfapsheet.com and we will give
+            you access free of charge. Thank you for using our website.
+          </span>
         </div>
         <button
           onClick={() => props.setPornstarLimitUpgradeModalIsOpen(false)}

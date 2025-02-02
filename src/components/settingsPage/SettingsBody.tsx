@@ -67,10 +67,10 @@ export default function SettingsBody() {
           query: GET_USER_PROFILE,
           data: {
             getUserProfile: {
-              __typename: 'UserProfileReturn', // Ensure this matches your schema typename
-              user_is_interested: isChecked,  // Update the `user_is_interested` field
+              __typename: "UserProfileReturn", // Ensure this matches your schema typename
+              user_is_interested: isChecked, // Update the `user_is_interested` field
               user_email: data.getUserProfile.user_email,
-              user_username: data.getUserProfile.user_username
+              user_username: data.getUserProfile.user_username,
             },
           },
         });
@@ -155,7 +155,7 @@ export default function SettingsBody() {
           </div>
         </div>
         <div className={styles["update-container"]}>
-          <span>
+          {/* <span>
             Thank you for supporting MyFapSheet. We are currently in the beta phase
             of our service so we will only be allowing a maximum of 25
             pornstars. In the future, the premium plan will allow up to 1000
@@ -174,6 +174,12 @@ export default function SettingsBody() {
               the premium plan releases.
             </label>
           </div>
+          */}
+          <span>
+            Update 2/1/2025: We have decided to stopped development of the website indefinitely. If you are
+            interested in adding more pornstars of up to 1,000 please email
+            support@myfapsheet.com and we will give you access free of charge. Thank you for using our website.
+          </span>
         </div>
         <GenericError genericError={genericError} />
         <MutationVersionError versionError={versionError} />

@@ -48,9 +48,11 @@
   border-radius: 4px;
 }
 
+/*
 .input-active {
-  border: 1px solid rgb(255, 255, 255);
+  //border: 1px solid rgb(255, 255, 255);
 }
+  */
 
 .search-input {
   width: 100%;
@@ -70,6 +72,7 @@
 
 .search-input:focus {
   outline-style: none;
+  border: 1px solid rgb(255, 255, 255);
 }
 
 .down-button-container {

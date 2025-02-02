@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styles from "./PornstarTilesContainer.module.scss";
 import PornstarTile from "./PornstarTile";
 import { usePornstarAndTagsContext } from "@/contexts/PornstarAndTagsContext";
@@ -19,10 +19,24 @@ export interface FullPornstar {
 }
 
 export default function PornstarTilesContainer() {
-  const { pornstarTags, tagsToggle, nameSearchTerm } =
+  const { pornstarTags, tagsToggle, nameSearchTerm, filteredPornstarByName, filteredPornstarByTags, setFilteredPornstarByName, setFilteredPornstarByTags } =
     usePornstarAndTagsContext();
   const { fullPornstars, pornstarsData, pornstarsLoading, pornstarsError } =
     useFullPornstarsContext();
+
+    useEffect(() => {
+      const realFilterPornstarByTags = fullPornstars.filter((pornstar: any) =>
+        pornstarTags.every((FilterTag: string) =>
+          pornstar.pornstar_tags_text.some((tag: string) => tag === FilterTag)
+        )
+      );
+      setFilteredPornstarByTags(realFilterPornstarByTags)
+    
+      const filteredData = filteredPornstarByTags.filter((item: any) =>
+        item.pornstar_name.toLowerCase().includes(nameSearchTerm.toLowerCase())
+      );
+      setFilteredPornstarByName(filteredData)
+    },[pornstarTags,nameSearchTerm])
 
   if (pornstarsLoading) return <Loading />;
   if (pornstarsError) {
@@ -65,23 +79,15 @@ export default function PornstarTilesContainer() {
     );
   }
 
-  const realFilterPornstarByTags = fullPornstars.filter((pornstar: any) =>
-    pornstarTags.every((FilterTag: string) =>
-      pornstar.pornstar_tags_text.some((tag: string) => tag === FilterTag)
-    )
-  );
 
-  const filteredData = realFilterPornstarByTags.filter((item: any) =>
-    item.pornstar_name.toLowerCase().includes(nameSearchTerm.toLowerCase())
-  );
-
+  console.log("what is tags",filteredPornstarByTags)
   return (
     <>
       <div className={styles["pornstar-tiles-container"]}>
         {(tagsToggle
-          ? realFilterPornstarByTags
+          ? filteredPornstarByTags
           : nameSearchTerm || pornstarTags.length !== 0
-          ? filteredData
+          ? filteredPornstarByName
           : // copy of the default pornstars if the user didn't type anything in search bar
             [...pornstarsData.getAllPornstarsAndTags]
         )
@@ -102,12 +108,12 @@ export default function PornstarTilesContainer() {
             );
           })}
         {tagsToggle &&
-          realFilterPornstarByTags.length == 0 &&
+          filteredPornstarByTags.length == 0 &&
           pornstarsData.getAllPornstarsAndTags.length > 0 && (
             <span>No pornstars that match all these tags</span>
           )}
         {!tagsToggle &&
-          filteredData.length == 0 &&
+          filteredPornstarByName.length == 0 &&
           pornstarsData.getAllPornstarsAndTags.length > 0 && (
             <span>No pornstars with this name</span>
           )}

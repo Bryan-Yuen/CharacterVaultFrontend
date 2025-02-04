@@ -106,6 +106,21 @@
   border-width: 1px;
 }
 
+.search-item{
+  font-weight:550;
+}
+
+.number-of-pornstars {
+  font-size:14px;
+  text-transform: lowercase;
+}
+
+/* keep contaienr from shirnking if user put very long tag*/
+.buttons-container{
+  display:flex;
+  width:64px;
+}
+
 .search-results-container::-webkit-scrollbar {
   width: 10px;
 }

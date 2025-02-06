@@ -40,6 +40,8 @@ export default function ActorTilesContainer() {
 
   if (actorsLoading) return <Loading />;
   if (actorsError) {
+    console.log("actorsError",actorsError)
+    console.log("actorsError,graphqlerrors",actorsError.graphQLErrors)
     if (
       actorsError.graphQLErrors &&
       actorsError.graphQLErrors.length > 0

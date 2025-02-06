@@ -17,7 +17,7 @@ export default function HomePageVideoBody() {
     controls: true,
     responsive: true,
     fluid: true,
-    poster: "https://pub-6aa58914a36048c298f2af9531d479c2.r2.dev/actor-dashboard-example.webp",
+    poster: "https://character-vault-homepage-pictures.charactervault.site/actor-dashboard-example.webp",
     sources: [
       {
         src: "",
@@ -84,13 +84,13 @@ export default function HomePageVideoBody() {
           {/*temporary until we finish video */}
           {/*<VideoJS options={videoJsOptions} onReady={handlePlayerReady} /> */}
           <a
-          href="https://pub-6aa58914a36048c298f2af9531d479c2.r2.dev/actor-dashboard-example.webp"
+          href="https://character-vault-homepage-pictures.charactervault.site/actor-dashboard-example.webp"
           target="_blank"
           className={styles["dashboard-image-link"]}
         >
           <Image
             priority
-            src="https://pub-6aa58914a36048c298f2af9531d479c2.r2.dev/actor-dashboard-example.webp"
+            src="https://character-vault-homepage-pictures.charactervault.site/actor-dashboard-example.webp"
             alt="walter white"
             height={267}
             width={475}

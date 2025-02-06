@@ -3,56 +3,22 @@
 const nextConfig = {
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "testing-pictures.myfapsheet.com",
-        pathname: "**",
-      },
-      {
-        protocol: "https",
-        hostname: "home-page-pictures.myfapsheet.com",
-        pathname: "**",
-      },
-      {
-        protocol: "https",
-        hostname: "ad-banners.myfapsheet.com",
-        pathname: "**",
-      },
-      {
-        protocol: "https",
-        hostname: "demo-pornstars.myfapsheet.com",
-        pathname: "**",
-      },
-      {
-        protocol: "https",
-        hostname: "demo-list-pornstar-pictures.myfapsheet.com",
-        pathname: "**",
-      },
-      {
-        protocol: "https",
-        hostname: "home-page-video.myfapsheet.com",
-        pathname: "**",
-      },
-      {
-        protocol: "https",
-        hostname: "pornstar-pictures.myfapsheet.com",
-        pathname: "**",
-      },
-      {
-        protocol: "https",
-        hostname: "pornstar-pictures-cdn.myfapsheet.com",
-        pathname: "**",
-      },
       // demo list
       {
         protocol: "https",
-        hostname: "https://pub-e6bebdc4320d4f6ab48cf5edf2c48e9c.r2.dev",
+        hostname: "https://demo-list-actor-pictures.charactervault.site",
         pathname: "**",
       },
        // home page pictures
        {
         protocol: "https",
-        hostname: "https://pub-6aa58914a36048c298f2af9531d479c2.r2.dev",
+        hostname: "https://character-vault-homepage-pictures.charactervault.site",
+        pathname: "**",
+      },
+       // actor pictures
+       {
+        protocol: "https",
+        hostname: "https://actor-pictures.charactervault.site",
         pathname: "**",
       },
     ],

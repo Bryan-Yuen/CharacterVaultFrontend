@@ -20,7 +20,7 @@ export default function HomePageVideoBody() {
     poster: "https://character-vault-homepage-pictures.charactervault.site/actor-dashboard-example.webp",
     sources: [
       {
-        src: "",
+        src: "https://charactervault-homepage-video.charactervault.site/walter-white-demo.mp4",
         type: "video/mp4",
       },
       {
@@ -81,9 +81,8 @@ export default function HomePageVideoBody() {
           </div>
         </div>
         <div className={styles["video-body-container"]}>
-          {/*temporary until we finish video */}
-          {/*<VideoJS options={videoJsOptions} onReady={handlePlayerReady} /> */}
-          <a
+          <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+          {/*  <a
           href="https://character-vault-homepage-pictures.charactervault.site/actor-dashboard-example.webp"
           target="_blank"
           className={styles["dashboard-image-link"]}
@@ -97,7 +96,7 @@ export default function HomePageVideoBody() {
             unoptimized={true}
             className={styles["dashboard-image"]}
           />
-        </a>
+        </a>*/}
         </div>
       </div>
     </>

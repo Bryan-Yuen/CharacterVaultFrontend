@@ -67,13 +67,13 @@ export default function EmailVerificationNavBar() {
           {" "}
           <Image
             priority
-            src="/MyFapSheetSVG.svg"
-            alt="paper with droplets"
+            src="/action-icon.svg"
+            alt="clapperboard"
             height={0}
             width={0}
             className={styles["website-icon"]}
           />
-          <div className={styles["website-name"]}>MyFapSheet</div>
+          <div className={styles["website-name"]}>Character Vault</div>
         </Link>
         <div>
           <button

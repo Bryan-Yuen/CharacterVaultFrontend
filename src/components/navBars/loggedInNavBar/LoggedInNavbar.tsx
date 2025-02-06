@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import AccountDropdown from "./AccountDropdown";
-import SearchTagManagerAddPornstarContainer from "./SearchTagManagerAddPornstarContainer";
+import SearchTagManagerAddActorContainer from "./SearchTagManagerAddActorContainer";
 
 
 export default function LoggedInNavbar() {
@@ -48,22 +48,16 @@ export default function LoggedInNavbar() {
         {" "}
         <Image
               priority
-              src="/MyFapSheetSVG.svg"
-              alt="paper with droplets"
+              src="/action-icon.svg"
+              alt="clapperboard"
               height={0}
               width={0}
               className={styles["website-icon"]}
             />
-        <div className={styles["website-name"]}>MyFapSheet</div>
+        <div className={styles["website-name"]}>Character Vault</div>
       </Link>
-      {isDesktop && <SearchTagManagerAddPornstarContainer/>}
+      {isDesktop && <SearchTagManagerAddActorContainer/>}
       <div className={styles["upgrade-button-profile-icon-container"]}>
-      <Link
-          href={"/resources"}
-          className={`${styles["header"]} ${styles["resources"]}`}
-        >
-          Resources
-        </Link>
         <button className={`${styles['account-button']} ${styles[accountDropdownIsOpen ? 'account-dropdown-active' : '']}`} onClick={() => setAccountDropdownIsOpen(true)}>
           <Image
             priority

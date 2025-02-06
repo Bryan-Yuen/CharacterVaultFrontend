@@ -15,14 +15,14 @@ export default function PlanSection() {
           <div className={styles["website-icon-small-container"]}>
           <Image
             priority
-            src="/MyFapSheetSVG.svg"
-            alt="paper with droplets"
+            src="/action-icon.svg"
+            alt="clapperboard"
             height={0}
             width={0}
             className={styles["website-icon-small"]}
           />
           </div>
-          <div>Add up to 25 pornstars</div>
+          <div>Add up to 25 characters</div>
           {/*page scrolls up when pressing back button from another link, and its probably because of prefetch when links come into viewport*/}
           <Link
             href={"/register"}
@@ -37,13 +37,13 @@ export default function PlanSection() {
           <div className={styles["price"]}>$3.99/month</div>
           <Image
             priority
-            src="/MyFapSheetSVG.svg"
-            alt="paper with droplets"
+            src="/action-icon.svg"
+            alt="clapperboard"
             height={0}
             width={0}
             className={styles["website-icon-large"]}
           />
-          <div>Add up to 1000 pornstars</div>
+          <div>Add up to 1000 characters</div>
           {/*page scrolls up when pressing back button from another link, and its probably because of prefetch when links come into viewport*/}
           <Link
             href={"/register"}

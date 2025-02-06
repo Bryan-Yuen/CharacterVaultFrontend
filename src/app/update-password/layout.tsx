@@ -6,7 +6,7 @@ if (!process.env.NEXT_PUBLIC_ENVIRONMENT) {
 }
 
 export const metadata: Metadata = {
-  title: "Update Password - MyFapSheet",
+  title: "Update Password - MyActorList",
   description: "Update your password",
   robots: {
     index: false,

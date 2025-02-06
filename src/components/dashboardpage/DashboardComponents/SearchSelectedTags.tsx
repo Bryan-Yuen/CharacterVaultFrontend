@@ -1,19 +1,19 @@
 import React from 'react'
 import styles from './SearchSelectedTags.module.scss';
-import { usePornstarAndTagsContext } from '@/contexts/PornstarAndTagsContext';
+import { useActorAndTagsContext } from '@/contexts/ActorAndTagsContext';
 import Image from 'next/image';
 
 export default function SearchSelectedTags() {
   const {
-    pornstarTags,
-    setPornstarTags,
+    actorTags,
+    setActorTags,
     accountTags,
     setAccountTags
-  } = usePornstarAndTagsContext();
+  } = useActorAndTagsContext();
 
   const removeTag = (tag: string) => {
     //setClicked((oldClickStatus) => !oldClickStatus)
-    setPornstarTags((prevItems: string[]) =>
+    setActorTags((prevItems: string[]) =>
       prevItems.filter((item) => item !== tag)
     );
     setAccountTags([...accountTags, tag]);
@@ -21,11 +21,11 @@ export default function SearchSelectedTags() {
 
   return (
     <>
-      {pornstarTags.length > 0 && (
+      {actorTags.length > 0 && (
           <div className={styles['selected-tags-container']}>
             <h2 className={styles['selected-tags-title']}>Filtered Tags</h2>
             <ul>
-              {pornstarTags.map((item) => (
+              {actorTags.map((item) => (
                 <li key={item} onClick={() => removeTag(item)}>
                   <span className={styles['selected-tag']}>{item}</span>
                   <Image

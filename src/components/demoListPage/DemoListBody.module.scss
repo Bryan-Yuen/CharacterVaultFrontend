@@ -11,12 +11,12 @@
   margin:0;
 }
 
-.explain-message, .find-pornstars-message-bottom{
+.explain-message, .find-actors-message-bottom{
   font-size:20px;
   margin-top: 3px;
 }
 
-.find-pornstars-message {
+.find-actors-message {
   font-size: 28px;
   margin-top:5px;
 }
@@ -25,7 +25,7 @@
   color: #64a4dd;
 }
 
-.pornstar-tiles-container{
+.actor-tiles-container{
   /*
  display:grid;
  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));  Maximum of 5 columns, each with a minimum width of 100px 
@@ -52,17 +52,17 @@
 }
 
 @media only screen and (max-width: 500px) {
-  .explain-message, .find-pornstars-message-bottom{
+  .explain-message, .find-actors-message-bottom{
     font-size:16px;
     align-self: flex-start;
   }
 
-  .find-pornstars-message {
+  .find-actors-message {
     font-size: 24px;
     margin-top:5px;
   }
 
-  .find-pornstars-message-bottom{
+  .find-actors-message-bottom{
     margin-top:3px;
   }
 }

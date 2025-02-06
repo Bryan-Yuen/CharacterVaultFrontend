@@ -1,0 +1,28 @@
+.header{
+  text-decoration: none;
+  color: inherit;
+}
+
+.add-actor{
+  background-color: rgb(22 122 207);
+  padding: 8px 10px;
+  border:none;
+  font-size:16px;
+  border-radius: 4px;
+  margin-left:25px;
+}
+
+@media only screen and (max-width: 750px) {
+  .add-actor{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 50%;
+    font-size: 33px;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    /* goes over shuffle porntsar */
+    z-index:2;
+  }
+}

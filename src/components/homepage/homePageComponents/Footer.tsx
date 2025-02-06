@@ -16,7 +16,7 @@ export default function Footer() {
           Contact
         </Link>
       </div>
-      <div className={styles["copyright"]}>&copy; 2024 MyFapSheet</div>
+      <div className={styles["copyright"]}>&copy; 2024 Character Vault</div>
     </footer>
   );
 }

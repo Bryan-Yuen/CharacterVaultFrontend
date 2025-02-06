@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Feedback from "./page";
 
 export const metadata: Metadata = {
-  title: "Feedback - MyFapSheet",
+  title: "Feedback - MyActorList",
   description: "Feedback page to provide us with feedback or questions",
   robots: {
     index: false,

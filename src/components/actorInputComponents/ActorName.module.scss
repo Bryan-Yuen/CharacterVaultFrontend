@@ -1,0 +1,31 @@
+.actor-name-input-container{
+  margin-top:10px;
+}
+
+.name-label{
+  font-size:18px;
+}
+
+.actor-name-input{
+  display:block;
+  width:100%;
+  background-color: rgb(83, 83, 83);
+  color: white;
+  font-size: 16px;
+  border: 1px solid gray;
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 5px;
+}
+
+.actor-name-input::placeholder {
+  color: white;
+  opacity:.5;
+}
+
+
+.actor-name-input:focus {
+  outline-style: none;
+  border: 1px solid rgb(255, 255, 255)
+}
+

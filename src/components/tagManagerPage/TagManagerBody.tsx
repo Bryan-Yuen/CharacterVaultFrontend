@@ -15,7 +15,7 @@ import SuccessPopUp from "../utilities/SuccessPopUp";
 // definitely need lazy loading here, maybe just show a few over the page
 // depending on screen size, and as user scrolls load more.
 export default function TagManagerBody() {
-  // refreshes query every time it loads to update the used in # of pornstars
+  // refreshes query every time it loads to update the used in # of actors
   const { loading, error, data } = useQuery(GET_USER_TAGS,{
     fetchPolicy: "network-only",
   });
@@ -158,7 +158,7 @@ export default function TagManagerBody() {
           >
             <div>
             <span className={styles["search-item"]}>{item.user_tag_text}</span>
-            <span className={styles["number-of-pornstars"]}> [used in {item.pornstar_tags.length} pornstars]</span>
+            <span className={styles["number-of-actors"]}> [used in {item.actor_tags.length} actors]</span>
             </div>
             <div className={styles["buttons-container"]}>
               <button

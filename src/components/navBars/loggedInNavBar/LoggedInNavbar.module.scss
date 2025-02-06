@@ -21,14 +21,15 @@
 .website-icon {
   width:32px;
   height:auto;
+  transform: rotate(-20deg)
 }
 
 .website-name{
   margin:0;
-  margin-left:10px;
-  font-size:20px;
+  margin-left:15px;
   font-weight:400;
-
+  font-size:20px;
+  font-weight: 600;
 }
 
 .middle-container{
@@ -36,7 +37,7 @@
   align-items: center;
 }
 
-.tag-manager, .add-pornstar{
+.tag-manager, .add-actor{
   background-color: rgb(22 122 207);
   padding: 8px 10px;
   border:none;
@@ -48,7 +49,7 @@
   margin-right:25px;
 }
 
-.add-pornstar{
+.add-actor{
   margin-left:25px;
 }
 

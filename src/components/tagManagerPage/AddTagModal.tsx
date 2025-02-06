@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, useEffect,useRef } from "react";
+import React, { FormEvent, useState, useEffect, useRef } from "react";
 //import styles from './AddTagModal.module.scss';
 import { ADD_USER_TAG } from "@/mutations/userTagMutations";
 import { useMutation } from "@apollo/client";
@@ -9,15 +9,13 @@ import FormInput from "../utilities/FormInput";
 import FormInputInvalidMessage from "../utilities/FormInputInvalidMessage";
 import FormSubmitButton from "../utilities/FormSubmitButton";
 import { gql } from "@apollo/client";
-import { useSuccessAlertContext } from '@/contexts/ShowSuccessAlertContext';
+import { useSuccessAlertContext } from "@/contexts/ShowSuccessAlertContext";
 
 interface propDefs {
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function AddTagModal({
-  setModalIsOpen,
-}: propDefs) {
+export default function AddTagModal({ setModalIsOpen }: propDefs) {
   console.log("addtag comp called");
   const {
     input: tag,
@@ -33,7 +31,7 @@ export default function AddTagModal({
         user_tag_text: tag.toLowerCase(),
       },
     },
-    errorPolicy: "all"
+    errorPolicy: "all",
   });
 
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -48,17 +46,18 @@ export default function AddTagModal({
     if (uniqueTagIsInvalid) setUniqueTagIsInvalid(false);
   }, [tag]);
 
-  const {showSuccessfulPopup , setSuccessText, setTriggeredFrom} = useSuccessAlertContext();
+  const { showSuccessfulPopup, setSuccessText, setTriggeredFrom } =
+    useSuccessAlertContext();
 
   const [uniqueTagIsInvalid, setUniqueTagIsInvalid] = useState(false);
-  
+
   const [genericError, setGenericError] = useState(false);
   const [versionError, setVersionError] = useState(false);
   const [rateLimitError, setRateLimitError] = useState(false);
 
   const client = useApolloClient();
 
-  const addPornstarHandler = async (e: FormEvent<HTMLFormElement>) => {
+  const addActorHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const result = await addUserTag();
@@ -77,26 +76,25 @@ export default function AddTagModal({
             setVersionError(true);
             break;
           case "RATE_LIMIT_ERROR":
-            setRateLimitError(true)
+            setRateLimitError(true);
             break;
           default:
             setGenericError(true);
         }
       } else if (result.data) {
-        
         client.cache.modify({
           fields: {
             getUserTags(existingUserTags = []) {
               const newUserTagRef = client.cache.writeFragment({
                 data: {
-                  __typename: "UserTag",
-                  user_tag_id : result.data.addUserTag.user_tag_id,
-                  user_tag_text: tag.toLowerCase()
+                  __typename: "UserTagsWithActorTagsReturn",
+                  user_tag_id: result.data.addUserTag.user_tag_id,
+                  user_tag_text: tag.toLowerCase(),
                 },
                 fragment: gql`
-                  fragment NewPornstar on UserTag {
+                  fragment NewActor on UserTagsWithActorTagsReturn {
                     user_tag_id
-                  user_tag_text
+                    user_tag_text
                   }
                 `,
               });
@@ -106,8 +104,8 @@ export default function AddTagModal({
         });
 
         setModalIsOpen(false);
-        setSuccessText("Tag added")
-        setTriggeredFrom("TAGMANAGER")
+        setSuccessText("Tag added");
+        setTriggeredFrom("TAGMANAGER");
         showSuccessfulPopup();
       }
     } catch (error) {
@@ -123,7 +121,7 @@ export default function AddTagModal({
       genericError={genericError}
       versionError={versionError}
       rateLimitError={rateLimitError}
-      onSubmit={addPornstarHandler}
+      onSubmit={addActorHandler}
     >
       <FormInput
         inputIsInvalid={tagIsInvalid || uniqueTagIsInvalid}

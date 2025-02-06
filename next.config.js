@@ -43,6 +43,18 @@ const nextConfig = {
         hostname: "pornstar-pictures-cdn.myfapsheet.com",
         pathname: "**",
       },
+      // demo list
+      {
+        protocol: "https",
+        hostname: "https://pub-e6bebdc4320d4f6ab48cf5edf2c48e9c.r2.dev",
+        pathname: "**",
+      },
+       // home page pictures
+       {
+        protocol: "https",
+        hostname: "https://pub-6aa58914a36048c298f2af9531d479c2.r2.dev",
+        pathname: "**",
+      },
     ],
   },
   swcMinify: true, // Ensure SWC minification is enabled

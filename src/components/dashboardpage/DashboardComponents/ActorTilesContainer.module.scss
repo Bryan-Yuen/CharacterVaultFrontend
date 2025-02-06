@@ -1,0 +1,23 @@
+.actor-tiles-container{
+   /*
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));  Maximum of 5 columns, each with a minimum width of 100px 
+  grid-template-columns: repeat(auto-fit,300px);
+  gap: 15px;  Adjust the gap between grid items as needed 
+  */
+  display:flex;
+  flex-wrap:wrap;
+  justify-content: center;
+  width:1800px;
+  max-width:100%;
+  margin-top:20px;
+}
+
+.empty-actor-list-message-container {
+  text-align: center;
+  font-size:20px;
+}
+
+.resources-copy{
+  color: #64a4dd;
+}

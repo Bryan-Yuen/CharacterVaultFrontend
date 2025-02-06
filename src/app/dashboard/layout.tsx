@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import Dashboard from "./page";
 
 export const metadata: Metadata = {
-  title: "Dashboard - MyFapSheet",
-  description: "Dashboard to view your pornstars",
+  title: "Dashboard - MyActorList",
+  description: "Dashboard to view your actors",
   robots: {
     index: false,
     follow: false,

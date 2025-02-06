@@ -17,13 +17,13 @@ export default function NonDashboardNavbar() {
           {' '}
           <Image
               priority
-              src="/MyFapSheetSVG.svg"
-              alt="paper with droplets"
+              src="/action-icon.svg"
+              alt="clapperboard"
               height={0}
               width={0}
               className={styles["website-icon"]}
             />
-          <div className={styles['website-name']}>MyFapSheet</div>
+          <div className={styles['website-name']}>Character Vault</div>
         </Link>
         <button className={`${styles['account-button']} ${styles[accountDropdownIsOpen ? 'account-dropdown-active' : '']}`} onClick={() => setAccountDropdownIsOpen(true)}>
           <Image

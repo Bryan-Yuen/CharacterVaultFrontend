@@ -2,20 +2,20 @@ import React, { useState, ChangeEvent, useRef,   KeyboardEvent, } from "react";
 import styles from "./SearchBar.module.scss";
 import { GET_USER_TAGS } from "@/queries/userTagQueries";
 import { useQuery } from "@apollo/client";
-import { usePornstarAndTagsContext } from "@/contexts/PornstarAndTagsContext";
+import { useActorAndTagsContext } from "@/contexts/ActorAndTagsContext";
 import Loading from "@/components/utilities/Loading";
 import ErrorMessage from "@/components/utilities/ErrorMessage";
 
 export default function SearchBar() {
   const {
-    pornstarTags,
-    setPornstarTags,
+    actorTags,
+    setActorTags,
     tagsToggle,
     setTagsToggle,
     setNameSearchTerm,
     accountTags,
     setAccountTags,
-  } = usePornstarAndTagsContext();
+  } = useActorAndTagsContext();
 
   const { loading, error, data } = useQuery(GET_USER_TAGS, {
     onCompleted: (data) => {
@@ -51,15 +51,15 @@ export default function SearchBar() {
     setClicked(false);
   };
 
-  // need to make sure it doesn't already exist in pornstar tags array
+  // need to make sure it doesn't already exist in Actor tags array
   const handleTagClick = (tag: string) => {
     // honestly this is here because our create new tag button calls this function too
     // but i guess this can also serve as a safeguard for the regular tag click even though that
     // does remove it from the search array
 
     //check if this works or if we need to compare the string inside to the string
-    if (!pornstarTags.includes(tag)) {
-      setPornstarTags([...pornstarTags, tag]);
+    if (!actorTags.includes(tag)) {
+      setActorTags([...actorTags, tag]);
       // need to remove from the search bar now
       setAccountTags((prevItems) => prevItems.filter((item) => item !== tag));
       // resets the input
@@ -80,14 +80,14 @@ export default function SearchBar() {
       if (event.key === "Enter" && tagsToggle) {
         event.preventDefault();
   
-        if (!pornstarTags.includes(searchTerm)) {
+        if (!actorTags.includes(searchTerm)) {
           // new tag
           if (filteredData.length <= 0)
             // do nothing
             return;
           else {
             // gets first elem from filtered search bar results
-            setPornstarTags([...pornstarTags, filteredData[0]]);
+            setActorTags([...actorTags, filteredData[0]]);
             // need to remove from the search bar now
             setAccountTags((prevItems) =>
               prevItems.filter((item) => item !== filteredData[0])

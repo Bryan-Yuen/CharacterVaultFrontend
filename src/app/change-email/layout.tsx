@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import ChangeEmail from "./page";
 
 export const metadata: Metadata = {
-  title: "Change Email - MyFapSheet",
+  title: "Change Email - MyActorList",
   description: "Change email address",
   robots: {
     index: false,

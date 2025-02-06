@@ -8,7 +8,7 @@ import Modal from "../utilities/Modal";
 import FormInput from "../utilities/FormInput";
 import FormInputInvalidMessage from "../utilities/FormInputInvalidMessage";
 import FormSubmitButton from "../utilities/FormSubmitButton";
-import { GET_ALL_PORNSTARS_AND_TAGS } from "@/queries/pornstarsQueries";
+import { GET_ALL_ACTORS_AND_TAGS } from "@/queries/actorQueries";
 import { gql } from "@apollo/client";
 import { useSuccessAlertContext } from '@/contexts/ShowSuccessAlertContext';
 
@@ -69,7 +69,7 @@ export default function EditTagModal({
   const [versionError, setVersionError] = useState(false);
   const [rateLimitError, setRateLimitError] = useState(false);
 
-  const editPornstarHandler = async (e: FormEvent<HTMLFormElement>) => {
+  const editActorHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -97,16 +97,16 @@ export default function EditTagModal({
       } else if (result.data) {
         client.cache.writeFragment({
           id:
-            'UserTag:{"user_tag_id":' +
+            'UserTagsWithActorTagsReturn:{"user_tag_id":' +
             result.data.editUserTag.user_tag_id +
             "}",
           data: {
-            __typename: "UserTag",
+            __typename: "UserTagsWithActorTagsReturn",
             user_tag_id: result.data.editUserTag.user_tag_id,
             user_tag_text: tag.toLowerCase(),
           },
           fragment: gql`
-            fragment NewUserTag on UserTag {
+            fragment NewUserTag on UserTagsWithActorTagsReturn {
               user_tag_id
               user_tag_text
             }
@@ -116,16 +116,16 @@ export default function EditTagModal({
         // refetch so the dashboard page is accurate
         // in the future maybe delete this from cache instead, in case the user deletes and edits multiple tags so we just refresh 1 time
         await client.query({
-          query: GET_ALL_PORNSTARS_AND_TAGS,
+          query: GET_ALL_ACTORS_AND_TAGS,
           fetchPolicy: "network-only",
         });
 
-        // delete cache individual get pornstars queries from cache
+        // delete cache individual get actors queries from cache
         const cacheData = client.cache.extract(); // Extract the entire cache
 
         // Loop through all keys in the cache
         for (const key in cacheData) {
-          if (key.startsWith("PornstarWithTagsAndLinks:")) {
+          if (key.startsWith("ActorWithTagsAndLinks:")) {
             client.cache.evict({ id: key }); // Evict each specific entry
           }
         }
@@ -151,7 +151,7 @@ export default function EditTagModal({
       genericError={genericError}
       versionError={versionError}
       rateLimitError={rateLimitError}
-      onSubmit={editPornstarHandler}
+      onSubmit={editActorHandler}
     >
       <FormInput
         inputIsInvalid={tagIsInvalid || uniqueTagIsInvalid}

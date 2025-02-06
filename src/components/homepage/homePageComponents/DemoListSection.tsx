@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function DemoListSection() {
   return (
     <div className={styles["demo-list-body-container"]}>
-      <h2 className={styles["demo-list-body-title"]}>Check out our example pornstar list</h2>
+      <h2 className={styles["demo-list-body-title"]}>Check out our example character list</h2>
       {/*lets do different color for this*/}
       {/*page scrolls up when pressing back button from another link, and its probably because of prefetch when links come into viewport*/}
       <Link

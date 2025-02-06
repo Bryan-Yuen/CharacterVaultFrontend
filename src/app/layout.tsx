@@ -38,6 +38,7 @@ export const metadata: Metadata = {
 };
 */
 
+// no google tag manager for this website
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -49,9 +50,11 @@ export default function RootLayout({
       process.env.NEXT_PUBLIC_ENVIRONMENT === "DEVELOPMENT" ? (
         <></>
       ) : (
-        <GoogleTagManager
+        <>
+        {/*        <GoogleTagManager
           gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID || ""}
-        />
+        />*/}
+        </>
       )}
       <body className={inter.className}>
         <ChildrenWithProvider>{children}</ChildrenWithProvider>

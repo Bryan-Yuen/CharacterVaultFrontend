@@ -6,7 +6,7 @@ export default function MiddleMessage() {
     <div className={styles["middle-message-container"]}>
       <h2 className={styles["middle-message-title"]}>Customize your way</h2>
       <span className={styles["middle-message-content"]}>
-        Hate website's default pornstar pictures? Upload your own and add your
+        Have an character picture you like? Upload your own and add your
         own tags.
       </span>
     </div>

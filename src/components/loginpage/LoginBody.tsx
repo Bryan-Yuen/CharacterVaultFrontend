@@ -104,8 +104,8 @@ export default function LoginBody() {
     >
       <Image
         priority
-        src="/MyFapSheetSVG.svg"
-        alt="Down Icon"
+        src="/action-icon.svg"
+        alt="clapperboard"
         height={0}
         width={75}
         className={styles["website-icon"]}

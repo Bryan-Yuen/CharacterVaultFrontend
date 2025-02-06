@@ -17,18 +17,18 @@ export default function HomePageVideoBody() {
     controls: true,
     responsive: true,
     fluid: true,
-    poster: "https://home-page-pictures.myfapsheet.com/hero-video-poster.webp",
+    poster: "https://pub-6aa58914a36048c298f2af9531d479c2.r2.dev/actor-dashboard-example.webp",
     sources: [
       {
-        src: "https://home-page-video.myfapsheet.com/myfapsheet-homepage-ad-video.mp4",
+        src: "",
         type: "video/mp4",
       },
       {
-        src: "https://home-page-video.myfapsheet.com/myfapsheet-homepage-ad-video.webm",
+        src: "",
         type: "video/webm",
       },
       {
-        src: "https://home-page-video.myfapsheet.com/myfapsheet-homepage-ad-video.ogg",
+        src: "",
         type: "video/ogg",
       },
     ],
@@ -49,31 +49,17 @@ export default function HomePageVideoBody() {
 
   return (
     <>
-      <a
-        className={styles["mobile-affiliate-banner-link"]}
-        href="https://join.exotic4k.com/track/ST1XXobpejFuXMLKkGaQLmr2qwS"
-        target="_blank"
-      >
-        <Image
-          className={styles["mobile-affiliate-banner-image"]}
-          src="https://ad-banners.myfapsheet.com/mobile-exotic4k-banner.jpg"
-          width="900"
-          height="250"
-          alt="exotic4k advertisement banner"
-          id="mobile-exotic4k-banner"
-        />
-      </a>
       <h1 className={styles["mobile-homepage-header"]}>
-            Create Your Pornstar List
+      Create Your Favorite Movie & TV Characters List
           </h1>
       <div className={styles["video-section-container"]}>
         <div className={styles["hero-content-container"]}>
           <h1 className={styles["desktop-homepage-header"]}>
-            Create Your Pornstar List
+            Create Your Favorite Movie & TV Characters List
           </h1>
           <span className={styles["introduction-body-content"]}>
-            Stop writing your pornstars on a notes app and save them here.
-            Manage your favorite pornstars all in one place with our stylish
+            Save your favorite TV characters here.
+            Manage your favorite TV characters all in one place with our stylish
             dashboard.
           </span>
           {/*page scrolls up when pressing back button from another link, and its probably because of prefetch when links come into viewport*/}
@@ -95,7 +81,23 @@ export default function HomePageVideoBody() {
           </div>
         </div>
         <div className={styles["video-body-container"]}>
-          <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+          {/*temporary until we finish video */}
+          {/*<VideoJS options={videoJsOptions} onReady={handlePlayerReady} /> */}
+          <a
+          href="https://pub-6aa58914a36048c298f2af9531d479c2.r2.dev/actor-dashboard-example.webp"
+          target="_blank"
+          className={styles["dashboard-image-link"]}
+        >
+          <Image
+            priority
+            src="https://pub-6aa58914a36048c298f2af9531d479c2.r2.dev/actor-dashboard-example.webp"
+            alt="walter white"
+            height={267}
+            width={475}
+            unoptimized={true}
+            className={styles["dashboard-image"]}
+          />
+        </a>
         </div>
       </div>
     </>

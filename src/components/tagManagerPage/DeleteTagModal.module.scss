@@ -82,11 +82,11 @@
     flex-direction: column;
   }
   
-  .pornstar-name-input-container{
+  .actor-name-input-container{
     margin-top:10px;
   }
   
-  .pornstar-name-input{
+  .actor-name-input{
     display:block;
     width:100%;
     background-color: rgb(83, 83, 83);
@@ -97,12 +97,12 @@
     padding: 10px;
   }
   
-  .pornstar-name-input::placeholder {
+  .actor-name-input::placeholder {
     color: white;
     opacity:.5;
   }
   
-  .pornstar-name-input:focus {
+  .actor-name-input:focus {
     outline-style: none;
     border: 1px solid rgb(255, 255, 255)
   }

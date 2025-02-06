@@ -9,14 +9,14 @@ export default function IntroductionBody() {
       <div className={styles["introduction-body-container"]}>
         <div className={styles["dashboard-image-container"]}>
         <a
-          href="https://home-page-pictures.myfapsheet.com/ava-addams-example.webp"
+          href="https://pub-6aa58914a36048c298f2af9531d479c2.r2.dev/walter-white-example.webp"
           target="_blank"
           className={styles["dashboard-image-link"]}
         >
           <Image
             priority
-            src="https://home-page-pictures.myfapsheet.com/ava-addams-example.webp"
-            alt="ava addams"
+            src="https://pub-6aa58914a36048c298f2af9531d479c2.r2.dev/walter-white-example.webp"
+            alt="walter white"
             height={267}
             width={475}
             unoptimized={true}
@@ -40,7 +40,7 @@ export default function IntroductionBody() {
                   Upload custom images
                 </h3>
                 <span className={styles["feature-content"]}>
-                  Use your favorite pornstar picture you find online.
+                  Use your favorite character picture you find online.
                 </span>
               </div>
             </li>
@@ -56,7 +56,7 @@ export default function IntroductionBody() {
               <div className={styles["feature-copy-container"]}>
                 <h3 className={styles["feature-title"]}>Create custom tags</h3>
                 <span className={styles["feature-content"]}>
-                  Add tags and filter your pornstars by tags.
+                  Add tags and filter your character by tags.
                 </span>
               </div>
             </li>
@@ -72,7 +72,7 @@ export default function IntroductionBody() {
               <div className={styles["feature-copy-container"]}>
                 <h3 className={styles["feature-title"]}>Add video links</h3>
                 <span className={styles["feature-content"]}>
-                  Save your favorite videos for each pornstar.
+                  Save your favorite videos for each character.
                 </span>
               </div>
             </li>

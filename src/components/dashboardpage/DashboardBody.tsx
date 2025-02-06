@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import styles from "./DashboardBody.module.scss";
-import PornstarTileContainer from "./DashboardComponents/PornstarTilesContainer";
+import ActorTileContainer from "./DashboardComponents/ActorTilesContainer";
 import SearchSelectedTags from "./DashboardComponents/SearchSelectedTags";
-import ShuffleButtonAndPornstar from "./DashboardComponents/ShuffleButtonAndPornstar";
-import SearchTagManagerAddPornstarContainer from "../navBars/loggedInNavBar/SearchTagManagerAddPornstarContainer";
+import ShuffleButtonAndActor from "./DashboardComponents/ShuffleButtonAndActor";
+import SearchTagManagerAddActorContainer from "../navBars/loggedInNavBar/SearchTagManagerAddActorContainer";
 import SearchBar from "../navBars/loggedInNavBar/SearchBar";
-import AddPornstarButton from "../navBars/loggedInNavBar/AddPornstarButton";
+import AddActorButton from "../navBars/loggedInNavBar/AddActorButton";
 import { useSuccessAlertContext } from "@/contexts/ShowSuccessAlertContext";
 import SuccessPopUp from "../utilities/SuccessPopUp";
-import NumberOfPornstars from "./DashboardComponents/NumberOfPornstars";
+import NumberOfActors from "./DashboardComponents/NumberOfActors";
 
 export default function DashboardBody() {
   const [isDesktop, setDesktop] = useState(false);
@@ -42,13 +42,13 @@ export default function DashboardBody() {
   return (
     <div className={styles["dashboard-body"]}>
       {successAlertIsOpen && <SuccessPopUp successText={successText} />}
-      <NumberOfPornstars/>
-      {isDesktop && <SearchTagManagerAddPornstarContainer />}
+      <NumberOfActors/>
+      {isDesktop && <SearchTagManagerAddActorContainer />}
       {isPhone && <SearchBar />}
-      {isPhone && <AddPornstarButton phone={true}/>}
-      <ShuffleButtonAndPornstar />
+      {isPhone && <AddActorButton phone={true}/>}
+      <ShuffleButtonAndActor />
       <SearchSelectedTags />
-      <PornstarTileContainer />
+      <ActorTileContainer />
     </div>
   );
 }

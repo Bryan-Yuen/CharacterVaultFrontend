@@ -5,8 +5,8 @@ import Footer from "@/components/homepage/homePageComponents/Footer";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy - MyFapSheet",
-  description: "Read the Privacy Policy of MyFapSheet.",
+  title: "Privacy Policy - MyActorList",
+  description: "Read the Privacy Policy of MyActorList.",
   robots: {
     index: false,
     follow: false,

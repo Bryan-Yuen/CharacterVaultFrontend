@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/client";
 import { useApolloClient } from "@apollo/client";
 import Modal from "../utilities/Modal";
 import FormSubmitButton from "../utilities/FormSubmitButton";
-import { GET_ALL_PORNSTARS_AND_TAGS } from "@/queries/pornstarsQueries";
+import { GET_ALL_ACTORS_AND_TAGS } from "@/queries/actorQueries";
 import { useSuccessAlertContext } from '@/contexts/ShowSuccessAlertContext';
 
 interface propDefs {
@@ -60,22 +60,22 @@ export default function DeleteTagModal({
       } else if (result.data) {
         const normalizedId = client.cache.identify({
           user_tag_id: user_tag_id,
-          __typename: "UserTag",
+          __typename: "UserTagsWithActorTagsReturn",
         });
         client.cache.evict({ id: normalizedId });
         client.cache.gc();
 
         // refetch so the dashboard page is accurate
         await client.query({
-          query: GET_ALL_PORNSTARS_AND_TAGS,
+          query: GET_ALL_ACTORS_AND_TAGS,
           fetchPolicy: "network-only",
         });
-        // delete cache individual get pornstars queries from cache
+        // delete cache individual get actors queries from cache
         const cacheData = client.cache.extract(); // Extract the entire cache
 
         // Loop through all keys in the cache
         for (const key in cacheData) {
-          if (key.startsWith("PornstarWithTagsAndLinks:")) {
+          if (key.startsWith("ActorWithTagsAndLinks:")) {
             client.cache.evict({ id: key }); // Evict each specific entry
           }
         }
@@ -103,7 +103,7 @@ export default function DeleteTagModal({
       rateLimitError={rateLimitError}
       onSubmit={deleteUserTagHandler}
     >
-      <span>{user_tag_text} will be removed from all pornstars</span>
+      <span>{user_tag_text} will be removed from all actors</span>
       <FormSubmitButton
         formIsInvalid={false}
         loading={loading}

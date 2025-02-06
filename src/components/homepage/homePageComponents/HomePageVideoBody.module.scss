@@ -119,6 +119,7 @@
   margin-bottom:0;
   margin-top:10px;
   font-size:38px;
+  text-align:center;
   }
 
   .introduction-body-content{
@@ -194,5 +195,18 @@
   .mobile-homepage-header{
     font-size:25px;
   }
+}
+
+// temporary
+.dashboard-image{
+  border-radius: 12px;
+  height: auto;
+    width: 100%;
+    max-width: 750px;
+    border:1px solid rgb(173, 173, 173);
+}
+
+.video-body-container {
+  border:none;
 }
 

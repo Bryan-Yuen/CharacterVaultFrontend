@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import ChangePassword from "./page";
 
 export const metadata: Metadata = {
-  title: "Change Password - MyFapSheet",
+  title: "Change Password - MyActorList",
   description: "Change your password",
   robots: {
     index: false,

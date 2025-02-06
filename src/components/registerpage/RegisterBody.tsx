@@ -166,8 +166,8 @@ export default function RegisterBody() {
     >
       <Image
         priority
-        src="/MyFapSheetSVG.svg"
-        alt="paper with splash icon"
+        src="/action-icon.svg"
+        alt="clapperboard"
         height={0}
         width={75}
         className={styles["website-icon"]}

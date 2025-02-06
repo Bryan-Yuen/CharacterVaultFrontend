@@ -6,8 +6,8 @@ if (!process.env.NEXT_PUBLIC_ENVIRONMENT) {
 }
 
 export const metadata: Metadata = {
-  title: "Register - MyFapSheet",
-  description: "Register to MyFapSheet. Create your list now.",
+  title: "Register - MyActorList",
+  description: "Register to MyActorList. Create your list now.",
   robots: {
     index:
       process.env.NEXT_PUBLIC_ENVIRONMENT === "LOCAL_DEVELOPMENT" ||

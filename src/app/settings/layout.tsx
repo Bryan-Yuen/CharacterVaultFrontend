@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import Settings from "./page";
 
 export const metadata: Metadata = {
-  title: "Account Settings - MyFapSheet",
-  description: "Account Settings for MyFapSheet",
+  title: "Account Settings - MyActorList",
+  description: "Account Settings for MyActorList",
   robots: {
     index: false,
     follow: false,

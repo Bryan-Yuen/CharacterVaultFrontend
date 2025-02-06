@@ -20,17 +20,17 @@ const client = new ApolloClient({
   uri: process.env.NEXT_PUBLIC_SERVER_URL,
   cache: new InMemoryCache({
     typePolicies: {
-      PornstarWithTags: {
-        keyFields: ["pornstar_url_slug"],
+      ActorWithTags: {
+        keyFields: ["actor_url_slug"],
       },
-      PornstarTag: {
-        keyFields: ["pornstar_tag_id"],
+      ActorTag: {
+        keyFields: ["actor_tag_id"],
       },
-      UserTag: {
+      UserTagsWithActorTagsReturn: {
         keyFields: ["user_tag_id"],
       },
-      PornstarWithTagsAndLinks: {
-        keyFields: ["pornstar_url_slug"],
+      ActorWithTagsAndLinks: {
+        keyFields: ["actor_url_slug"],
       },
 
       /*

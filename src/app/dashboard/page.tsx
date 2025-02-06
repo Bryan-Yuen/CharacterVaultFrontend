@@ -5,8 +5,8 @@ import LoggedInNavbar from "@/components/navBars/loggedInNavBar/LoggedInNavbar";
 import DashboardBody from "@/components/dashboardpage/DashboardBody";
 import { ApolloProvider } from "@apollo/client";
 import client from "@/apolloClient/apolloClient";
-import PornstarAndTagsContextProvider from "@/contexts/PornstarAndTagsContext";
-import FilteredPornstarsContextProvider from "@/contexts/FullPornstarsContext";
+import ActorAndTagsContextProvider from "@/contexts/ActorAndTagsContext";
+import FilteredActorsContextProvider from "@/contexts/FullActorsContext";
 import AuthenticationWrapper from "@/components/utilities/AuthenticationWrapper";
 import type { Metadata } from "next";
 
@@ -15,21 +15,21 @@ import type { Metadata } from "next";
 /*
 export const metadata: Metadata = {
   title: "MyFapSheet",
-  description: "The place to save your favorite pornstars",
+  description: "The place to save your favorite Actors",
 };
 */
 
 export default function Dashboard() {
   return (
     <ApolloProvider client={client}>
-      <PornstarAndTagsContextProvider>
-        <FilteredPornstarsContextProvider>
+      <ActorAndTagsContextProvider>
+        <FilteredActorsContextProvider>
             <AuthenticationWrapper>
               <LoggedInNavbar />
               <DashboardBody />
             </AuthenticationWrapper>
-        </FilteredPornstarsContextProvider>
-      </PornstarAndTagsContextProvider>
+        </FilteredActorsContextProvider>
+      </ActorAndTagsContextProvider>
     </ApolloProvider>
   );
 }

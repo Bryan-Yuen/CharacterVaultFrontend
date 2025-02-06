@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import styles from "./actorTilesContainer.module.scss";
+import styles from "./ActorTilesContainer.module.scss";
 import ActorTile from "./ActorTile";
 import { useActorAndTagsContext } from "@/contexts/ActorAndTagsContext";
 import { useFullActorsContext } from "@/contexts/FullActorsContext";

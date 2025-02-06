@@ -71,7 +71,7 @@ export default function EditActorBody() {
       document.title =
         "Edit - " +
         capitalizeWords(data.getActor.actor_name) +
-        " - MyFapSheet";
+        " - Character Vault";
       setActorTags(
         data.getActor.actor_tags.map((tag: any) => tag.actor_tag_text)
       );

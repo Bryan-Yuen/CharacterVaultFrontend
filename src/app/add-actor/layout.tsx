@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import AddActor from "./page"; // import your Demo's pages
 
 export const metadata: Metadata = {
-  title: "Add Actor - MyActorList",
-  description: "Add a new actor",
+  title: "Add character - Character Vault",
+  description: "Add a new character",
   robots: {
     index: false,
     follow: false,

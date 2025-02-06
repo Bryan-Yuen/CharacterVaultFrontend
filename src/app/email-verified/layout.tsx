@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import EmailVerified from "./page";
 
 export const metadata: Metadata = {
-  title: "Email Verified - MyActorList",
+  title: "Email Verified - Character Vault",
   description: "Email has been verified",
   robots: {
     index: false,

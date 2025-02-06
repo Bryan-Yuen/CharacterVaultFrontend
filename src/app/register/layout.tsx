@@ -6,7 +6,7 @@ if (!process.env.NEXT_PUBLIC_ENVIRONMENT) {
 }
 
 export const metadata: Metadata = {
-  title: "Register - MyActorList",
+  title: "Register - Character Vault",
   description: "Register to MyActorList. Create your list now.",
   robots: {
     index:

@@ -12,14 +12,14 @@ export default function PrivacyBody() {
         1. <b>Introduction</b>
       </p>
       <p>
-        Welcome to <b> MyFapSheet LLC</b>.
+        Welcome to <b> CharacterVault LLC</b>.
       </p>
       <p>
-        <b>MyFapSheet LLC</b> (“us”, “we”, or “our”) operates{" "}
-        <b>myfapsheet.com</b> (hereinafter referred to as <b>“Service”</b>).
+        <b>CharacterVault LLC</b> (“us”, “we”, or “our”) operates{" "}
+        <b>charactervault.site</b> (hereinafter referred to as <b>“Service”</b>).
       </p>
       <p>
-        Our Privacy Policy governs your visit to <b>myfapsheet.com</b>, and
+        Our Privacy Policy governs your visit to <b>charactervault.site</b>, and
         explains how we collect, safeguard and disclose information that results
         from your use of our Service.
       </p>
@@ -39,7 +39,7 @@ export default function PrivacyBody() {
         2. <b>Definitions</b>
       </p>
       <p>
-        <b>SERVICE</b> means the myfapsheet.com website operated by MyFapSheet
+        <b>SERVICE</b> means the charactervault.site website operated by CharacterVault
         LLC.
       </p>
       <p>
@@ -184,7 +184,7 @@ export default function PrivacyBody() {
       <p>
         5. <b>Use of Data</b>
       </p>
-      <p>MyFapSheet LLC uses the collected data for various purposes:</p>
+      <p>CharacterVault LLC uses the collected data for various purposes:</p>
       <p>0.1. to provide and maintain our Service;</p>
       <p>0.2. to notify you about changes to our Service;</p>
       <p>
@@ -256,7 +256,7 @@ export default function PrivacyBody() {
         information represents your agreement to that transfer.
       </p>
       <p>
-        MyFapSheet LLC will take all the steps reasonably necessary to ensure
+        CharacterVault LLC will take all the steps reasonably necessary to ensure
         that your data is treated securely and in accordance with this Privacy
         Policy and no transfer of your Personal Data will take place to an
         organisation or a country unless there are adequate controls in place
@@ -333,7 +333,7 @@ export default function PrivacyBody() {
         {" "}
         If you wish to be informed what Personal Data we hold about you and if
         you want it to be removed from our systems, please email us at{" "}
-        <b>support@myfapsheet.com</b>.
+        <b>support@charactervault.site</b>.
       </p>
       <p>
         In certain circumstances, you have the following data protection rights:
@@ -404,7 +404,7 @@ export default function PrivacyBody() {
       </p>
       <p>
         0.4. users are able to change their personal information by emailing us
-        at <b>support@myfapsheet.com</b>.
+        at <b>support@charactervault.site</b>.
       </p>
       <p>Our Policy on “Do Not Track” Signals:</p>
       <p>
@@ -508,7 +508,7 @@ export default function PrivacyBody() {
       </p>
       <p>
         To exercise your California data protection rights described above,
-        please send your request(s) by email: <b>support@myfapsheet.com</b>.
+        please send your request(s) by email: <b>support@charactervault.site</b>.
       </p>
       <p>
         Your data protection rights, described above, are covered by the CCPA,
@@ -636,11 +636,11 @@ export default function PrivacyBody() {
       </p>
       <p>
         If you have any questions about this Privacy Policy, please contact us
-        by email: <b>support@myfapsheet.com</b>.
+        by email: <b>support@charactervault.site</b>.
       </p>
       <p className={styles["ending"]}>
         This <a href="https://policymaker.io/privacy-policy/">Privacy Policy</a>{" "}
-        was created for <b>myfapsheet.com</b> by{" "}
+        was created for <b>charactervault.site</b> by{" "}
         <a href="https://policymaker.io">PolicyMaker.io</a> on 2024-02-10.
       </p>
     </main>

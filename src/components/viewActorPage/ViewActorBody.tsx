@@ -46,7 +46,7 @@ export default function ViewActorBody() {
     },
     onCompleted: (data) => {
       document.title =
-        capitalizeWords(data.getActor.actor_name) + " - MyActorList";
+        capitalizeWords(data.getActor.actor_name) + " - Character Vault";
     },
   });
 

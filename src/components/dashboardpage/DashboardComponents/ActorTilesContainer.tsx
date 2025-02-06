@@ -119,7 +119,7 @@ export default function ActorTilesContainer() {
           )}
         {actorsData.getAllActorsAndTags.length == 0 && (
           <div className={styles["empty-actor-list-message-container"]}>
-          <span>Welcome to MyFapSheet<br></br> Please go to our <Link href={"/resources"} className={styles["resources-copy"]}>Resources</Link> page to watch a tutorial on <br></br>drag and drop uploading image before adding your first actor.</span>
+          <span>Welcome to Character Vault<br></br> Add your first character now</span>
           </div>
         )}
       </div>

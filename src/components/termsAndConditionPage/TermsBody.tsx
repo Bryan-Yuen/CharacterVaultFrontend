@@ -12,12 +12,12 @@ export default function TermsBody() {
         1. <b>Introduction</b>
       </p>
       <p>
-        Welcome to <b>MyFapSheet LLC</b> (“Company”, “we”, “our”, “us”)!
+        Welcome to <b>Character Vault</b> (“Company”, “we”, “our”, “us”)!
       </p>
       <p>
         These Terms of Service (“Terms”, “Terms of Service”) govern your use of
-        our website located at <b>myfapsheet.com</b> (together or individually
-        “Service”) operated by <b>MyFapSheet LLC</b>.
+        our website located at <b>charactervault.site</b> (together or individually
+        “Service”) operated by <b>CharacterVault LLC</b>.
       </p>
       <p>
         Our Privacy Policy also governs your use of our Service and explains how
@@ -32,7 +32,7 @@ export default function TermsBody() {
       <p>
         If you do not agree with (or cannot comply with) Agreements, then you
         may not use the Service, but please let us know by emailing at{" "}
-        <b>support@myfapsheet.com</b> so we can try to find a solution. These
+        <b>support@charactervault.site</b> so we can try to find a solution. These
         Terms apply to all visitors, users and others who wish to access or use
         Service.
       </p>
@@ -43,7 +43,7 @@ export default function TermsBody() {
         By using our Service, you agree to subscribe to newsletters, marketing
         or promotional materials and other information we may send. However, you
         may opt out of receiving any, or all, of these communications from us by
-        following the unsubscribe link or by emailing at support@myfapsheet.com.
+        following the unsubscribe link or by emailing at support@charactervault.site.
       </p>
       <p>
         3. <b>Purchases</b>
@@ -100,22 +100,22 @@ export default function TermsBody() {
       </p>
       <p>
         At the end of each Billing Cycle, your Subscription will automatically
-        renew under the exact same conditions unless you cancel it or MyFapSheet
+        renew under the exact same conditions unless you cancel it or CharacterVault
         LLC cancels it. You may cancel your Subscription renewal either through
         your online account management page or by contacting
-        support@myfapsheet.com customer support team.
+        support@charactervault.site customer support team.
       </p>
       <p>
         A valid payment method is required to process the payment for your
-        subscription. You shall provide MyFapSheet LLC with accurate and
+        subscription. You shall provide CharacterVault LLC with accurate and
         complete billing information that may include but not limited to full
         name, address, state, postal or zip code, telephone number, and a valid
         payment method information. By submitting such payment information, you
-        automatically authorize MyFapSheet LLC to charge all Subscription fees
+        automatically authorize CharacterVault LLC to charge all Subscription fees
         incurred through your account to any such payment instruments.
       </p>
       <p>
-        Should automatic billing fail to occur for any reason, MyFapSheet LLC
+        Should automatic billing fail to occur for any reason, CharacterVault LLC
         reserves the right to terminate your access to the Service with
         immediate effect.
       </p>
@@ -123,7 +123,7 @@ export default function TermsBody() {
         6. <b>Free Trial</b>
       </p>
       <p>
-        MyFapSheet LLC may, at its sole discretion, offer a Subscription with a
+        CharacterVault LLC may, at its sole discretion, offer a Subscription with a
         free trial for a limited period of time ("Free Trial").
       </p>
       <p>
@@ -132,13 +132,13 @@ export default function TermsBody() {
       </p>
       <p>
         If you do enter your billing information when signing up for Free Trial,
-        you will not be charged by MyFapSheet LLC until Free Trial has expired.
+        you will not be charged by CharacterVault LLC until Free Trial has expired.
         On the last day of Free Trial period, unless you cancelled your
         Subscription, you will be automatically charged the applicable
         Subscription fees for the type of Subscription you have selected.
       </p>
       <p>
-        At any time and without notice, MyFapSheet LLC reserves the right to (i)
+        At any time and without notice, CharacterVault LLC reserves the right to (i)
         modify Terms of Service of Free Trial offer, or (ii) cancel such Free
         Trial offer.
       </p>
@@ -146,12 +146,12 @@ export default function TermsBody() {
         7. <b>Fee Changes</b>
       </p>
       <p>
-        MyFapSheet LLC, in its sole discretion and at any time, may modify
+        CharacterVault LLC, in its sole discretion and at any time, may modify
         Subscription fees for the Subscriptions. Any Subscription fee change
         will become effective at the end of the then-current Billing Cycle.
       </p>
       <p>
-        MyFapSheet LLC will provide you with a reasonable prior notice of any
+        CharacterVault LLC will provide you with a reasonable prior notice of any
         change in Subscription fees to give you an opportunity to terminate your
         Subscription before such change becomes effective.
       </p>
@@ -198,12 +198,12 @@ export default function TermsBody() {
         of Service, who may also use your Content subject to these Terms.
       </p>
       <p>
-        MyFapSheet LLC has the right but not the obligation to monitor and edit
+        CharacterVault LLC has the right but not the obligation to monitor and edit
         all Content provided by users.
       </p>
       <p>
         In addition, Content found on or through this Service are the property
-        of MyFapSheet LLC or used with permission. You may not distribute,
+        of CharacterVault LLC or used with permission. You may not distribute,
         modify, transmit, reuse, download, repost, copy, or use said Content,
         whether in whole or in part, for commercial purposes or for personal
         gain, without express advance written permission from us.
@@ -336,10 +336,10 @@ export default function TermsBody() {
       <p>
         Service and its original content (excluding Content provided by users),
         features and functionality are and will remain the exclusive property of
-        MyFapSheet LLC and its licensors. Service is protected by copyright,
+        CharacterVault LLC and its licensors. Service is protected by copyright,
         trademark, and other laws of and foreign countries. Our trademarks may
         not be used in connection with any product or service without the prior
-        written consent of MyFapSheet LLC.
+        written consent of CharacterVault LLC.
       </p>
       <p>
         15. <b>Copyright Policy</b>
@@ -354,7 +354,7 @@ export default function TermsBody() {
         If you are a copyright owner, or authorized on behalf of one, and you
         believe that the copyrighted work has been copied in a way that
         constitutes copyright infringement, please submit your claim via email
-        to support@myfapsheet.com, with the subject line: “Copyright
+        to support@charactervault.site, with the subject line: “Copyright
         Infringement” and include in your claim a detailed description of the
         alleged Infringement as detailed below, under “DMCA Notice and Procedure
         for Copyright Infringement Claims”
@@ -397,13 +397,13 @@ export default function TermsBody() {
         owner or authorized to act on the copyright owner’s behalf.
       </p>
       <p>
-        You can contact our Copyright Agent via email at support@myfapsheet.com.
+        You can contact our Copyright Agent via email at support@charactervault.site.
       </p>
       <p>
         17. <b>Error Reporting and Feedback</b>
       </p>
       <p>
-        You may provide us either directly at support@myfapsheet.com or via
+        You may provide us either directly at support@charactervault.site or via
         third party sites and tools with information and feedback concerning
         errors, suggestions for improvements, ideas, problems, complaints, and
         other matters related to our Service (“Feedback”). You acknowledge and
@@ -425,10 +425,10 @@ export default function TermsBody() {
       </p>
       <p>
         Our Service may contain links to third party web sites or services that
-        are not owned or controlled by MyFapSheet LLC.
+        are not owned or controlled by CharacterVault LLC.
       </p>
       <p>
-        MyFapSheet LLC has no control over, and assumes no responsibility for
+        CharacterVault LLC has no control over, and assumes no responsibility for
         the content, privacy policies, or practices of any third party web sites
         or services. We do not warrant the offerings of any of these
         entities/individuals or their websites.
@@ -605,14 +605,14 @@ export default function TermsBody() {
       </p>
       <p>
         Please send your feedback, comments, requests for technical support by
-        email: <b>support@myfapsheet.com</b>.
+        email: <b>support@charactervault.site</b>.
       </p>
       <p className={styles["ending"]}>
         These{" "}
         <a href="https://policymaker.io/terms-and-conditions/">
           Terms of Service
         </a>{" "}
-        were created for <b>myfapsheet.com</b> by{" "}
+        were created for <b>charactervault.site</b> by{" "}
         <a href="https://policymaker.io">PolicyMaker.io</a> on 2024-02-10.
       </p>
     </main>

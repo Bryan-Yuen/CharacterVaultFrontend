@@ -1,5 +1,5 @@
 import React, { FormEvent, useState, useEffect } from "react";
-import styles from "./DeleteactorModal.module.scss";
+import styles from "./DeleteActorModal.module.scss";
 import { DELETE_ACTOR } from "@/mutations/actorMutations";
 import { useMutation } from "@apollo/client";
 import { useApolloClient } from "@apollo/client";

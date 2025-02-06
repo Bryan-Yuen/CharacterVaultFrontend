@@ -2,7 +2,7 @@ import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { GET_ACTOR } from "@/queries/actorQueries";
 import { useMutation, useQuery } from "@apollo/client";
-import styles from "./EditactorBody.module.scss";
+import styles from "./EditActorBody.module.scss";
 import useInput from "../hooks/useInput";
 import { useApolloClient } from "@apollo/client";
 import { EDIT_ACTOR } from "@/mutations/actorMutations";

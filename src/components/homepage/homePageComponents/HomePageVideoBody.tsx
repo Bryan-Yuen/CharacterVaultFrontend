@@ -24,7 +24,7 @@ export default function HomePageVideoBody() {
         type: "video/mp4",
       },
       {
-        src: "",
+        src: "https://charactervault-homepage-video.charactervault.site/walter-white-demo.webm",
         type: "video/webm",
       },
       {

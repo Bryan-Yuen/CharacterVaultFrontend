@@ -11,7 +11,7 @@ if (!process.env.NEXT_PUBLIC_ENVIRONMENT) {
 }
 
 export const metadata: Metadata = {
-  title: "MyActorList - Create your character list",
+  title: "CharacterVault - Create your character list",
   description:
     "Create your list and add and manage your favorite characters. Upload custom images, tags, and video links.",
   robots: {

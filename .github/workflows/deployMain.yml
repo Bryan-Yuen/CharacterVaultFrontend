@@ -30,13 +30,13 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         port: 22
         script: |
-          cd ~/apps/ProdMyFapSheetFrontend
+          cd ~/apps/CharacterVaultFrontend
           git pull
           git status
           npm install
           npm run build
           npm run sitemap
-          pm2 restart ProdMyFapSheetFrontend
+          pm2 restart CharacterVaultFrontend
           curl https://api.cloudflare.com/client/v4/zones/${{ secrets.ZONE_ID }}/purge_cache \
             -H 'Content-Type: application/json' \
             -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}" \

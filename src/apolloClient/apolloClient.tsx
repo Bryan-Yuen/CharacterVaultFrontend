@@ -32,14 +32,6 @@ const client = new ApolloClient({
       ActorWithTagsAndLinks: {
         keyFields: ["actor_url_slug"],
       },
-
-      /*
-        UserTagWithPornstarTagTest: {
-          // In an inventory management system, products might be identified
-          // by their UPC.
-          keyFields: ["user_tag_id",],
-        },
-        */
     },
   }),
   credentials: process.env.NEXT_PUBLIC_ENVIRONMENT === "LOCAL_DEVELOPMENT" ? "include" : "same-origin",

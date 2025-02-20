@@ -57,6 +57,7 @@ export default function EmailVerificationBody() {
   };
 
   if (loading) return <Loading />;
+  if (error) console.log(error)
   return (
     <main className={styles["email-verification-body-container"]}>
       <div className={styles["content-container"]}>

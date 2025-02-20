@@ -11,16 +11,6 @@ import FormInput from "../utilities/FormInput";
 import FormInputInvalidMessage from "../utilities/FormInputInvalidMessage";
 import FormSubmitButton from "../utilities/FormSubmitButton";
 import { useApolloClient } from "@apollo/client";
-import Cookies from "js-cookie";
-
-type UserTwinredConversionInformation = {
-  campaignId: string;
-  placementId: string;
-  siteId: string;
-  city: string;
-  operatingSystem: string;
-  siteName: string;
-};
 
 export default function RegisterBody() {
   const {
@@ -47,9 +37,6 @@ export default function RegisterBody() {
     inputBlurHandler: registerPasswordBlurHandler,
   } = useInput((input) => input.length >= 6);
 
-  const [campaignParams, setCampaignParams] =
-    useState<UserTwinredConversionInformation | null>(null);
-
   const [registerUser, { loading }] = useMutation(REGISTER_USER, {
     errorPolicy: "all",
   });
@@ -59,21 +46,6 @@ export default function RegisterBody() {
     if (uniqueUsernameIsInvalid) setUniqueUsernameIsInvalid(false);
     if (uniqueEmailIsInvalid) setUniqueEmailIsInvalid(false);
   }, [registerUsername, registerEmail]);
-
-  useEffect(() => {
-    // Parse the "homepage-campaign-params" cookie
-    const campaignCookie = Cookies.get("homepage-campaign-params");
-
-    // Check if the specific cookie exists
-    if (campaignCookie) {
-      try {
-        setCampaignParams(JSON.parse(campaignCookie));
-        console.log("parsed ", JSON.parse(campaignCookie));
-      } catch (err) {
-        setCampaignParams(null);
-      }
-    }
-  }, []);
 
   const [uniqueUsernameIsInvalid, setUniqueUsernameIsInvalid] = useState(false);
   const [uniqueEmailIsInvalid, setUniqueEmailIsInvalid] = useState(false);
@@ -88,30 +60,13 @@ export default function RegisterBody() {
     e.preventDefault();
 
     try {
-      let registerInput;
-      if (campaignParams) {
-        registerInput = {
-          user_username: registerUsername,
-          user_email: registerEmail.toLowerCase(),
-          user_password: registerPassword,
-          campaign_id: campaignParams.campaignId,
-          placement_id: campaignParams.placementId,
-          site_id: campaignParams.siteId,
-          city: campaignParams.city,
-          operating_system: campaignParams.operatingSystem,
-          site_name: campaignParams.siteName,
-        };
-      }
-      else {
-        registerInput = {
-          user_username: registerUsername,
-          user_email: registerEmail.toLowerCase(),
-          user_password: registerPassword,
-        };
-      }
       const result = await registerUser({
         variables: {
-          user: registerInput,
+          user: {
+            user_username: registerUsername,
+            user_email: registerEmail.toLowerCase(),
+            user_password: registerPassword,
+          }
         }
       });
       if (!result) {

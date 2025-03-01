@@ -44,7 +44,7 @@ export default function DemoListActorTile(props: propDefs) {
           />
         )}
         <div className={styles['actor-tile-bottom-container']}>
-          <h1 className={styles['actor-name']}>{props.actor_name}</h1>
+          <h2 className={styles['actor-name']}>{props.actor_name}</h2>
           <ul className={styles['actor-tags-list']}>
             {props.tags?.slice().sort().map((tag: any) => (
               <li className={styles['actor-tags-list-item']} key={props.actor_url_slug + "-" + tag}>{tag}</li>

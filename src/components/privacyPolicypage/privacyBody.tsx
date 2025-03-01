@@ -4,9 +4,9 @@ import styles from "./privacyBody.module.scss";
 export default function PrivacyBody() {
   return (
     <main className={styles["terms-body-container"]}>
-      <h2 className={styles["header"]}>
+      <h1 className={styles["header"]}>
         <b>PRIVACY POLICY</b>
-      </h2>
+      </h1>
       <p>Effective date: 2024-02-10</p>
       <p>
         1. <b>Introduction</b>

@@ -4,9 +4,9 @@ import styles from "./TermsBody.module.scss";
 export default function TermsBody() {
   return (
     <main className={styles["terms-body-container"]}>
-      <h2 className={styles["header"]}>
+      <h1 className={styles["header"]}>
         <b>TERMS AND CONDITIONS</b>
-      </h2>
+      </h1>
       <p>Last updated: 2024-02-10</p>
       <p>
         1. <b>Introduction</b>

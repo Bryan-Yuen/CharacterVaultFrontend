@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./HomePageVideoBody.module.scss";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
@@ -11,6 +11,22 @@ import globalStyles from "@/sharedStyles/global-classes.module.scss";
 
 export default function HomePageVideoBody() {
   const playerRef = useRef(null);
+
+  const [isDesktop, setDesktop] = useState(true);
+    useEffect(() => {
+      const updateMedia = () => {
+        if (window.innerWidth > 1000) {
+          setDesktop(true);
+        } else {
+          setDesktop(false);
+        }
+      };
+  
+      updateMedia();
+  
+      window.addEventListener("resize", updateMedia);
+      return () => window.removeEventListener("resize", updateMedia);
+    }, []);
 
   const videoJsOptions = {
     autoplay: false,
@@ -49,14 +65,14 @@ export default function HomePageVideoBody() {
 
   return (
     <>
-      <h1 className={styles["mobile-homepage-header"]}>
+    {!isDesktop &&  <h1 className={styles["mobile-homepage-header"]}>
       Create Your Favorite Movie & TV Characters List
-          </h1>
+          </h1>}
       <div className={styles["video-section-container"]}>
         <div className={styles["hero-content-container"]}>
-          <h1 className={styles["desktop-homepage-header"]}>
+          {isDesktop && <h1 className={styles["desktop-homepage-header"]}>
             Create Your Favorite Movie & TV Characters List
-          </h1>
+          </h1>}
           <span className={styles["introduction-body-content"]}>
             Save your favorite TV characters here.
             Manage your favorite TV characters all in one place with our stylish

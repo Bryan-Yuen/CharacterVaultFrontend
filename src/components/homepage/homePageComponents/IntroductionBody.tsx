@@ -9,13 +9,13 @@ export default function IntroductionBody() {
       <div className={styles["introduction-body-container"]}>
         <div className={styles["dashboard-image-container"]}>
         <a
-          href="https://character-vault-homepage-pictures.charactervault.site/walter-white-example.webp"
+          href="https://character-vault-homepage-pictures.charactervault.org/walter-white-example.webp"
           target="_blank"
           className={styles["dashboard-image-link"]}
         >
           <Image
             priority
-            src="https://character-vault-homepage-pictures.charactervault.site/walter-white-example.webp"
+            src="https://character-vault-homepage-pictures.charactervault.org/walter-white-example.webp"
             alt="walter white"
             height={267}
             width={475}

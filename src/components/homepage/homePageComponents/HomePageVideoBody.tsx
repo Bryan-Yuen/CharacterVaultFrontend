@@ -33,14 +33,14 @@ export default function HomePageVideoBody() {
     controls: true,
     responsive: true,
     fluid: true,
-    poster: "https://character-vault-homepage-pictures.charactervault.site/actor-dashboard-example.webp",
+    poster: "https://character-vault-homepage-pictures.charactervault.org/actor-dashboard-example.webp",
     sources: [
       {
-        src: "https://charactervault-homepage-video.charactervault.site/walter-white-demo.mp4",
+        src: "https://charactervault-homepage-video.charactervault.org/walter-white-demo.mp4",
         type: "video/mp4",
       },
       {
-        src: "https://charactervault-homepage-video.charactervault.site/walter-white-demo.webm",
+        src: "https://charactervault-homepage-video.charactervault.org/walter-white-demo.webm",
         type: "video/webm",
       },
       {
